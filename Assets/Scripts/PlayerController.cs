@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 15.00f;
+    public float dashSpeed = 15.00f;
 
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool canTakeDamage = true;
+    [HideInInspector] public bool canDash = false;
 
     [HideInInspector] public Health _playerHealth;
     [HideInInspector] public Animator _playerAnimator;
@@ -79,6 +81,12 @@ public class PlayerController : MonoBehaviour
             _playerAnimator.SetBool("IsRunning", false);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        {
+            canDash = false;
+        }
+
+        // Dev tool
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -92,6 +100,15 @@ public class PlayerController : MonoBehaviour
         if (canMove)
         {
             _playerRigidbody.AddForce(moveDir * speed, ForceMode2D.Force);
+
+            if (!canDash)
+            {
+                canDash = true;
+
+                Vector2 viewDir = new Vector2(horizontalView, verticalView);
+
+                _playerRigidbody.AddForce(viewDir * dashSpeed, ForceMode2D.Impulse);
+            }
         }
     }
 
