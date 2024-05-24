@@ -56,12 +56,17 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && playerController.canTakeDamage)
+        if (collision.CompareTag("Player") && playerController != null && playerController.canTakeDamage)
         {
+            playerController.canTakeDamage = false;
+            playerController.Invoke(nameof(playerController.DamageReset), .5f);
+
             heading = player.position - transform.position;
             direction = heading / heading.magnitude;
 
-            StartCoroutine(playerController.IFrameAnimation(.5f, 1, true, direction));
+            StartCoroutine(playerController.IFrameAnimation(.5f, 1, true, 
+                Vector3.Distance(player.position, transform.position) > .1f ? direction : Vector2.zero));
+
             playerController._playerHealth.RemoveHealth(_damageManager.damage, playerController.Death);
         }
     }

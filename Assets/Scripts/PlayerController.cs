@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 15.00f;
+
+    [Space]
+
     public float dashSpeed = 15.00f;
+    public float dashCooldown = 1f;
 
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
@@ -15,19 +19,22 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float verticalView;
 
     [HideInInspector] public bool canMove = true;
-    [HideInInspector] public bool canTakeDamage = true;
-    [HideInInspector] public bool canDash = false;
+    /*[HideInInspector]*/ public bool canTakeDamage = true;
+    [HideInInspector] public int canDash = 0;
 
     [HideInInspector] public Health _playerHealth;
     [HideInInspector] public Animator _playerAnimator;
 
     Vector2 moveDir;
+    Vector2 startVelocity;
 
+    HudManager _hudManager;
     Rigidbody2D _playerRigidbody;
     SpriteRenderer _playerSpriteRenderer;
 
     private void Awake()
     {
+        _hudManager = GetComponent<HudManager>();
         _playerHealth = GetComponent<Health>();
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
@@ -81,9 +88,16 @@ public class PlayerController : MonoBehaviour
             _playerAnimator.SetBool("IsRunning", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        if (Input.GetKeyDown(KeyCode.Space) && canDash == 0)
         {
-            canDash = false;
+            canDash = 2;
+            canTakeDamage = false;
+
+            startVelocity = _playerRigidbody.velocity;
+
+            Invoke(nameof(DashReset), dashCooldown);
+            Invoke(nameof(DamageReset), dashCooldown / 3);
+            StartCoroutine(_hudManager.DashCooldownBar(dashCooldown));
         }
 
         // Dev tool
@@ -101,11 +115,11 @@ public class PlayerController : MonoBehaviour
         {
             _playerRigidbody.AddForce(moveDir * speed, ForceMode2D.Force);
 
-            if (!canDash)
+            if (canDash == 2)
             {
-                canDash = true;
+                canDash = 1;
 
-                Vector2 viewDir = new Vector2(horizontalView, verticalView);
+                Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
 
                 _playerRigidbody.AddForce(viewDir * dashSpeed, ForceMode2D.Impulse);
             }
@@ -114,13 +128,12 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator IFrameAnimation(float duration, int colorShiftTimes, bool knockBack, Vector2 dir)
     {
-        canTakeDamage = false;
         _playerSpriteRenderer.color = Color.red;
 
         if (knockBack)
         {
             _playerRigidbody.velocity = Vector2.zero;
-            _playerRigidbody.AddForce(dir * 25000);
+            _playerRigidbody.AddForce((dir != null ? dir : Vector2.zero) * 1000, ForceMode2D.Impulse);
         }
 
         for (int i = 0; i < colorShiftTimes; i++)
@@ -130,6 +143,15 @@ public class PlayerController : MonoBehaviour
         }
 
         _playerSpriteRenderer.color = Color.white;
+    }
+
+    void DashReset()
+    {
+        canDash = 0;
+    }
+
+    public void DamageReset()
+    {
         canTakeDamage = true;
     }
 
