@@ -5,10 +5,15 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public bool attack = false;
-    public bool throwAttack = false;
+    public float attackDelay = 1f;
 
-    [SerializeField] float attackDelay = 1f;
-    [SerializeField] float throwAttackDelay = 1f;
+    [Space]
+
+    public int throwAttack = 0;
+    public int maxAmmo = 6;
+    [HideInInspector] public int currentAmmo = 6;
+    public float throwAttackDelay = 1f;
+    public float throwAttackReloadTime = .5f;
     [SerializeField] GameObject throwingAttack;
 
     PlayerController playerController;
@@ -26,6 +31,9 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         playerController = FindAnyObjectByType<PlayerController>();
+
+        HudManager.instance.FillAmmoBar(maxAmmo);
+        currentAmmo = maxAmmo;
     }
 
     private void Update()
@@ -42,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButton(0) && !attack)
         {
             attack = true;
-            Invoke(nameof(AttackReset), attackDelay);
+            StartCoroutine(AttackReset());
 
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -51,9 +59,13 @@ public class PlayerAttack : MonoBehaviour
 
             _orbAnimator.SetTrigger("Attack");
         }
-        if (Input.GetMouseButton(1) && !throwAttack)
+
+        if (Input.GetMouseButton(1) && throwAttack == 0 && currentAmmo > 0)
         {
-            throwAttack = true;
+            HudManager.instance.UpdateAmmoBar(currentAmmo);
+            currentAmmo--;
+
+            throwAttack = 2;
             Invoke(nameof(ThrowAttackReset), throwAttackDelay);
 
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -79,8 +91,10 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void AttackReset()
+    IEnumerator AttackReset()
     {
+        yield return new WaitForSeconds(attackDelay);
+
         attack = false;
 
         playerController.speed *= 2f;
@@ -89,8 +103,8 @@ public class PlayerAttack : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x == 1 ? -1 : 1, transform.localScale.y, transform.localScale.z);
     }
 
-    void ThrowAttackReset()
+    public void ThrowAttackReset()
     {
-        throwAttack = false;
+        throwAttack = 0;
     }
 }

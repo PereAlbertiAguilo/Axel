@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 9021389012119843173}
   - component: {fileID: 7215255467561977418}
   - component: {fileID: -3280815085736294400}
+  - component: {fileID: -2967556826083421971}
+  - component: {fileID: 4271045969464213892}
   - component: {fileID: 5560280630272806367}
   - component: {fileID: 7154466435017873188}
   m_Layer: 0
@@ -101,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0799ce2f0488afd41b2cfdf4d7d2d775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 60
 --- !u!114 &7215255467561977418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40b79d803f737c47b91d4d469728f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 8
 --- !u!114 &-3280815085736294400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +129,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f140ff678bdecb2448dc826e1b67318d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroy: 1
   collidedTag: Target
+--- !u!114 &-2967556826083421971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835321785871805510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d82c62ad34ec14409cc0fcc2ed3d71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDestroyInstance: {fileID: 942157634890792352, guid: 7850e2dd35813c44eb4ff68cc6543168, type: 3}
+--- !u!114 &4271045969464213892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835321785871805510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb8c6f05e2d00b46b1d51bcdd2b8180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2
 --- !u!58 &5560280630272806367
 CircleCollider2D:
   m_ObjectHideFlags: 0

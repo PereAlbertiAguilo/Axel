@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     public float dashSpeed = 15.00f;
     public float dashCooldown = 1f;
+    [SerializeField] ParticleSystem dashTrail;
+
+    [Space]
 
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
@@ -19,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float verticalView;
 
     [HideInInspector] public bool canMove = true;
-    /*[HideInInspector]*/ public bool canTakeDamage = true;
+    [HideInInspector] public bool canTakeDamage = true;
     [HideInInspector] public int canDash = 0;
 
     [HideInInspector] public Health _playerHealth;
@@ -28,13 +31,11 @@ public class PlayerController : MonoBehaviour
     Vector2 moveDir;
     Vector2 startVelocity;
 
-    HudManager _hudManager;
     Rigidbody2D _playerRigidbody;
     SpriteRenderer _playerSpriteRenderer;
 
     private void Awake()
     {
-        _hudManager = GetComponent<HudManager>();
         _playerHealth = GetComponent<Health>();
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
@@ -95,9 +96,11 @@ public class PlayerController : MonoBehaviour
 
             startVelocity = _playerRigidbody.velocity;
 
+            dashTrail.Play();
+
             Invoke(nameof(DashReset), dashCooldown);
             Invoke(nameof(DamageReset), dashCooldown / 3);
-            StartCoroutine(_hudManager.DashCooldownBar(dashCooldown));
+            StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
         }
 
         // Dev tool
@@ -158,6 +161,6 @@ public class PlayerController : MonoBehaviour
     public void Death()
     {
         StopAllCoroutines();
-        _playerSpriteRenderer.enabled = false;
+        Destroy(gameObject);
     }
 }

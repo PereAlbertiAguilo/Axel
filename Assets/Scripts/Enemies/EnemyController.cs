@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (canMove) transform.position = Vector3.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
+        if (canMove && playerController != null) transform.position = Vector3.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
     }
 
     public void OnHit()
@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
             heading = player.position - transform.position;
             direction = heading / heading.magnitude;
 
-            StartCoroutine(playerController.IFrameAnimation(.5f, 1, true, 
+            playerController.StartCoroutine(playerController.IFrameAnimation(.5f, 1, true, 
                 Vector3.Distance(player.position, transform.position) > .1f ? direction : Vector2.zero));
 
             playerController._playerHealth.RemoveHealth(_damageManager.damage, playerController.Death);
