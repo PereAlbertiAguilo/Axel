@@ -33,6 +33,8 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        EnemiesManager.instance.AddToEnemiesList(gameObject);
+
         playerController = FindAnyObjectByType<PlayerController>();
         player = playerController.transform;
 
@@ -50,14 +52,18 @@ public class EnemyController : MonoBehaviour
 
     public void OnHit()
     {
-        heading = player.position - transform.position;
-        direction = heading / heading.magnitude;
-        _enemyRigidbody.AddForce(-direction * 100, ForceMode2D.Impulse);
+        CancelInvoke();
 
         canMove = false;
         Invoke(nameof(MoveReset), .45f);
 
         DeactivateFollowState();
+
+        heading = player.position - transform.position;
+        direction = heading / heading.magnitude;
+
+        _enemyRigidbody.velocity = Vector2.zero;
+        _enemyRigidbody.AddForce(-direction * 100, ForceMode2D.Impulse);
     }
 
     void MoveReset()
@@ -73,9 +79,9 @@ public class EnemyController : MonoBehaviour
         if (_aIPath != null) _aIPath.canMove = canMove;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") && playerController != null && playerController.canTakeDamage)
+        if (collision.gameObject.CompareTag("Player") && playerController != null && playerController.canTakeDamage)
         {
             playerController.canTakeDamage = false;
             playerController.Invoke(nameof(playerController.DamageReset), .5f);
@@ -83,10 +89,15 @@ public class EnemyController : MonoBehaviour
             heading = player.position - transform.position;
             direction = heading / heading.magnitude;
 
-            playerController.StartCoroutine(playerController.IFrameAnimation(.5f, 1, true, 
+            playerController.StartCoroutine(playerController.IFrameAnimation(.5f, 1, true,
                 Vector3.Distance(player.position, transform.position) > .1f ? direction : Vector2.zero));
 
             playerController._playerHealth.RemoveHealth(_damageManager.damage, playerController.Death);
         }
+    }
+
+    private void OnDisable()
+    {
+        EnemiesManager.instance.RemoveFromEnemiesList(gameObject);
     }
 }

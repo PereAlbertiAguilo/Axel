@@ -13,7 +13,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Obstacle
   - 
   - 
   - 
@@ -57,6 +57,9 @@ TagManager:
     locked: 0
   - name: ForegroundD
     uniqueID: 4077476659
+    locked: 0
+  - name: Details
+    uniqueID: 127907025
     locked: 0
   - name: Default
     uniqueID: 0

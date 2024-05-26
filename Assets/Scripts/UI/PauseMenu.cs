@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -37,6 +38,8 @@ public class PauseMenu : MonoBehaviour
     // Resumes the game
     public void Resume()
     {
+        ChangeCurrentSelectedElement(null);
+        UpdateAnimators(true);
         paused = false;
         Time.timeScale = 1;
     }
@@ -44,8 +47,24 @@ public class PauseMenu : MonoBehaviour
     // Pauses the game
     public void Pause()
     {
+        ChangeCurrentSelectedElement(null);
+        UpdateAnimators(false);
         paused = true;
         Time.timeScale = 0;
+    }
+
+    void ChangeCurrentSelectedElement(GameObject selected)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(selected);
+    }
+
+    void UpdateAnimators(bool activate)
+    {
+        foreach(Animator a in FindObjectsOfType<Animator>())
+        {
+            a.enabled = activate;
+        }
     }
 
     // Restarts the game

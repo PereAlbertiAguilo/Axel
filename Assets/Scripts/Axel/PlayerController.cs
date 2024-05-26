@@ -92,14 +92,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canDash == 0)
         {
             canDash = 2;
-            canTakeDamage = false;
 
             startVelocity = _playerRigidbody.velocity;
 
             dashTrail.Play();
 
             Invoke(nameof(DashReset), dashCooldown);
-            Invoke(nameof(DamageReset), .3f);
             StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
         }
     }

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
+    [SerializeField] float waitTime = 1f;
+
     PlayerController playerController;
     HudManager hudManager;
     PlayerAttack playerAttack;
 
     Animator _animator;
 
-    bool isInRange = false;
+    bool canInteract = false;
 
     private void Awake()
     {
@@ -27,7 +29,7 @@ public class SavePoint : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R) && playerAttack.currentAmmo < playerAttack.maxAmmo && 
-            (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2) && isInRange)
+            (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2) && canInteract)
         {
             playerAttack.CancelInvoke();
             playerAttack.throwAttack = 1;
@@ -39,12 +41,19 @@ public class SavePoint : MonoBehaviour
         }
     }
 
+    IEnumerator InteractDelay(bool enter)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        canInteract = enter;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            isInRange = true;
-            _animator.SetBool("IsInRange", isInRange);
+            StartCoroutine(InteractDelay(true));
+            _animator.SetBool("IsInRange", true);
         }
     }
 
@@ -52,8 +61,9 @@ public class SavePoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isInRange = false;
-            _animator.SetBool("IsInRange", isInRange);
+            StopAllCoroutines();
+            canInteract = false;
+            _animator.SetBool("IsInRange", false);
         }
     }
 }
