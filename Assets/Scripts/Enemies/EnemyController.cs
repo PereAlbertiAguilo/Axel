@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Pathfinding;
+using System.IO;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] float speed = 20f;
-
     bool canMove = true;
 
     Vector3 heading;
@@ -17,10 +17,15 @@ public class EnemyController : MonoBehaviour
     DamageManager _damageManager;
 
     [HideInInspector] public Rigidbody2D _enemyRigidbody;
+
+    AIPath _aIPath;
+    AIDestinationSetter _destinationSetter;
     SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
+        _aIPath = GetComponent<AIPath>();
+        _destinationSetter = GetComponent<AIDestinationSetter>();
         _enemyRigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _damageManager = GetComponent<DamageManager>();
@@ -30,28 +35,42 @@ public class EnemyController : MonoBehaviour
     {
         playerController = FindAnyObjectByType<PlayerController>();
         player = playerController.transform;
+
+        _destinationSetter.target = player;
     }
 
     private void Update()
     {
-        if (canMove && playerController != null) transform.position = Vector3.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
+        if (playerController._playerHealth.currentHealth <= 0 && canMove) 
+        {
+            canMove = false;
+            DeactivateFollowState();
+        }
     }
 
     public void OnHit()
     {
-        _enemyRigidbody.velocity = Vector2.zero;
         heading = player.position - transform.position;
         direction = heading / heading.magnitude;
         _enemyRigidbody.AddForce(-direction * 100, ForceMode2D.Impulse);
 
         canMove = false;
         Invoke(nameof(MoveReset), .45f);
+
+        DeactivateFollowState();
     }
 
     void MoveReset()
     {
         _enemyRigidbody.velocity = Vector2.zero;
         canMove = true;
+
+        DeactivateFollowState();
+    }
+
+    void DeactivateFollowState()
+    {
+        if (_aIPath != null) _aIPath.canMove = canMove;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -99,14 +99,8 @@ public class PlayerController : MonoBehaviour
             dashTrail.Play();
 
             Invoke(nameof(DashReset), dashCooldown);
-            Invoke(nameof(DamageReset), dashCooldown / 3);
+            Invoke(nameof(DamageReset), .3f);
             StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
-        }
-
-        // Dev tool
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
