@@ -4,23 +4,16 @@ using UnityEngine;
 
 public class DoorsManager : MonoBehaviour
 {
-    Animator _animator;
+    public Animator animatorUp;
+    public Animator animatorDown;
+    public Animator animatorRight;
+    public Animator animatorLeft;
 
-    private void Awake()
+    public void OpenDoor(string doorStateParameter, bool doorState)
     {
-        _animator = GetComponent<Animator>();
-    }
-
-    public void OpenDoors(bool[] doorsState)
-    {
-        for (int i = 0; i < doorsState.Length; i++)
-        {
-            if (!doorsState[i])
-            {
-                continue;
-            }
-
-            _animator.SetBool(_animator.GetParameter(i).name, doorsState[i]);
-        }
+        animatorUp.SetBool(doorStateParameter, doorState);
+        animatorDown.SetBool(doorStateParameter, doorState);
+        animatorRight.SetBool(doorStateParameter, doorState);
+        animatorLeft.SetBool(doorStateParameter, doorState);
     }
 }

@@ -10,11 +10,7 @@ public class FadeBlack : MonoBehaviour
 
     private void Awake()
     {
-        // Makes this script a static variable
-        if (instance == null)
-        {
-            instance = this;
-        }
+        instance = this;
 
         _animator = GetComponent<Animator>();
     }
@@ -33,5 +29,14 @@ public class FadeBlack : MonoBehaviour
         Time.timeScale = 1;
 
         _animator.Play("FadeFromBlack");
+    }
+
+    public IEnumerator FadeInFadeOut(float delay)
+    {
+        FadeToBlack();
+
+        yield return new WaitForSeconds(delay);
+
+        FadeFromBlack();
     }
 }

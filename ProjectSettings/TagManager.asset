@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Orb
   - Target
+  - Room
   layers:
   - Default
   - TransparentFX

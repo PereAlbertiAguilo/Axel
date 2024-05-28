@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsTrigger
-    path: DoorLeft
+    path: 
     classID: 61
     script: {fileID: 0}
     flags: 0
@@ -59,7 +59,7 @@ AnimationClip:
     - time: 0.25
       value: {fileID: 428427479, guid: 5670a7b40e3b8ce4a988d1ec76c0fa02, type: 3}
     attribute: m_Sprite
-    path: DoorLeft
+    path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -71,7 +71,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 883602968
+      path: 0
       attribute: 2693561734
       script: {fileID: 0}
       typeID: 61
@@ -80,7 +80,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 883602968
+      path: 0
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -140,7 +140,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsTrigger
-    path: DoorLeft
+    path: 
     classID: 61
     script: {fileID: 0}
     flags: 0

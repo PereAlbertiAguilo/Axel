@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     AIPath _aIPath;
     AIDestinationSetter _destinationSetter;
     SpriteRenderer _spriteRenderer;
+    EnemiesManager emiesManager;
 
     private void Awake()
     {
@@ -33,7 +34,8 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        EnemiesManager.instance.AddToEnemiesList(gameObject);
+        emiesManager = transform.parent.GetComponent<EnemiesManager>();
+        emiesManager.AddToEnemiesList(gameObject);
 
         playerController = FindAnyObjectByType<PlayerController>();
         player = playerController.transform;
@@ -98,6 +100,6 @@ public class EnemyController : MonoBehaviour
 
     private void OnDisable()
     {
-        EnemiesManager.instance.RemoveFromEnemiesList(gameObject);
+        emiesManager.RemoveFromEnemiesList(gameObject);
     }
 }

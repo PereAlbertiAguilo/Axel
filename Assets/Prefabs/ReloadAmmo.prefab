@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 1390197424512096408}
   - component: {fileID: 8225497768168852435}
   m_Layer: 4
-  m_Name: SavePoint
+  m_Name: ReloadAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

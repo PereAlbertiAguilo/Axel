@@ -8,13 +8,6 @@ public class EnemiesManager : MonoBehaviour
 
     public bool enemiesAlive = true;
 
-    public static EnemiesManager instance;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
     public List<GameObject> FillEnemiesList()
     {
         enemiesList.Clear();
