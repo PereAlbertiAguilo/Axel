@@ -26,6 +26,7 @@ public class FadeBlack : MonoBehaviour
     // Activates a fede FROM black aimation
     public void FadeFromBlack()
     {
+        print("fade from black");
         Time.timeScale = 1;
 
         _animator.Play("FadeFromBlack");

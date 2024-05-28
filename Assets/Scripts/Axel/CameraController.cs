@@ -36,12 +36,13 @@ public class CameraController : MonoBehaviour
         playerController.canMove = false;
 
         //FadeBlack.instance.StartCoroutine(FadeBlack.instance.FadeInFadeOut(.1f));
-        FadeBlack.instance.FadeFromBlack();
 
         gridGraph.center = newPos.position;
         gridGraph.Scan();
 
         await Task.Delay(150);
+
+        FadeBlack.instance.FadeFromBlack();
 
         playerController.canMove = true;
 

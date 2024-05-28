@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         if (knockBack)
         {
             _playerRigidbody.velocity = Vector2.zero;
-            _playerRigidbody.AddForce((dir != null ? dir : Vector2.zero) * 1000, ForceMode2D.Impulse);
+            _playerRigidbody.AddForce((dir != null ? dir : Vector2.zero) * 1200, ForceMode2D.Impulse);
         }
 
         for (int i = 0; i < colorShiftTimes; i++)
