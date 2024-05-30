@@ -6,7 +6,7 @@ public class FadeBlack : MonoBehaviour
 {
     public static FadeBlack instance;
 
-    Animator _animator;
+    public Animator _animator;
 
     private void Awake()
     {

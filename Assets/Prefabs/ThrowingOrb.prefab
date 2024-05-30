@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onDestroyInstance: {fileID: 942157634890792352, guid: 7850e2dd35813c44eb4ff68cc6543168, type: 3}
+  interactionType: 1
 --- !u!114 &4271045969464213892
 MonoBehaviour:
   m_ObjectHideFlags: 0

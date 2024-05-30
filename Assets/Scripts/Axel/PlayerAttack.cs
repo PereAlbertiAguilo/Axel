@@ -54,8 +54,8 @@ public class PlayerAttack : MonoBehaviour
 
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            playerController.speed /= 2f;
-            playerController._playerAnimator.speed /= 2f;
+            playerController.speed /= 1.5f;
+            playerController._playerAnimator.speed /= 1.5f;
 
             _orbAnimator.SetTrigger("Attack");
         }
@@ -97,8 +97,8 @@ public class PlayerAttack : MonoBehaviour
 
         attack = false;
 
-        playerController.speed *= 2f;
-        playerController._playerAnimator.speed *= 2f;
+        playerController.speed *= 1.5f;
+        playerController._playerAnimator.speed *= 1.5f;
 
         transform.localScale = new Vector3(transform.localScale.x == 1 ? -1 : 1, transform.localScale.y, transform.localScale.z);
     }

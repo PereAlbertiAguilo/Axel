@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    float offset = 5f;
+    float offset = 4f;
 
     public enum DoorDir 
     { 
@@ -16,7 +16,7 @@ public class Door : MonoBehaviour
 
     public DoorDir dorDirection;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -38,6 +38,7 @@ public class Door : MonoBehaviour
                     break;
             }
 
+            FadeBlack.instance.FadeFromBlack();
         }
     }
 }

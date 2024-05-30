@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using System.Linq;
 
 public class RoomManager : MonoBehaviour
 {
-    [SerializeField] GameObject roomPrefab;
+    [SerializeField] string roomsFolderPath;
+    [SerializeField] int roomsAmount = 1;
+    [SerializeField] GameObject initialRoomPrefab;
 
     [Space]
 
@@ -27,8 +29,12 @@ public class RoomManager : MonoBehaviour
 
     bool generationComplete = false;
 
+    public List<int> usedNumbers = new List<int>();
+
     private void Start()
     {
+        Time.timeScale = 0;
+
         roomGrid = new int[gridSize.x, gridSize.y];
         roomQueue = new Queue<Vector2Int>();
 
@@ -73,19 +79,13 @@ public class RoomManager : MonoBehaviour
         {
             Debug.Log("Generation Complete: " + roomCount + " rooms created");
             generationComplete = true;
+            Time.timeScale = 1;
 
-            int reloadRoom = Random.Range(0, rooms.Count);
+            int reloadRoom = Random.Range(1, rooms.Count - 1);
 
             for (int i = 1; i < rooms.Count; i++)
             {
                 rooms[i].GetComponent<Room>().enemiesManager.gameObject.SetActive(false);
-
-                if (i == reloadRoom)
-                {
-                    continue;
-                }
-
-                Destroy(rooms[i].GetComponentInChildren<SavePoint>().gameObject);
             }
         }
     }
@@ -95,12 +95,11 @@ public class RoomManager : MonoBehaviour
         roomQueue.Enqueue(roomIndex);
         roomGrid[roomIndex.x, roomIndex.y] = 1;
         roomCount++;
-        GameObject initialRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        GameObject initialRoom = Instantiate(initialRoomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        initialRoom.transform.parent = transform;   
         initialRoom.name = $"Room_{roomCount}";
         initialRoom.GetComponent<Room>().roomIndex = roomIndex;
         rooms.Add(initialRoom);
-        Destroy(initialRoom.GetComponentInChildren<SavePoint>().gameObject);
-        //OpenDoors(initialRoom, roomIndex.x, roomIndex.y);
     }
 
     bool TryGenerateRoom(Vector2Int roomIndex)
@@ -111,11 +110,16 @@ public class RoomManager : MonoBehaviour
         if(AdjacentRoomsCount(roomIndex) > 1) return false;
         if (roomGrid[roomIndex.x, roomIndex.y] != 0) return false;
 
-
         roomQueue.Enqueue(roomIndex);
         roomGrid[roomIndex.x, roomIndex.y] = 1;
         roomCount++;
-        GameObject newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+
+        usedNumbers.Add(RandomNumberNoRepeat.GetRandomNumberFromList(usedNumbers, 0, roomsAmount));
+
+        GameObject randomLoad = Resources.Load($"{roomsFolderPath}/{usedNumbers.Last()}", typeof(GameObject)) as GameObject;
+        GameObject newRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+
+        newRoom.transform.parent = transform; 
         newRoom.name = $"Room_{roomCount}";
         newRoom.GetComponent<Room>().roomIndex = roomIndex;
         rooms.Add(newRoom);

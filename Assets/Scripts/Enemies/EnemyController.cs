@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
         CancelInvoke();
 
         canMove = false;
-        Invoke(nameof(MoveReset), .12f);
+        Invoke(nameof(MoveReset), .2f);
 
         DeactivateFollowState();
 
@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour
         direction = heading / heading.magnitude;
 
         _enemyRigidbody.velocity = Vector2.zero;
-        _enemyRigidbody.AddForce(-direction * 1500, ForceMode2D.Impulse);
+        _enemyRigidbody.AddForce(-direction * 800, ForceMode2D.Impulse);
     }
 
     void MoveReset()

@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     public static CameraController instance;
 
     public CinemachineVirtualCamera virtualCamera;
+    public GameObject miniMapCam;
 
     AstarPath astar;
     Pathfinding.AstarData data;
@@ -35,14 +36,12 @@ public class CameraController : MonoBehaviour
     {
         playerController.canMove = false;
 
-        //FadeBlack.instance.StartCoroutine(FadeBlack.instance.FadeInFadeOut(.1f));
+        miniMapCam.transform.position = new Vector3(newPos.position.x, newPos.position.y, miniMapCam.transform.position.z);
 
         gridGraph.center = newPos.position;
         gridGraph.Scan();
 
         await Task.Delay(150);
-
-        FadeBlack.instance.FadeFromBlack();
 
         playerController.canMove = true;
 

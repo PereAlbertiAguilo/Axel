@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8431705358645408745}
   - component: {fileID: 3008833142576113991}
-  m_Layer: 5
-  m_Name: Circle
+  m_Layer: 7
+  m_Name: MinimapPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 12}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 8, y: 8, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7605515950816524103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -72,9 +72,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
-  m_Sprite: {fileID: 1093379961, guid: 66b35563190f7fe419bba3686cbeb067, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: 12
+  m_Sprite: {fileID: -113466694, guid: 66b35563190f7fe419bba3686cbeb067, type: 3}
+  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -191,8 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 9000
-  dashSpeed: 2500
-  dashCooldown: 0.5
+  dashSpeed: 4000
+  dashCooldown: 0.4
   dashTrail: {fileID: 2637903016991198213}
   horizontalInput: 0
   verticalInput: 0
@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 7159533120188371589}
   - component: {fileID: 6054262999984954177}
   - component: {fileID: 2281612145825284002}
+  - component: {fileID: 8161375699165172368}
   - component: {fileID: 565374587079127128}
   - component: {fileID: 6001647550453652354}
   m_Layer: 0
@@ -434,6 +435,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
+--- !u!114 &8161375699165172368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7020429121938117111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d82c62ad34ec14409cc0fcc2ed3d71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDestroyInstance: {fileID: 942157634890792352, guid: 7850e2dd35813c44eb4ff68cc6543168, type: 3}
+  interactionType: 0
 --- !u!60 &565374587079127128
 PolygonCollider2D:
   m_ObjectHideFlags: 0

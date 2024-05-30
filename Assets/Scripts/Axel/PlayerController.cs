@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,7 +30,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Animator _playerAnimator;
 
     Vector2 moveDir;
-    Vector2 startVelocity;
 
     Rigidbody2D _playerRigidbody;
     SpriteRenderer _playerSpriteRenderer;
@@ -40,6 +40,12 @@ public class PlayerController : MonoBehaviour
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        verticalInput = -1;
+        verticalView = -1;
     }
 
     private void Update()
@@ -93,11 +99,12 @@ public class PlayerController : MonoBehaviour
         {
             canDash = 2;
 
-            startVelocity = _playerRigidbody.velocity;
+            _playerRigidbody.velocity = Vector2.zero;
 
             dashTrail.Play();
 
             Invoke(nameof(DashReset), dashCooldown);
+            Invoke(nameof(MoveReset), dashCooldown / 2.5f);
             StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
         }
     }
@@ -117,6 +124,8 @@ public class PlayerController : MonoBehaviour
                 Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
 
                 _playerRigidbody.AddForce(viewDir * dashSpeed, ForceMode2D.Impulse);
+
+                canMove = false;
             }
         }
     }
@@ -143,6 +152,11 @@ public class PlayerController : MonoBehaviour
     void DashReset()
     {
         canDash = 0;
+    }
+
+    void MoveReset()
+    {
+        canMove = true;
     }
 
     public void DamageReset()

@@ -63,15 +63,10 @@ public class PauseMenu : MonoBehaviour
     {
         foreach(Animator a in FindObjectsOfType<Animator>())
         {
+            if (a == FadeBlack.instance._animator) continue;
             a.enabled = activate;
         }
     }
-
-    // Restarts the game
-    //public void Restart()
-    //{
-    //    StartCoroutine(ChangeSceneDelay(SceneManager.GetActiveScene().name));
-    //}
 
     // Goes to the main menu
     public void Menu()
@@ -82,9 +77,10 @@ public class PauseMenu : MonoBehaviour
     // Adds a delay before changeing the scene
     IEnumerator ChangeSceneDelay(string sceneName)
     {
+        Time.timeScale = 1;
         FadeBlack.instance.FadeToBlack();
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.42f);
 
         SceneManager.LoadScene(sceneName);
     }
