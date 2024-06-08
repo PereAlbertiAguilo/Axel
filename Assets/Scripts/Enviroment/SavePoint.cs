@@ -28,7 +28,7 @@ public class SavePoint : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && playerAttack.currentAmmo < playerAttack.maxAmmo && 
+        if (UserInput.instance.interactInput && playerAttack.currentAmmo < playerAttack.maxAmmo && 
             (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2) && canInteract)
         {
             playerAttack.CancelInvoke();

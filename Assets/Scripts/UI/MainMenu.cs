@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] Transform cameraFollow;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ChangeCurrentSelectedElement(FindObjectsOfType<Button>()[FindObjectsOfType<Button>().Length - 1].gameObject);
+        }
+    }
 
     public void Play(string sceneName)
     {
         StartCoroutine(ChangeSceneDelay(sceneName));
     }
 
-    public void Settings()
+    public void SettingsAndKeyBinds(float offset)
     {
-        cameraFollow.position = Vector2.down * 18f;
+        cameraFollow.position = Vector2.down * offset;
     }
 
     public void Exit()
@@ -26,12 +35,12 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void Return()
+    public void Return(float offset)
     {
-        cameraFollow.position = Vector2.zero;
+        cameraFollow.position = Vector2.up * offset;
     }
 
-    void ChangeCurrentSelectedElement(GameObject selected)
+    public void ChangeCurrentSelectedElement(GameObject selected)
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(selected);

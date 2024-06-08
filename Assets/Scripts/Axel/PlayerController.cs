@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,9 +16,12 @@ public class PlayerController : MonoBehaviour
 
     [Space]
 
+    [SerializeField] Color damagedColor;
+
+    [Space]
+
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
-    
     [HideInInspector] public float horizontalView;
     [HideInInspector] public float verticalView;
 
@@ -28,11 +31,15 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public Health _playerHealth;
     [HideInInspector] public Animator _playerAnimator;
+    public EnemiesManager currentEnemiesManager;
 
     Vector2 moveDir;
 
     Rigidbody2D _playerRigidbody;
     SpriteRenderer _playerSpriteRenderer;
+
+    public VolumeProfile volumeProfile;
+    Vignette vignette;
 
     private void Awake()
     {
@@ -46,22 +53,32 @@ public class PlayerController : MonoBehaviour
     {
         verticalInput = -1;
         verticalView = -1;
+
+        Vignette tmp;
+        if (volumeProfile.TryGet(out tmp)) vignette = tmp;
     }
 
     private void Update()
     {
+        if (!canMove) return;
+
         PlayerInput();
     }
 
     private void FixedUpdate()
     {
+        if (!canMove) return;
+
         PlayerMovement();
     }
 
     void PlayerInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = UserInput.instance.moveInput.x;
+        verticalInput = UserInput.instance.moveInput.y;
+
+        horizontalInput = Mathf.Abs(horizontalInput) <= .3f ? 0 : horizontalInput;
+        verticalInput = Mathf.Abs(verticalInput) <= .3f ? 0 : verticalInput;
 
         if (horizontalInput != 0)
         {
@@ -95,7 +112,7 @@ public class PlayerController : MonoBehaviour
             _playerAnimator.SetBool("IsRunning", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && canDash == 0)
+        if (UserInput.instance.dashInput && canDash == 0)
         {
             canDash = 2;
 
@@ -105,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
             Invoke(nameof(DashReset), dashCooldown);
             Invoke(nameof(MoveReset), dashCooldown / 2.5f);
-            StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
+            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
         }
     }
 
@@ -113,39 +130,58 @@ public class PlayerController : MonoBehaviour
     {
         moveDir = new Vector2(horizontalInput, verticalInput);
 
-        if (canMove)
+        _playerRigidbody.AddForce(moveDir * speed, ForceMode2D.Force);
+
+        if (canDash == 2)
         {
-            _playerRigidbody.AddForce(moveDir * speed, ForceMode2D.Force);
+            canDash = 1;
 
-            if (canDash == 2)
-            {
-                canDash = 1;
+            Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
 
-                Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
+            _playerRigidbody.AddForce(viewDir * dashSpeed, ForceMode2D.Impulse);
 
-                _playerRigidbody.AddForce(viewDir * dashSpeed, ForceMode2D.Impulse);
-
-                canMove = false;
-            }
+            canMove = false;
         }
     }
 
-    public IEnumerator IFrameAnimation(float duration, int colorShiftTimes, bool knockBack, Vector2 dir)
+    public void DamagedIFrames(float duration, bool knockBack, Vector2 dir)
     {
-        _playerSpriteRenderer.color = Color.red;
+        canTakeDamage = false;
+        Invoke(nameof(DamageReset), duration);
+
+        StartCoroutine(DamagedAnimation(duration));
 
         if (knockBack)
         {
             _playerRigidbody.velocity = Vector2.zero;
             _playerRigidbody.AddForce((dir != null ? dir : Vector2.zero) * 1200, ForceMode2D.Impulse);
         }
+    }
 
-        for (int i = 0; i < colorShiftTimes; i++)
+    public IEnumerator DamagedAnimation(float duration)
+    {
+        Color vignetteStartColor = vignette.color.value;
+        float currentTime = 0;
+
+        while (currentTime < duration)
         {
-            yield return new WaitForSeconds(duration / colorShiftTimes);
-            _playerSpriteRenderer.color = _playerSpriteRenderer.color == Color.white ? Color.red : Color.white;
+            currentTime += Time.deltaTime;
+
+            if (currentTime < duration / 2f)
+            {
+                vignette.color.value = Color.Lerp(vignette.color.value, damagedColor, Mathf.PingPong(Time.time, currentTime));
+                _playerSpriteRenderer.color = Color.Lerp(_playerSpriteRenderer.color, damagedColor, Mathf.PingPong(Time.time, currentTime));
+            }
+            else
+            {
+                vignette.color.value = Color.Lerp(vignette.color.value, vignetteStartColor, Mathf.PingPong(Time.time, currentTime / 2));
+                _playerSpriteRenderer.color = Color.Lerp(_playerSpriteRenderer.color, Color.white, Mathf.PingPong(Time.time, currentTime / 2));
+            }
+
+            yield return null;
         }
 
+        vignette.color.value = vignetteStartColor;
         _playerSpriteRenderer.color = Color.white;
     }
 
@@ -159,6 +195,14 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
+    public void MoveUpdate(bool active)
+    {
+        canMove = active;
+        _playerAnimator.SetBool("IsRunning", active);
+        horizontalInput = 0;
+        verticalInput = 0;
+    }
+
     public void DamageReset()
     {
         canTakeDamage = true;
@@ -167,6 +211,6 @@ public class PlayerController : MonoBehaviour
     public void Death()
     {
         StopAllCoroutines();
-        Destroy(gameObject);
+        canMove = false;
     }
 }

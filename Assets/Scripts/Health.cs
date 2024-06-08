@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
 
             if(healthBar != null )
             {
-                healthBar.UpdateHealthBar(currentHealth, maxHealth);
+                healthBar.StartCoroutine(healthBar.UpdateHealthBar(currentHealth, maxHealth, .4f));
             }
 
             if (currentHealth <= 0)

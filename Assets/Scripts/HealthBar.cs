@@ -7,8 +7,22 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] Image healthBar;
 
-    public void UpdateHealthBar(float currentHealth, float maxHealth)
+    public IEnumerator UpdateHealthBar(float currentHealth, float maxHealth, float duration)
     {
-        healthBar.fillAmount = currentHealth / maxHealth;
+        float startFillAmount = healthBar.fillAmount;
+        float endFillAmount = currentHealth / maxHealth;
+
+        float currentTime = 0;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+
+            healthBar.fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, currentTime / duration);
+
+            yield return null;
+        }
+
+        healthBar.fillAmount = endFillAmount;
     }
 }

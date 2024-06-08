@@ -77,16 +77,27 @@ public class RoomManager : MonoBehaviour
         }
         else if (!generationComplete)
         {
-            Debug.Log("Generation Complete: " + roomCount + " rooms created");
-            generationComplete = true;
-            Time.timeScale = 1;
-
             int reloadRoom = Random.Range(1, rooms.Count - 1);
 
             for (int i = 1; i < rooms.Count; i++)
             {
                 rooms[i].GetComponent<Room>().enemiesManager.gameObject.SetActive(false);
             }
+
+            Room lastRoom = rooms.Last().GetComponent<Room>();
+            Vector2 lastRoomPos = rooms.Last().transform.position;
+            Room newLastRoom = Instantiate(initialRoomPrefab, lastRoomPos, Quaternion.identity).GetComponent<Room>();
+
+            newLastRoom.openUp = lastRoom.openUp;
+            newLastRoom.openDown = lastRoom.openDown;
+            newLastRoom.openLeft = lastRoom.openLeft;
+            newLastRoom.openRight = lastRoom.openRight;
+
+            Destroy(rooms.Last());
+
+            generationComplete = true;
+            Time.timeScale = 1;
+            Debug.Log("Generation Complete: " + roomCount + " rooms created");
         }
     }
 

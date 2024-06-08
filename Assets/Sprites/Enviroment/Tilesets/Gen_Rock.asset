@@ -359,13 +359,14 @@ MonoBehaviour:
     m_Sprites:
     - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
     - {fileID: 684072460, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
+    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
     - {fileID: 596703583, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
+    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
     - {fileID: -1969350666, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
+    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
     - {fileID: 532245271, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
+    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
     - {fileID: 1524044248, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
-    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
-    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
-    - {fileID: -1512462871, guid: cf58fc3e541ca7a46904865f9c622337, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1

@@ -12,9 +12,16 @@ public class PauseMenu : MonoBehaviour
 
     bool paused = false;
 
+    PlayerController playerController;
+
+    private void Awake()
+    {
+        playerController = FindObjectOfType<PlayerController>();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (UserInput.instance.pauseInput)
         {
             if (paused)
             {
@@ -26,6 +33,11 @@ public class PauseMenu : MonoBehaviour
                 pauseButton.onClick.Invoke();
                 Pause();
             }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            ChangeCurrentSelectedElement(null);
         }
 
         // Dev tool
@@ -42,6 +54,7 @@ public class PauseMenu : MonoBehaviour
         UpdateAnimators(true);
         paused = false;
         Time.timeScale = 1;
+        playerController.canMove = true;
     }
 
     // Pauses the game
@@ -50,7 +63,8 @@ public class PauseMenu : MonoBehaviour
         ChangeCurrentSelectedElement(null);
         UpdateAnimators(false);
         paused = true;
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
+        playerController.canMove = false;
     }
 
     void ChangeCurrentSelectedElement(GameObject selected)

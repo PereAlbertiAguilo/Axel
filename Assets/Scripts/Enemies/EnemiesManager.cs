@@ -36,4 +36,50 @@ public class EnemiesManager : MonoBehaviour
             enemiesAlive = false;
         }
     }
+
+    public EnemyController GetClosestEnemyToPoint(Vector2 point)
+    {
+        int closestToPoint = 0;
+        float currentDist = 999;
+
+        if(enemiesList.Count <= 0)
+        {
+            return null;
+        }
+
+        for (int i = 0; i < enemiesList.Count; i++)
+        {
+            if (currentDist > Vector2.Distance(enemiesList[i].transform.position, point))
+            {
+                currentDist = Vector2.Distance(enemiesList[i].transform.position, point);
+                closestToPoint = i;
+            }
+        }
+
+        return enemiesList[closestToPoint].GetComponent<EnemyController>();
+    }
+
+    public EnemyController GetNearNextEnemy(EnemyController enemy, int dir)
+    {
+        EnemyController newEnemy = null;
+
+        for (int i = 0; i < enemiesList.Count; i++)
+        {
+            if (enemy.gameObject == enemiesList[i])
+            {
+                if(dir > 0 && i + dir < enemiesList.Count)
+                {
+                    print("+1");
+                    newEnemy = enemiesList[i + dir].GetComponent<EnemyController>();
+                }
+                if (dir < 0 && i - dir > 0)
+                {
+                    print("-1");
+                    newEnemy = enemiesList[i - dir].GetComponent<EnemyController>();
+                }
+            }
+        }
+
+        return newEnemy;
+    }
 }

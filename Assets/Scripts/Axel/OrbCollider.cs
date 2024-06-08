@@ -40,7 +40,7 @@ public class OrbCollider : MonoBehaviour
             }
             if (_enemyController != null)
             {
-                //_enemyController.OnHit();
+                _enemyController.OnHit();
             }
         }
     }

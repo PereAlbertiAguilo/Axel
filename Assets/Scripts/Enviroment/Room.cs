@@ -51,11 +51,14 @@ public class Room : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            PlayerController playerController = collision.GetComponent<PlayerController>();
+
             UpdateMiniMapDoors();
 
             CameraController.instance.ChangeCameraPos(transform);
             miniMapDisplay.SetActive(true);
             enemiesManager.gameObject.SetActive(true);
+            playerController.currentEnemiesManager = enemiesManager;
         }
     }
 }
