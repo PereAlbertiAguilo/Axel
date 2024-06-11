@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class EnemyController : MonoBehaviour
 {
-    bool canMove = true;
+    public bool canMove = true;
 
     Vector3 heading;
     Vector3 direction;
@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     AIPath _aIPath;
     AIDestinationSetter _destinationSetter;
     SpriteRenderer _spriteRenderer;
-    EnemiesManager emiesManager;
+    EnemiesManager enemiesManager;
 
     private void Awake()
     {
@@ -32,8 +32,8 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        emiesManager = transform.parent.GetComponent<EnemiesManager>();
-        emiesManager.AddToEnemiesList(gameObject);
+        enemiesManager = transform.parent.GetComponent<EnemiesManager>();
+        if (enemiesManager != null) enemiesManager.AddToEnemiesList(gameObject);
 
         playerController = FindAnyObjectByType<PlayerController>();
         player = playerController.transform;
@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (playerController._playerHealth.currentHealth <= 0 && canMove) 
+        if (playerController._playerHealth.currentHealth <= 0) 
         {
             canMove = false;
             DeactivateFollowState();
@@ -52,18 +52,21 @@ public class EnemyController : MonoBehaviour
 
     public void OnHit()
     {
-        CancelInvoke();
+        if (canMove)
+        {
+            CancelInvoke();
 
-        canMove = false;
-        Invoke(nameof(MoveReset), .2f);
+            canMove = false;
+            Invoke(nameof(MoveReset), .2f);
 
-        DeactivateFollowState();
+            DeactivateFollowState();
 
-        heading = player.position - transform.position;
-        direction = heading / heading.magnitude;
+            heading = player.position - transform.position;
+            direction = heading / heading.magnitude;
 
-        _enemyRigidbody.velocity = Vector2.zero;
-        _enemyRigidbody.AddForce(-direction * 800, ForceMode2D.Impulse);
+            _enemyRigidbody.velocity = Vector2.zero;
+            _enemyRigidbody.AddForce(-direction * 800, ForceMode2D.Impulse);
+        }
     }
 
     void MoveReset()
@@ -74,7 +77,7 @@ public class EnemyController : MonoBehaviour
         DeactivateFollowState();
     }
 
-    void DeactivateFollowState()
+    public void DeactivateFollowState()
     {
         if (_aIPath != null) _aIPath.canMove = canMove;
     }
@@ -94,6 +97,6 @@ public class EnemyController : MonoBehaviour
 
     private void OnDisable()
     {
-        emiesManager.RemoveFromEnemiesList(gameObject);
+        enemiesManager.RemoveFromEnemiesList(gameObject);
     }
 }

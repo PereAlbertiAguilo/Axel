@@ -47,6 +47,14 @@ public class Room : MonoBehaviour
         miniMapLeft.SetActive(openLeft);
     }
 
+    void CloseCurrentDoorsWithDelay()
+    {
+        if (openUp) doorsManager.animatorUp.Play("CloseDoors");
+        if (openDown) doorsManager.animatorDown.Play("CloseDoors");
+        if (openRight) doorsManager.animatorRight.Play("CloseDoors");
+        if (openLeft) doorsManager.animatorLeft.Play("CloseDoors");
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -55,9 +63,12 @@ public class Room : MonoBehaviour
 
             UpdateMiniMapDoors();
 
+            if (enemiesManager.enemiesAlive) Invoke(nameof(CloseCurrentDoorsWithDelay), .5f);
+
             CameraController.instance.ChangeCameraPos(transform);
             miniMapDisplay.SetActive(true);
             enemiesManager.gameObject.SetActive(true);
+            playerController._playerRigidbody.velocity = Vector2.zero;
             playerController.currentEnemiesManager = enemiesManager;
         }
     }

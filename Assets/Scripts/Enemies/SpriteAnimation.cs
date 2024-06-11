@@ -9,13 +9,11 @@ public class SpriteAnimation : MonoBehaviour
 
     SpriteRenderer _spriteRenderer;
 
-    bool nextIteration = false;
+    public bool nextIteration = true;
 
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        Invoke(nameof(StartAnimation), Random.value * 2);
     }
 
     private void Update()
@@ -35,11 +33,6 @@ public class SpriteAnimation : MonoBehaviour
             yield return new WaitForSeconds(animationDuration / sprites.Length);
         }
 
-        nextIteration = true;
-    }
-
-    void StartAnimation()
-    {
         nextIteration = true;
     }
 }

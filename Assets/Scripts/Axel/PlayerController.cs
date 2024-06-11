@@ -31,11 +31,11 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public Health _playerHealth;
     [HideInInspector] public Animator _playerAnimator;
-    public EnemiesManager currentEnemiesManager;
+    [HideInInspector] public EnemiesManager currentEnemiesManager;
+    [HideInInspector] public Rigidbody2D _playerRigidbody;
 
     Vector2 moveDir;
 
-    Rigidbody2D _playerRigidbody;
     SpriteRenderer _playerSpriteRenderer;
 
     public VolumeProfile volumeProfile;

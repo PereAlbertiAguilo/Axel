@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class UserInput : MonoBehaviour
@@ -16,6 +17,9 @@ public class UserInput : MonoBehaviour
     public bool dashInput { get; private set; }
     public bool pauseInput { get; private set; }
     public bool interactInput { get; private set; }
+    public bool statsInputDown { get; private set; }
+    public bool statsInputUp { get; private set; }
+
     public bool isKeyboard;
 
     PlayerInput _playerInput;
@@ -28,6 +32,7 @@ public class UserInput : MonoBehaviour
     InputAction _dashAction;
     InputAction _pauseAction;
     InputAction _interactAction;
+    InputAction _statsAction;
 
     private void Awake()
     {
@@ -56,6 +61,7 @@ public class UserInput : MonoBehaviour
         _dashAction = _playerInput.actions["Dash"];
         _pauseAction = _playerInput.actions["Pause"];
         _interactAction = _playerInput.actions["Interact"];
+        _statsAction = _playerInput.actions["Stats"];
     }
 
     void UpdateInputs()
@@ -70,5 +76,7 @@ public class UserInput : MonoBehaviour
         interactInput = _interactAction.WasPressedThisFrame();
         isKeyboard = Input.GetJoystickNames()[0].Length < 1;
         moveInput = _moveAction.ReadValue<Vector2>();
+        statsInputDown = _statsAction.WasPressedThisFrame();
+        statsInputUp = _statsAction.WasReleasedThisFrame();
     }
 }

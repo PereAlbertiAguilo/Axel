@@ -3,17 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// TODO: Stats manager 
+// TODO: Time / StageName
+// TODO: Link stats to UI
+// TODO: Money / Cins / Currency / whatever... (brainstorming)
+
+
 public class HudManager : MonoBehaviour
 {
     [SerializeField] Image dashCooldownImage;
-    [SerializeField] GameObject ammoBar;
+    public GameObject ammoBar;
     [SerializeField] GameObject ammoPoint;
+
+    [SerializeField] GameObject topBar;
+    [SerializeField] GameObject statsPanel;
 
     public static HudManager instance;
 
     private void Awake()
     {
         if(instance == null) instance = this;
+    }
+
+    private void Update()
+    {
+        if (!PauseMenu.instance.paused)
+        {
+            if (UserInput.instance.statsInputDown)
+            {
+                topBar.SetActive(false);
+                statsPanel.SetActive(true);
+            }
+            else if (UserInput.instance.statsInputUp)
+            {
+                topBar.SetActive(true);
+                statsPanel.SetActive(false);
+            }
+        }
     }
 
     public IEnumerator DashCooldownBar(float dashCooldown)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    float offset = 5f;
+    float offset = 4f;
 
     public enum DoorDir 
     { 

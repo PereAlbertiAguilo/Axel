@@ -10,12 +10,16 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Button pauseButton;
     [SerializeField] Button resumeButton;
 
-    bool paused = false;
+    public bool paused = false;
 
     PlayerController playerController;
 
+    public static PauseMenu instance;
+
     private void Awake()
     {
+        instance = this;
+
         playerController = FindObjectOfType<PlayerController>();
     }
 
@@ -25,8 +29,11 @@ public class PauseMenu : MonoBehaviour
         {
             if (paused)
             {
-                resumeButton.onClick.Invoke();
-                Resume();
+                if (transform.GetChild(0).gameObject.activeInHierarchy)
+                {
+                    resumeButton.onClick.Invoke();
+                    Resume();
+                }
             }
             else
             {
@@ -35,9 +42,15 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null && paused)
         {
-            ChangeCurrentSelectedElement(null);
+            ChangeCurrentSelectedElement(FindObjectsOfType<Button>()[FindObjectsOfType<Button>().Length - 1].gameObject);
+        }
+
+        if (!Application.isPlaying && !paused)
+        {
+            pauseButton.onClick.Invoke();
+            Pause();
         }
 
         // Dev tool
@@ -52,22 +65,22 @@ public class PauseMenu : MonoBehaviour
     {
         ChangeCurrentSelectedElement(null);
         UpdateAnimators(true);
+        UpdateEnemies(true);
         paused = false;
-        Time.timeScale = 1;
         playerController.canMove = true;
     }
 
     // Pauses the game
     public void Pause()
     {
-        ChangeCurrentSelectedElement(null);
+        ChangeCurrentSelectedElement(resumeButton.gameObject);
         UpdateAnimators(false);
+        UpdateEnemies(false);
         paused = true;
-        //Time.timeScale = 0;
         playerController.canMove = false;
     }
 
-    void ChangeCurrentSelectedElement(GameObject selected)
+    public void ChangeCurrentSelectedElement(GameObject selected)
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(selected);
@@ -75,10 +88,25 @@ public class PauseMenu : MonoBehaviour
 
     void UpdateAnimators(bool activate)
     {
-        foreach(Animator a in FindObjectsOfType<Animator>())
+        foreach(Animator a in FindObjectsOfType<Animator>(true))
         {
             if (a == FadeBlack.instance._animator) continue;
             a.enabled = activate;
+        }
+        foreach(SpriteAnimation a in FindObjectsOfType<SpriteAnimation>())
+        {
+            if(!activate) a.StopAllCoroutines();
+            a.enabled = activate;
+            a.nextIteration = activate;
+        }
+    }
+
+    void UpdateEnemies(bool activate)
+    {
+        foreach (EnemyController e in FindObjectsOfType<EnemyController>())
+        {
+            e.canMove = activate;
+            e.DeactivateFollowState();
         }
     }
 

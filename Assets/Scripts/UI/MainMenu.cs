@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null)
         {
             ChangeCurrentSelectedElement(FindObjectsOfType<Button>()[FindObjectsOfType<Button>().Length - 1].gameObject);
         }

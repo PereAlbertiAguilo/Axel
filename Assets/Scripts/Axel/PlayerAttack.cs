@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] GameObject[] attackIcons;
+
     public int attackIndex = 0;
 
     public bool attack = false;
@@ -59,6 +61,13 @@ public class PlayerAttack : MonoBehaviour
             {
                 attackIndex = 0;
             }
+
+            for (int i = 0; i < attackIcons.Length; i++)
+            {
+                attackIcons[i].SetActive(i == attackIndex);
+            }
+
+            HudManager.instance.ammoBar.SetActive(attackIndex == 1);
         }
 
         if (UserInput.instance.attackInput)
@@ -85,10 +94,10 @@ public class PlayerAttack : MonoBehaviour
     }
 
     float horizontalInput;
-    float verticalInput;
+    float verticalInput = -1;
 
     float horizontalView = 0;
-    float verticalView = 0;
+    float verticalView = -1;
 
     bool lockOnEnemy = false;
 
@@ -116,7 +125,7 @@ public class PlayerAttack : MonoBehaviour
         Vector3 pos = Vector2.down;
 
         EnemiesManager currentEnemiesManager = playerController.currentEnemiesManager;
-        EnemyController lockedEnemy = currentEnemiesManager.GetClosestEnemyToPoint(transform.position);
+        EnemyController lockedEnemy = currentEnemiesManager != null ? currentEnemiesManager.GetClosestEnemyToPoint(transform.position) : null;
 
         if (UserInput.instance.lockEnemyInput)
         {
@@ -130,7 +139,7 @@ public class PlayerAttack : MonoBehaviour
             lockEnemyDisplay.SetActive(true);
             lockEnemyDisplay.transform.position = pos;
         }
-        else
+        else 
         {
             lockEnemyDisplay.SetActive(false);
 
@@ -147,7 +156,7 @@ public class PlayerAttack : MonoBehaviour
         Vector3 direction = pos - transform.position;
         var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * 15);
+        if (!attack) transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * 15);
     }
 
     IEnumerator AttackReset()

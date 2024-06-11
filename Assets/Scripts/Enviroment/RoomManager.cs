@@ -5,9 +5,15 @@ using System.Linq;
 
 public class RoomManager : MonoBehaviour
 {
-    [SerializeField] string roomsFolderPath;
-    [SerializeField] int roomsAmount = 1;
-    [SerializeField] GameObject initialRoomPrefab;
+    [SerializeField] string initialRoomsFolderName;
+    [SerializeField] string normalRoomsFolderName;
+    [SerializeField] string lastRoomsFolderName;
+
+    [Space]
+
+    [SerializeField] int initialRoomsAmount = 1;
+    [SerializeField] int normalRoomsAmount = 1;
+    [SerializeField] int lastRoomsAmount = 1;
 
     [Space]
 
@@ -29,7 +35,9 @@ public class RoomManager : MonoBehaviour
 
     bool generationComplete = false;
 
-    public List<int> usedNumbers = new List<int>();
+    List<int> initialUsedRoomsIndex = new List<int>();
+    List<int> normalUsedRoomsIndex = new List<int>();
+    List<int> lastUsedRoomsIndex = new List<int>();
 
     private void Start()
     {
@@ -77,23 +85,12 @@ public class RoomManager : MonoBehaviour
         }
         else if (!generationComplete)
         {
-            int reloadRoom = Random.Range(1, rooms.Count - 1);
-
             for (int i = 1; i < rooms.Count; i++)
             {
                 rooms[i].GetComponent<Room>().enemiesManager.gameObject.SetActive(false);
             }
 
-            Room lastRoom = rooms.Last().GetComponent<Room>();
-            Vector2 lastRoomPos = rooms.Last().transform.position;
-            Room newLastRoom = Instantiate(initialRoomPrefab, lastRoomPos, Quaternion.identity).GetComponent<Room>();
-
-            newLastRoom.openUp = lastRoom.openUp;
-            newLastRoom.openDown = lastRoom.openDown;
-            newLastRoom.openLeft = lastRoom.openLeft;
-            newLastRoom.openRight = lastRoom.openRight;
-
-            Destroy(rooms.Last());
+            GenerateLastRoom();
 
             generationComplete = true;
             Time.timeScale = 1;
@@ -106,7 +103,12 @@ public class RoomManager : MonoBehaviour
         roomQueue.Enqueue(roomIndex);
         roomGrid[roomIndex.x, roomIndex.y] = 1;
         roomCount++;
-        GameObject initialRoom = Instantiate(initialRoomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+
+        initialUsedRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(initialUsedRoomsIndex, 0, initialRoomsAmount));
+
+        GameObject randomLoad = Resources.Load($"{initialRoomsFolderName}/{initialUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
+        GameObject initialRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+
         initialRoom.transform.parent = transform;   
         initialRoom.name = $"Room_{roomCount}";
         initialRoom.GetComponent<Room>().roomIndex = roomIndex;
@@ -125,9 +127,9 @@ public class RoomManager : MonoBehaviour
         roomGrid[roomIndex.x, roomIndex.y] = 1;
         roomCount++;
 
-        usedNumbers.Add(RandomNumberNoRepeat.GetRandomNumberFromList(usedNumbers, 0, roomsAmount));
+        normalUsedRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(normalUsedRoomsIndex, 0, normalRoomsAmount));
 
-        GameObject randomLoad = Resources.Load($"{roomsFolderPath}/{usedNumbers.Last()}", typeof(GameObject)) as GameObject;
+        GameObject randomLoad = Resources.Load($"{normalRoomsFolderName}/{normalUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
         GameObject newRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
 
         newRoom.transform.parent = transform; 
@@ -137,6 +139,24 @@ public class RoomManager : MonoBehaviour
         OpenDoors(newRoom, roomIndex.x, roomIndex.y);
 
         return true;
+    }
+
+    void GenerateLastRoom()
+    {
+        Room lastRoom = rooms.Last().GetComponent<Room>();
+        Vector2 lastRoomPos = rooms.Last().transform.position;
+
+        lastUsedRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(lastUsedRoomsIndex, 0, lastRoomsAmount));
+
+        GameObject randomLoad = Resources.Load($"{lastRoomsFolderName}/{lastUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
+        Room newLastRoom = Instantiate(randomLoad, lastRoomPos, Quaternion.identity).GetComponent<Room>();
+
+        newLastRoom.openUp = lastRoom.openUp;
+        newLastRoom.openDown = lastRoom.openDown;
+        newLastRoom.openLeft = lastRoom.openLeft;
+        newLastRoom.openRight = lastRoom.openRight;
+
+        Destroy(rooms.Last());
     }
 
     void RegenerateRooms()
