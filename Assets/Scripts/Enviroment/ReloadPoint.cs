@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SavePoint : MonoBehaviour
+public class ReloadPoint : MonoBehaviour
 {
     [SerializeField] float waitTime = 1f;
 
@@ -28,16 +28,21 @@ public class SavePoint : MonoBehaviour
 
     private void Update()
     {
-        if (UserInput.instance.interactInput && playerAttack.currentAmmo < playerAttack.maxAmmo && 
+        if (UserInput.instance.interactInput && playerAttack.currentAmmo < StatsManager.instance.maxAmmo && 
             (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2) && canInteract)
         {
+            float currentAmmo = playerAttack.currentAmmo;
+
             playerAttack.CancelInvoke();
             playerAttack.throwAttack = 1;
             playerAttack.Invoke(nameof(playerAttack.ThrowAttackReset), playerAttack.throwAttackReloadTime);
 
             HudManager.instance.StartCoroutine(HudManager.instance.ReloadAmmoBar
-                (playerAttack.maxAmmo - playerAttack.currentAmmo, playerAttack.throwAttackReloadTime));
-            playerAttack.currentAmmo = playerAttack.maxAmmo;
+                (StatsManager.instance.maxAmmo - playerAttack.currentAmmo, playerAttack.throwAttackReloadTime));
+            
+            playerAttack.currentAmmo = StatsManager.instance.maxAmmo;
+
+            if (currentAmmo <= 0) playerAttack.UpdateHUD();
         }
     }
 

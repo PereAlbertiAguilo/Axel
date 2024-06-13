@@ -14,9 +14,7 @@ public class PlayerAttack : MonoBehaviour
     [Space]
 
     public int throwAttack = 0;
-    public int maxAmmo = 6;
     [HideInInspector] public int currentAmmo = 6;
-    public float throwAttackDelay = 1f;
     public float throwAttackReloadTime = .5f;
     [SerializeField] GameObject throwingAttack;
 
@@ -36,8 +34,10 @@ public class PlayerAttack : MonoBehaviour
     {
         playerController = FindAnyObjectByType<PlayerController>();
 
-        HudManager.instance.FillAmmoBar(maxAmmo);
-        currentAmmo = maxAmmo;
+        _damageManager.damage = StatsManager.instance.normalDamage;
+
+        HudManager.instance.FillAmmoBar(StatsManager.instance.maxAmmo);
+        currentAmmo = StatsManager.instance.maxAmmo;
     }
 
     private void Update()
@@ -53,21 +53,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (UserInput.instance.changeAttackInput)
         {
-            if(attackIndex < 1)
-            {
-                attackIndex++;
-            }
-            else
-            {
-                attackIndex = 0;
-            }
-
-            for (int i = 0; i < attackIcons.Length; i++)
-            {
-                attackIcons[i].SetActive(i == attackIndex);
-            }
-
-            HudManager.instance.ammoBar.SetActive(attackIndex == 1);
+            UpdateHUD();
         }
 
         if (UserInput.instance.attackInput)
@@ -80,16 +66,26 @@ public class PlayerAttack : MonoBehaviour
                 _orbAnimator.SetTrigger("Attack");
             }
 
-            if(throwAttack == 0 && currentAmmo > 0 && attackIndex == 1)
+            if(throwAttack == 0 && attackIndex == 1)
             {
-                HudManager.instance.UpdateAmmoBar(currentAmmo);
-                currentAmmo--;
+                if(currentAmmo > 0)
+                {
+                    HudManager.instance.UpdateAmmoBar(currentAmmo);
+                    currentAmmo--;
 
-                throwAttack = 2;
-                Invoke(nameof(ThrowAttackReset), throwAttackDelay);
+                    throwAttack = 2;
+                    Invoke(nameof(ThrowAttackReset), StatsManager.instance.throwAttackFireRate);
 
-                Instantiate(throwingAttack, transform.position, transform.rotation);
+                    DamageManager throwDamage = Instantiate(throwingAttack, transform.position, transform.rotation).GetComponent<DamageManager>();
+                    throwDamage.damage = StatsManager.instance.throwDamage;
+
+                    if(currentAmmo <= 0)
+                    {
+                        UpdateHUD();
+                    }
+                }
             }
+            
         }
     }
 
@@ -157,6 +153,32 @@ public class PlayerAttack : MonoBehaviour
         var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
 
         if (!attack) transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * 15);
+    }
+
+    public void UpdateHUD()
+    {
+        if (currentAmmo > 0)
+        {
+            if (attackIndex < 1)
+            {
+                attackIndex++;
+            }
+            else
+            {
+                attackIndex = 0;
+            }
+        }
+        else
+        {
+            attackIndex = 0;
+        }
+
+        for (int i = 0; i < attackIcons.Length; i++)
+        {
+            attackIcons[i].SetActive(i == attackIndex);
+        }
+
+        HudManager.instance.ammoBar.SetActive(attackIndex == 1);
     }
 
     IEnumerator AttackReset()

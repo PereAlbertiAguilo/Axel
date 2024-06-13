@@ -6,12 +6,6 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 15.00f;
-
-    [Space]
-
-    public float dashSpeed = 15.00f;
-    public float dashCooldown = 1f;
     [SerializeField] ParticleSystem dashTrail;
 
     [Space]
@@ -48,7 +42,7 @@ public class PlayerController : MonoBehaviour
         _playerAnimator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
-
+    
     private void Start()
     {
         verticalInput = -1;
@@ -116,13 +110,11 @@ public class PlayerController : MonoBehaviour
         {
             canDash = 2;
 
-            _playerRigidbody.velocity = Vector2.zero;
-
             dashTrail.Play();
 
-            Invoke(nameof(DashReset), dashCooldown);
-            Invoke(nameof(MoveReset), dashCooldown / 2.5f);
-            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
+            Invoke(nameof(DashReset), StatsManager.instance.dashCooldown);
+            Invoke(nameof(MoveReset), StatsManager.instance.dashCooldown / 2.5f);
+            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(StatsManager.instance.dashCooldown));
         }
     }
 
@@ -130,15 +122,17 @@ public class PlayerController : MonoBehaviour
     {
         moveDir = new Vector2(horizontalInput, verticalInput);
 
-        _playerRigidbody.AddForce(moveDir * speed, ForceMode2D.Force);
+        _playerRigidbody.AddForce(moveDir * StatsManager.instance.speed, ForceMode2D.Force);
 
         if (canDash == 2)
         {
+            _playerRigidbody.velocity = Vector2.zero;
+
             canDash = 1;
 
             Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
 
-            _playerRigidbody.AddForce(viewDir * dashSpeed, ForceMode2D.Impulse);
+            _playerRigidbody.AddForce(viewDir * StatsManager.instance.dashSpeed, ForceMode2D.Impulse);
 
             canMove = false;
         }
