@@ -80,7 +80,7 @@ public class RoomManager : MonoBehaviour
         }
         else if (roomCount < minRooms)
         {
-            Debug.Log("Number of rooms was les than the minimum amount (" + minRooms + ") Trying Again");
+            //Debug.Log("Number of rooms was les than the minimum amount (" + minRooms + ") Trying Again");
             RegenerateRooms();
         }
         else if (!generationComplete)
@@ -94,7 +94,7 @@ public class RoomManager : MonoBehaviour
 
             generationComplete = true;
             Time.timeScale = 1;
-            Debug.Log("Generation Complete: " + roomCount + " rooms created");
+            //Debug.Log("Generation Complete: " + roomCount + " rooms created");
         }
     }
 

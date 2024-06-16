@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour
 
         Vignette tmp;
         if (volumeProfile.TryGet(out tmp)) vignette = tmp;
+
+        _playerHealth.maxHealth = StatsManager.instance.stats[0].statValue;
+        _playerHealth.currentHealth = StatsManager.instance.stats[0].statValue;
     }
 
     private void Update()
@@ -112,9 +115,9 @@ public class PlayerController : MonoBehaviour
 
             dashTrail.Play();
 
-            Invoke(nameof(DashReset), StatsManager.instance.dashCooldown);
-            Invoke(nameof(MoveReset), StatsManager.instance.dashCooldown / 2.5f);
-            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(StatsManager.instance.dashCooldown));
+            Invoke(nameof(DashReset), StatsManager.instance.stats[7].statValue);
+            Invoke(nameof(MoveReset), .16f);
+            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(StatsManager.instance.stats[7].statValue));
         }
     }
 
@@ -122,7 +125,7 @@ public class PlayerController : MonoBehaviour
     {
         moveDir = new Vector2(horizontalInput, verticalInput);
 
-        _playerRigidbody.AddForce(moveDir * StatsManager.instance.speed, ForceMode2D.Force);
+        _playerRigidbody.AddForce(moveDir * StatsManager.instance.stats[5].statValue * 100, ForceMode2D.Force);
 
         if (canDash == 2)
         {
@@ -132,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
             Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
 
-            _playerRigidbody.AddForce(viewDir * StatsManager.instance.dashSpeed, ForceMode2D.Impulse);
+            _playerRigidbody.AddForce(viewDir * StatsManager.instance.stats[6].statValue * 100, ForceMode2D.Impulse);
 
             canMove = false;
         }

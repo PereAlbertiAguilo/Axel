@@ -28,7 +28,7 @@ public class ReloadPoint : MonoBehaviour
 
     private void Update()
     {
-        if (UserInput.instance.interactInput && playerAttack.currentAmmo < StatsManager.instance.maxAmmo && 
+        if (UserInput.instance.interactInput && playerAttack.currentAmmo < (int)StatsManager.instance.stats[4].statValue && 
             (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2) && canInteract)
         {
             float currentAmmo = playerAttack.currentAmmo;
@@ -38,9 +38,9 @@ public class ReloadPoint : MonoBehaviour
             playerAttack.Invoke(nameof(playerAttack.ThrowAttackReset), playerAttack.throwAttackReloadTime);
 
             HudManager.instance.StartCoroutine(HudManager.instance.ReloadAmmoBar
-                (StatsManager.instance.maxAmmo - playerAttack.currentAmmo, playerAttack.throwAttackReloadTime));
+                ((int)StatsManager.instance.stats[4].statValue - playerAttack.currentAmmo, playerAttack.throwAttackReloadTime));
             
-            playerAttack.currentAmmo = StatsManager.instance.maxAmmo;
+            playerAttack.currentAmmo = (int)StatsManager.instance.stats[4].statValue;
 
             if (currentAmmo <= 0) playerAttack.UpdateHUD();
         }

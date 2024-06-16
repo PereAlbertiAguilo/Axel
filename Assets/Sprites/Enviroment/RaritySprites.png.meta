@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4fa02abe67abc814fa63637e04e6afc9
+guid: d58302f9c1ef2ad4aa755818c246f427
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icons_0
+      name: RaritySprites_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a0748257f2f1e34faba3716e045a0d4
-      internalID: -667108513
+      spriteID: 55f3339f66c548e408ebdee008abc6c8
+      internalID: -1899404849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_1
+      name: RaritySprites_1
       rect:
         serializedVersion: 2
         x: 16
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fcb987bba8104c4a9340667abcd3f1e
-      internalID: -368476673
+      spriteID: 66ded4b50d3459f42b51765941d19d13
+      internalID: 1581217616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_2
+      name: RaritySprites_2
       rect:
         serializedVersion: 2
         x: 32
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2eab391d71635c34fac02a4dfa37df4a
-      internalID: 1172788161
+      spriteID: 2c15acf7e077c7d498ac43295120f112
+      internalID: 1502366076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_3
+      name: RaritySprites_3
       rect:
         serializedVersion: 2
         x: 48
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 614ab92f19c752e498d6b5898c847a0c
-      internalID: -1996246006
+      spriteID: d27ed6750ebdb4944ab1f84b2bc60082
+      internalID: 696328271
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_4
+      name: RaritySprites_4
       rect:
         serializedVersion: 2
         x: 0
@@ -208,113 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce54036fba1aeb74a91df0efd2f54f52
-      internalID: -1361479664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_5
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a1a19bf22580a244384b5549472d57b3
-      internalID: 744481619
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_6
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 17392ecb31895414d9df8959c24028ad
-      internalID: -765882653
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_7
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8455714efedb98342ad5eb1e0d635a84
-      internalID: -667761099
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_8
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 840338e658750bf4fbfcefdb6dc0e9d8
-      internalID: -2126824408
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icons_9
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b33ae702585a5942a01e9d694c93010
-      internalID: 500095644
+      spriteID: 9ab32d8dc97bc8248adf1025a718c922
+      internalID: 201825475
       vertices: []
       indices: 
       edges: []
@@ -330,16 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Icons_0: -667108513
-      Icons_1: -368476673
-      Icons_2: 1172788161
-      Icons_3: -1996246006
-      Icons_4: -1361479664
-      Icons_5: 744481619
-      Icons_6: -765882653
-      Icons_7: -667761099
-      Icons_8: -2126824408
-      Icons_9: 500095644
+      RaritySprites_0: -1899404849
+      RaritySprites_1: 1581217616
+      RaritySprites_2: 1502366076
+      RaritySprites_3: 696328271
+      RaritySprites_4: 201825475
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

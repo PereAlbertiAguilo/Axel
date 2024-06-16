@@ -13,6 +13,8 @@ public class DamagePopUp : MonoBehaviour
         if (collision.CompareTag("Orb"))
         {
             DamageManager damageManager = collision.GetComponent<DamageManager>();
+            if (damageManager.isPlayer) damageManager.UpdateDamage(collision.GetComponent<PlayerAttack>() != null ?
+                StatsManager.instance.stats[1].statValue : StatsManager.instance.stats[3].statValue);
 
             GameObject text = Instantiate(popUpText, transform.position, Quaternion.identity).transform.GetChild(0).gameObject;
             text.GetComponent<TextMeshProUGUI>().text = "" + damageManager.damage;

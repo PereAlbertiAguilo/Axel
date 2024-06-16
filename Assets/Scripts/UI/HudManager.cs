@@ -70,6 +70,14 @@ public class HudManager : MonoBehaviour
         }
     }
 
+    public void EmptyAmmoBar()
+    {
+        foreach (Transform ammoPoint in ammoBar.transform)
+        {
+            Destroy(ammoPoint.gameObject);
+        }
+    }
+
     public IEnumerator ReloadAmmoBar(int ammoToFill, float reloadTime)
     {
         for (int i = 0; i < ammoToFill; i++)
@@ -91,15 +99,15 @@ public class HudManager : MonoBehaviour
     {
         StatsManager sm = StatsManager.instance;
 
-        string[] stats = { sm.normalDamage.ToString(), sm.throwDamage.ToString(), sm.throwAttackFireRate.ToString(), 
-            sm.maxAmmo.ToString(), (sm.speed / 100).ToString(), (sm.dashSpeed / 100).ToString(), sm.dashCooldown.ToString(), };
-
         int index = 0;
 
         foreach (Transform stat in statsLayout.transform)
         {
-            stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = stats[index].ToString();
+            stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = "" + sm.stats[index].statValue;
             index++;
         }
+
+        EmptyAmmoBar();
+        FillAmmoBar((int)sm.stats[4].statValue);
     }
 }

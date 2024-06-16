@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,26 +8,25 @@ public class StatsManager : MonoBehaviour
 {
     public static StatsManager instance;
 
-    public float normalDamage;
-    public float throwDamage;
-    public float throwAttackFireRate;
-    public int maxAmmo;
-    public float speed;
-    public float dashSpeed;
-    public float dashCooldown;
+    [Serializable]
+    public class Stat
+    {
+        public string name;
+        public float statValue;
+        public float statMultiliper;
+    }
 
-    //[Space]
-
-    //public float normalDamageMax;
-    //public float throwDamageMax;
-    //public float throwAttackFireRateMax;
-    //public int maxAmmoMax;
-    //public float speedMax;
-    //public float dashSpeedMax;
-    //public float dashCooldownMax;
+    public List<Stat> stats = new List<Stat>();
 
     private void Awake()
     {
         instance = this;
+    }
+
+    public void UpgradeStat(string statName, float statChange)
+    {
+        stats.Find(x => x.name == statName).statValue += statChange;
+
+        HudManager.instance.UpdateStatsUI();
     }
 }
