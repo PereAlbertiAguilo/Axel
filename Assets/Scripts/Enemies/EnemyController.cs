@@ -6,6 +6,7 @@ using Pathfinding;
 public class EnemyController : MonoBehaviour
 {
     public bool canMove = true;
+    public bool canBeKnockbacked = true;
 
     Vector3 heading;
     Vector3 direction;
@@ -52,7 +53,7 @@ public class EnemyController : MonoBehaviour
 
     public void OnHit()
     {
-        if (canMove)
+        if (canMove && canBeKnockbacked)
         {
             CancelInvoke();
 

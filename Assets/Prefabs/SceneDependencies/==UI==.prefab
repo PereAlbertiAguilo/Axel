@@ -2798,6 +2798,7 @@ MonoBehaviour:
   topBar: {fileID: 7154931489924098306}
   statsPanel: {fileID: 4600201539619674361}
   statsLayout: {fileID: 7569301275176609310}
+  timerText: {fileID: 3333540430051144521}
 --- !u!1 &8269193001615433428
 GameObject:
   m_ObjectHideFlags: 0

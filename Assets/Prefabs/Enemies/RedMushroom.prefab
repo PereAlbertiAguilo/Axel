@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
+  canBeKnockbacked: 0
   _enemyRigidbody: {fileID: 0}
 --- !u!114 &770944641760347416
 MonoBehaviour:
@@ -390,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40b79d803f737c47b91d4d469728f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 1
   damage: 10
 --- !u!114 &8003988938522265231
 MonoBehaviour:

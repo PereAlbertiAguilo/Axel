@@ -30,7 +30,7 @@ public class StatUpgrader : MonoBehaviour
 
     bool canInteract = false;
 
-    public int randomStat = 0;
+    public int randomStatIndex = 0;
 
     public enum Rarity
     {
@@ -50,12 +50,22 @@ public class StatUpgrader : MonoBehaviour
     {
         rarity = SetRarity();
 
-        randomStat = Random.Range(-1, 7) + 1;
+        randomStatIndex = Random.Range(-1, 7) + 1;
 
-        statImage.sprite = statsSprites[randomStat];
-        statAmountText.text = "" + GetStatToUpgrade(randomStat) +  ": " + StatsManager.instance.stats[randomStat].statValue;
-        statAmountText.text += (StatsManager.instance.stats[randomStat].statMultiliper > 0 ? " + " : " - ") + 
-            Mathf.Abs(StatsManager.instance.stats[randomStat].statMultiliper) * rarityMuliplier;
+        statImage.sprite = statsSprites[randomStatIndex];
+        statAmountText.text = "" + StatFromIndex(randomStatIndex).name +  ":\n" + StatFromIndex(randomStatIndex).statValue;
+        statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiliper > 0 ? " + " : " - ") +
+            Mathf.Abs(StatFromIndex(randomStatIndex).statMultiliper) * rarityMuliplier + "</color>";
+    }
+
+    private void Update()
+    {
+        if (UserInput.instance.interactInput && canInteract && !hasInteracted)
+        {
+            hasInteracted = true;
+            StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex).name, StatFromIndex(randomStatIndex).statMultiliper * rarityMuliplier);
+            _animator.SetBool("IsInRange", false);
+        }
     }
 
     Rarity SetRarity()
@@ -96,23 +106,14 @@ public class StatUpgrader : MonoBehaviour
         return rarity;
     }
 
-    private void Update()
+    StatsManager.Stat StatFromIndex(int statIndex)
     {
-        if(UserInput.instance.interactInput && canInteract && !hasInteracted)
-        {
-            hasInteracted = true;
-            StatsManager.instance.UpgradeStat(GetStatToUpgrade(randomStat), StatsManager.instance.stats[randomStat].statMultiliper * rarityMuliplier);
-        }
-    }
-
-    string GetStatToUpgrade(int statIndex)
-    {
-        return StatsManager.instance.stats[statIndex].name;
+        return StatsManager.instance.stats[statIndex];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !hasInteracted)
         {
             canInteract = true;
             _animator.SetBool("IsInRange", true);
@@ -121,7 +122,7 @@ public class StatUpgrader : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !hasInteracted)
         {
             canInteract = false;
             _animator.SetBool("IsInRange", false);

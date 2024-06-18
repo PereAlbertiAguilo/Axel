@@ -19,6 +19,9 @@ public class HudManager : MonoBehaviour
     [SerializeField] GameObject statsPanel;
     [SerializeField] GameObject statsLayout;
 
+    [SerializeField] TextMeshProUGUI timerText;
+    float timer = 0;
+
     public static HudManager instance;
 
     private void Awake()
@@ -46,6 +49,18 @@ public class HudManager : MonoBehaviour
                 statsPanel.SetActive(false);
             }
         }
+
+        if (!PauseMenu.instance.paused) Timer();
+    }
+
+    void Timer()
+    {
+        timer += Time.deltaTime;
+
+        int minutes = Mathf.FloorToInt(timer / 60F);
+        int seconds = Mathf.FloorToInt(timer - minutes * 60);
+
+        timerText.text = string.Format("{00:0}:{1:00}", minutes, seconds);
     }
 
     public IEnumerator DashCooldownBar(float dashCooldown)
