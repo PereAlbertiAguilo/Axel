@@ -7,6 +7,12 @@ public class Health : MonoBehaviour
 {
     public float maxHealth;
     public float currentHealth;
+    [HideInInspector] public HealthBar healthBar;
+
+    private void Awake()
+    {
+        healthBar = GetComponent<HealthBar>();
+    }
 
     private void OnEnable()
     {
@@ -18,8 +24,6 @@ public class Health : MonoBehaviour
         if(currentHealth > 0)
         {
             currentHealth -= healthRemoved;
-
-            HealthBar healthBar = GetComponent<HealthBar>();
 
             if(healthBar != null )
             {

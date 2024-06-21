@@ -12,6 +12,7 @@ public class UserInput : MonoBehaviour
     public Vector2 viewInput {  get; private set; }
     public bool viewInputDown {  get; private set; }
     public bool attackInput { get; private set; }
+    public bool attackInputUp { get; private set; }
     public bool changeAttackInput { get; private set; }
     public bool lockEnemyInput { get; private set; }
     public bool dashInput { get; private set; }
@@ -69,6 +70,7 @@ public class UserInput : MonoBehaviour
         viewInput = _viewAction.ReadValue<Vector2>();
         viewInputDown = _viewAction.WasPressedThisFrame();
         attackInput = _attackAction.IsPressed();
+        attackInputUp = _attackAction.WasReleasedThisFrame();
         changeAttackInput = _changeAttackAction.WasPressedThisFrame();
         lockEnemyInput = _lockEnemyAction.WasPressedThisFrame();
         dashInput = _dashAction.WasPressedThisFrame();

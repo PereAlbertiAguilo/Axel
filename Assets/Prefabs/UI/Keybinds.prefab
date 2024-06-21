@@ -145,7 +145,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4293381863
-  m_fontColor: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -348,8 +348,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293381863
-  m_fontColor: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4293381863
-  m_fontColor: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -941,7 +941,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4290290872
-  m_fontColor: {r: 0.72156864, g: 0.6431373, b: 0.72156864, a: 1}
+  m_fontColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1265,8 +1265,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293381863
-  m_fontColor: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.72156864, g: 0.6431373, b: 0.72156864, a: 1}
+  m_Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1791,8 +1791,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293381863
-  m_fontColor: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1926,7 +1926,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4293381863
-  m_fontColor: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2078,7 +2078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.9058824, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2153,6 +2153,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: Q
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -2331,6 +2335,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Mayusculas
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -2504,6 +2512,10 @@ PrefabInstance:
       propertyPath: m_text
       value: LT
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -2676,6 +2688,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -2854,6 +2870,10 @@ PrefabInstance:
       propertyPath: m_text
       value: W/A/S/D
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -3027,6 +3047,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Barra Espaciadora
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -3199,6 +3223,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: RB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -3377,6 +3405,10 @@ PrefabInstance:
       propertyPath: m_text
       value: A
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -3553,6 +3585,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: Flecha Arriba/Flecha Izquierda/Flecha Abajo/Flecha Derecha
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -3743,6 +3779,10 @@ PrefabInstance:
       propertyPath: m_text
       value: LS Up/LS Left/LS Down/LS Right
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -3920,6 +3960,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Esc
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -4092,6 +4136,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: RT
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -4270,6 +4318,10 @@ PrefabInstance:
       propertyPath: m_text
       value: F
       objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
+      objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
@@ -4442,6 +4494,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: Right Stick Press
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -4623,6 +4679,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: RS Up/RS Left/RS Down/RS Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -4812,6 +4872,10 @@ PrefabInstance:
     - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
       value: E
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277978483109281494, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291611852
       objectReference: {fileID: 0}
     - target: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp

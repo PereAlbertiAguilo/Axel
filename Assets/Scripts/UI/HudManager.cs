@@ -20,9 +20,12 @@ public class HudManager : MonoBehaviour
     [SerializeField] GameObject statsLayout;
 
     [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI currentHealthText;
     float timer = 0;
 
     public static HudManager instance;
+    PlayerAttack playerAttack;
+    PlayerController playerController;
 
     private void Awake()
     {
@@ -31,6 +34,9 @@ public class HudManager : MonoBehaviour
 
     private void Start()
     {
+        playerAttack = FindObjectOfType<PlayerAttack>();
+        playerController = FindObjectOfType<PlayerController>();
+
         UpdateStatsUI();
     }
 
@@ -51,6 +57,8 @@ public class HudManager : MonoBehaviour
         }
 
         if (!PauseMenu.instance.paused) Timer();
+
+        currentHealthText.text = "" + playerController._playerHealth.currentHealth;
     }
 
     void Timer()
@@ -77,11 +85,12 @@ public class HudManager : MonoBehaviour
         dashCooldownImage.fillAmount = 1;
     }
 
-    public void FillAmmoBar(int ammoToFill)
+    public IEnumerator FillAmmoBar(int ammoToFill, float reloadTime)
     {
         for (int i = 0; i < ammoToFill; i++)
         {
             Instantiate(ammoPoint, ammoBar.transform);
+            yield return new WaitForSeconds((reloadTime / ammoToFill) / 2);
         }
     }
 
@@ -90,15 +99,6 @@ public class HudManager : MonoBehaviour
         foreach (Transform ammoPoint in ammoBar.transform)
         {
             Destroy(ammoPoint.gameObject);
-        }
-    }
-
-    public IEnumerator ReloadAmmoBar(int ammoToFill, float reloadTime)
-    {
-        for (int i = 0; i < ammoToFill; i++)
-        {
-            Instantiate(ammoPoint, ammoBar.transform);
-            yield return new WaitForSeconds((reloadTime / ammoToFill) / 2);
         }
     }
 
@@ -123,6 +123,6 @@ public class HudManager : MonoBehaviour
         }
 
         EmptyAmmoBar();
-        FillAmmoBar((int)sm.stats[4].statValue);
+        StartCoroutine(FillAmmoBar(Mathf.CeilToInt(StatsManager.instance.stats[4].statValue), playerAttack.throwAttackReloadTime));
     }
 }

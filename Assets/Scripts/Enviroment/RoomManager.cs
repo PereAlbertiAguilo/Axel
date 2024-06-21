@@ -5,15 +5,15 @@ using System.Linq;
 
 public class RoomManager : MonoBehaviour
 {
-    [SerializeField] string initialRoomsFolderName;
-    [SerializeField] string normalRoomsFolderName;
-    [SerializeField] string lastRoomsFolderName;
+    [SerializeField] string floorFolderName;
+    [SerializeField] string treasureRoomsFolderName;
 
     [Space]
 
     [SerializeField] int initialRoomsAmount = 1;
     [SerializeField] int normalRoomsAmount = 1;
     [SerializeField] int lastRoomsAmount = 1;
+    [SerializeField] int treasureRoomsAmount = 1;
 
     [Space]
 
@@ -24,6 +24,8 @@ public class RoomManager : MonoBehaviour
 
     public Vector2Int roomSize = new Vector2Int();
     public Vector2Int gridSize = new Vector2Int();
+
+    [Space]
 
     public List<GameObject> rooms = new List<GameObject>();
 
@@ -38,6 +40,9 @@ public class RoomManager : MonoBehaviour
     List<int> initialUsedRoomsIndex = new List<int>();
     List<int> normalUsedRoomsIndex = new List<int>();
     List<int> lastUsedRoomsIndex = new List<int>();
+    List<int> specialRoomsIndex = new List<int>();
+
+    int treasuereRoomIndex;
 
     private void Start()
     {
@@ -80,21 +85,17 @@ public class RoomManager : MonoBehaviour
         }
         else if (roomCount < minRooms)
         {
-            //Debug.Log("Number of rooms was les than the minimum amount (" + minRooms + ") Trying Again");
             RegenerateRooms();
         }
         else if (!generationComplete)
         {
-            for (int i = 1; i < rooms.Count; i++)
-            {
-                rooms[i].GetComponent<Room>().enemiesManager.gameObject.SetActive(false);
-            }
-
             GenerateLastRoom();
+
+            treasuereRoomIndex = Random.Range(1, roomCount - 2);
+            GenerateSpecialRoom(rooms[treasuereRoomIndex].GetComponent<Room>(), treasureRoomsFolderName);
 
             generationComplete = true;
             Time.timeScale = 1;
-            //Debug.Log("Generation Complete: " + roomCount + " rooms created");
         }
     }
 
@@ -106,13 +107,14 @@ public class RoomManager : MonoBehaviour
 
         initialUsedRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(initialUsedRoomsIndex, 0, initialRoomsAmount));
 
-        GameObject randomLoad = Resources.Load($"{initialRoomsFolderName}/{initialUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
-        GameObject initialRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        GameObject randomLoad = Resources.Load($"{floorFolderName}/Initial/{initialUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
+        Room initialRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity).GetComponent<Room>();
 
         initialRoom.transform.parent = transform;   
-        initialRoom.name = $"Room_{roomCount}";
-        initialRoom.GetComponent<Room>().roomIndex = roomIndex;
-        rooms.Add(initialRoom);
+        initialRoom.gameObject.name = $"Room_Initial_{roomCount}";
+        initialRoom.roomGridPos = roomIndex;
+        initialRoom.roomIndex = roomCount - 1;
+        rooms.Add(initialRoom.gameObject);
     }
 
     bool TryGenerateRoom(Vector2Int roomIndex)
@@ -129,13 +131,14 @@ public class RoomManager : MonoBehaviour
 
         normalUsedRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(normalUsedRoomsIndex, 0, normalRoomsAmount));
 
-        GameObject randomLoad = Resources.Load($"{normalRoomsFolderName}/{normalUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
-        GameObject newRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        GameObject randomLoad = Resources.Load($"{floorFolderName}/Normal/{normalUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
+        Room newRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity).GetComponent<Room>();
 
         newRoom.transform.parent = transform; 
-        newRoom.name = $"Room_{roomCount}";
-        newRoom.GetComponent<Room>().roomIndex = roomIndex;
-        rooms.Add(newRoom);
+        newRoom.gameObject.name = $"Room_{roomCount}";
+        newRoom.roomGridPos = roomIndex;
+        newRoom.roomIndex = roomCount - 1;
+        rooms.Add(newRoom.gameObject);
         OpenDoors(newRoom, roomIndex.x, roomIndex.y);
 
         return true;
@@ -148,15 +151,38 @@ public class RoomManager : MonoBehaviour
 
         lastUsedRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(lastUsedRoomsIndex, 0, lastRoomsAmount));
 
-        GameObject randomLoad = Resources.Load($"{lastRoomsFolderName}/{lastUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
+        GameObject randomLoad = Resources.Load($"{floorFolderName}/Last/{lastUsedRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
         Room newLastRoom = Instantiate(randomLoad, lastRoomPos, Quaternion.identity).GetComponent<Room>();
 
-        newLastRoom.openUp = lastRoom.openUp;
-        newLastRoom.openDown = lastRoom.openDown;
-        newLastRoom.openLeft = lastRoom.openLeft;
-        newLastRoom.openRight = lastRoom.openRight;
+        newLastRoom.transform.parent = transform;
+        newLastRoom.gameObject.name = $"Room_Last_{roomCount}";
+        newLastRoom.roomGridPos = lastRoom.roomGridPos;
+        newLastRoom.roomIndex = lastRoom.roomIndex;
+        OpenDoors(newLastRoom, lastRoom.roomGridPos.x, lastRoom.roomGridPos.y);
 
         Destroy(rooms.Last());
+
+        rooms.Add(newLastRoom.gameObject);
+    }
+
+    void GenerateSpecialRoom(Room replacedRoom, string specialRoomTypeFolderName)
+    {
+        Vector2 replacedRoomPos = replacedRoom.transform.position;
+
+        specialRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(specialRoomsIndex, 0, treasureRoomsAmount));
+
+        GameObject randomLoad = Resources.Load($"{floorFolderName}/Special/{specialRoomTypeFolderName}/{specialRoomsIndex.Last()}", typeof(GameObject)) as GameObject;
+        Room especialRoom = Instantiate(randomLoad, replacedRoomPos, Quaternion.identity).GetComponent<Room>();
+
+        especialRoom.transform.parent = transform;
+        especialRoom.gameObject.name = $"Room_Special_{roomCount}";
+        especialRoom.roomGridPos = replacedRoom.roomGridPos;
+        especialRoom.roomIndex = replacedRoom.roomIndex;
+        OpenDoors(especialRoom, replacedRoom.roomGridPos.x, replacedRoom.roomGridPos.y);
+
+        Destroy(rooms[replacedRoom.roomIndex]);
+
+        rooms.Add(especialRoom.gameObject);
     }
 
     void RegenerateRooms()
@@ -176,25 +202,12 @@ public class RoomManager : MonoBehaviour
         StartRoomGenerationFromRoom(initialRoomIndex);
     }
 
-    void OpenDoors(GameObject room, int x, int y)
+    void OpenDoors(Room newRoom, int x, int y)
     {
-        Room newRoom = room.GetComponent<Room>();
-
         Room leftRoom = GetRoomAt(new Vector2Int(x - 1, y));
         Room rightRoom = GetRoomAt(new Vector2Int(x + 1, y));
         Room upRoom = GetRoomAt(new Vector2Int(x, y + 1));
         Room downRoom = GetRoomAt(new Vector2Int(x, y - 1));
-
-        //newRoom.left = leftRoom;
-        //leftRoom.right = newRoom;
-        //newRoom.right = rightRoom;
-        //rightRoom.left = newRoom;
-        //newRoom.down = downRoom;
-        //downRoom.up = newRoom;
-        //newRoom.up = upRoom;
-        //upRoom.down = newRoom;
-
-        //print("" + leftRoom.gameObject.name + " " + rightRoom.gameObject.name + " " + upRoom.gameObject.name + " " + downRoom.gameObject.name);
 
         if (x > 0 && roomGrid[x - 1, y] != 0)
         {
@@ -220,7 +233,7 @@ public class RoomManager : MonoBehaviour
 
     Room GetRoomAt(Vector2Int index)
     {
-        GameObject room = rooms.Find(r => r.GetComponent<Room>().roomIndex == index);
+        GameObject room = rooms.Find(r => r.GetComponent<Room>().roomGridPos == index);
 
         if(room != null) return room.GetComponent<Room>();
 

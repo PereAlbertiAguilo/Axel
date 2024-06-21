@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public bool openUp = false; 
+    public int roomIndex = 0;
+
+    public bool openUp = false;
     public bool openDown = false;
     public bool openRight = false;
     public bool openLeft = false;
@@ -19,16 +21,11 @@ public class Room : MonoBehaviour
 
     public GameObject miniMapDisplay;
 
-    public Vector2Int roomIndex {  get; set; }
+    public Vector2Int roomGridPos {  get; set; }
 
-    public void OpenDoors()
+    private void Start()
     {
-        doorsManager.OpenDoor("Up", openUp);
-        doorsManager.OpenDoor("Down", openDown);
-        doorsManager.OpenDoor("Right", openRight);
-        doorsManager.OpenDoor("Left", openLeft);
-
-        UpdateMiniMapDoors();
+        enemiesManager.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -37,6 +34,15 @@ public class Room : MonoBehaviour
         {
             OpenDoors();
         }
+    }
+    public void OpenDoors()
+    {
+        doorsManager.OpenDoor("Up", openUp);
+        doorsManager.OpenDoor("Down", openDown);
+        doorsManager.OpenDoor("Right", openRight);
+        doorsManager.OpenDoor("Left", openLeft);
+
+        UpdateMiniMapDoors();
     }
 
     void UpdateMiniMapDoors()

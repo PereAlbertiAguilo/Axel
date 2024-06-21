@@ -48,14 +48,14 @@ public class StatUpgrader : MonoBehaviour
 
     private void Start()
     {
-        rarity = SetRarity();
+        SetRarity();
 
         randomStatIndex = Random.Range(-1, 7) + 1;
 
         statImage.sprite = statsSprites[randomStatIndex];
         statAmountText.text = "" + StatFromIndex(randomStatIndex).name +  ":\n" + StatFromIndex(randomStatIndex).statValue;
-        statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiliper > 0 ? " + " : " - ") +
-            Mathf.Abs(StatFromIndex(randomStatIndex).statMultiliper) * rarityMuliplier + "</color>";
+        statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiliper[(int)rarity] > 0 ? " + " : " - ") +
+            Mathf.Abs(StatFromIndex(randomStatIndex).statMultiliper[(int)rarity]) + "</color>";
     }
 
     private void Update()
@@ -63,15 +63,14 @@ public class StatUpgrader : MonoBehaviour
         if (UserInput.instance.interactInput && canInteract && !hasInteracted)
         {
             hasInteracted = true;
-            StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex).name, StatFromIndex(randomStatIndex).statMultiliper * rarityMuliplier);
+            StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiliper[(int)rarity]);
             _animator.SetBool("IsInRange", false);
         }
     }
 
-    Rarity SetRarity()
+    void SetRarity()
     {
         float randomValue = Random.value;
-        Rarity rarity = Rarity.common;
 
         if(randomValue > 0 && randomValue < .6f)
         {
@@ -102,8 +101,6 @@ public class StatUpgrader : MonoBehaviour
         rarityImage.color = rarityColors[(int)rarity];
         rarityText.color = rarityColors[(int)rarity];
         rarityText.text = rarity.ToString();
-
-        return rarity;
     }
 
     StatsManager.Stat StatFromIndex(int statIndex)

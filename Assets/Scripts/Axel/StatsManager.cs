@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class StatsManager : MonoBehaviour
 {
+    PlayerController playerController;
+
     public static StatsManager instance;
 
     [Serializable]
@@ -13,7 +15,7 @@ public class StatsManager : MonoBehaviour
     {
         public string name;
         public float statValue;
-        public float statMultiliper;
+        public float[] statMultiliper;
     }
 
     public List<Stat> stats = new List<Stat>();
@@ -21,11 +23,16 @@ public class StatsManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        playerController = FindObjectOfType<PlayerController>();
     }
 
-    public void UpgradeStat(string statName, float statChange)
+    public void UpgradeStat(Stat statToUpgrade, float statChange)
     {
-        stats.Find(x => x.name == statName).statValue += statChange;
+        statToUpgrade.statValue += statChange;
+
+        playerController._playerHealth.maxHealth = stats[0].statValue;
+        playerController._playerHealth.healthBar.StartCoroutine(playerController._playerHealth.healthBar.UpdateHealthBar(playerController._playerHealth.currentHealth, StatsManager.instance.stats[0].statValue, .4f));
 
         HudManager.instance.UpdateStatsUI();
     }

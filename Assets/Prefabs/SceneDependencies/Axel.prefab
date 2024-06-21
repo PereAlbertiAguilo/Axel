@@ -329,48 +329,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f52f07f2fb4d3df4ea4b49376e61ec80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statsMulipliers:
-  - 5
-  - 0.5
-  - 1
-  - 0.02
-  - 1
-  - 500
-  - 100
-  - 0.05
-  health: 50
-  normalDamage: 3
-  throwDamage: 8
-  throwAttackFireRate: 1
-  maxAmmo: 4
-  speed: 75
-  dashSpeed: 40
-  dashCooldown: 1
   stats:
   - name: Health
     statValue: 50
-    statMultiliper: 5
+    statMultiliper:
+    - 5
+    - 6
+    - 9
+    - 12.5
+    - 20
   - name: Nromal Damage
     statValue: 3
-    statMultiliper: 0.5
+    statMultiliper:
+    - 1
+    - 1.5
+    - 3
+    - 5
+    - 7.5
   - name: Throw Damage
     statValue: 8
-    statMultiliper: 1
+    statMultiliper:
+    - 2
+    - 2.4
+    - 3.6
+    - 5
+    - 8
   - name: Fire Rate
     statValue: 1
-    statMultiliper: -0.02
+    statMultiliper:
+    - -0.1
+    - -0.12
+    - -0.18
+    - -0.25
+    - -0.4
   - name: Max Ammo
     statValue: 4
-    statMultiliper: 1
+    statMultiliper:
+    - 1
+    - 1.2
+    - 1.8
+    - 2.5
+    - 4
   - name: Speed
     statValue: 75
-    statMultiliper: 5
+    statMultiliper:
+    - 3
+    - 3.6
+    - 5.4
+    - 7.5
+    - 12
   - name: Dash Speed
     statValue: 40
-    statMultiliper: 2.5
+    statMultiliper:
+    - 1
+    - 1.2
+    - 1.8
+    - 2.5
+    - 4
   - name: Dash Cooldown
     statValue: 1
-    statMultiliper: -0.015
+    statMultiliper:
+    - -0.05
+    - -0.06
+    - -0.09
+    - -0.125
+    - -0.2
 --- !u!95 &8604484191206652037
 Animator:
   serializedVersion: 5

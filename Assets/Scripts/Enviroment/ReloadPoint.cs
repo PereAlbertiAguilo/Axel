@@ -28,21 +28,26 @@ public class ReloadPoint : MonoBehaviour
 
     private void Update()
     {
-        if (UserInput.instance.interactInput && playerAttack.currentAmmo < (int)StatsManager.instance.stats[4].statValue && 
-            (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2) && canInteract)
+        if (UserInput.instance.interactInput && canInteract)
         {
-            float currentAmmo = playerAttack.currentAmmo;
+            int currentMaxAmmo = Mathf.CeilToInt(StatsManager.instance.stats[4].statValue);
 
-            playerAttack.CancelInvoke();
-            playerAttack.throwAttack = 1;
-            playerAttack.Invoke(nameof(playerAttack.ThrowAttackReset), playerAttack.throwAttackReloadTime);
+            if (playerAttack.currentAmmo < currentMaxAmmo && (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2))
+            {
+                float currentAmmo = playerAttack.currentAmmo;
 
-            HudManager.instance.StartCoroutine(HudManager.instance.ReloadAmmoBar
-                ((int)StatsManager.instance.stats[4].statValue - playerAttack.currentAmmo, playerAttack.throwAttackReloadTime));
+                playerAttack.CancelInvoke();
+                playerAttack.throwAttack = 1;
+                playerAttack.Invoke(nameof(playerAttack.ThrowAttackReset), playerAttack.throwAttackReloadTime);
+
+                hudManager.EmptyAmmoBar();
+                hudManager.StartCoroutine(hudManager.FillAmmoBar(currentMaxAmmo, playerAttack.throwAttackReloadTime));
+
+                playerAttack.currentAmmo = currentMaxAmmo;
+
+                if (currentAmmo <= 0) playerAttack.UpdateHUD();
+            }
             
-            playerAttack.currentAmmo = (int)StatsManager.instance.stats[4].statValue;
-
-            if (currentAmmo <= 0) playerAttack.UpdateHUD();
         }
     }
 

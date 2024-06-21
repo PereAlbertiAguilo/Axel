@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -57,6 +58,8 @@ public class PlayerAttack : MonoBehaviour
 
         if (UserInput.instance.attackInput)
         {
+            isAttacking = true;
+
             if (!attack && attackIndex == 0)
             {
                 attack = true;
@@ -84,9 +87,13 @@ public class PlayerAttack : MonoBehaviour
                     }
                 }
             }
-            
+        }
+        else if(UserInput.instance.attackInputUp)
+        {
+            isAttacking = false;
         }
     }
+    bool isAttacking;
 
     float horizontalInput;
     float verticalInput = -1;
@@ -151,7 +158,7 @@ public class PlayerAttack : MonoBehaviour
         Vector3 direction = pos - transform.position;
         var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
 
-        if (!attack) transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * 15);
+        if (!isAttacking && !attack) transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * 30);
     }
 
     public void UpdateHUD()
