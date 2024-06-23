@@ -32,7 +32,7 @@ public class OrbCollider : MonoBehaviour
         {
             StartCoroutine(HitColorShift());
 
-            DamageManager damageManager = collision.GetComponent<DamageManager>();
+            DamageManager damageManager = collision.transform.parent.GetComponent<DamageManager>();
 
             if (_health != null)
             {

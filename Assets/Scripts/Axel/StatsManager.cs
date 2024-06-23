@@ -10,12 +10,18 @@ public class StatsManager : MonoBehaviour
 
     public static StatsManager instance;
 
+    public enum StatType
+    {
+        health, nDamage, tDamage, aRate, ammo, speed, dSpeed, dCooldown
+    }
+
     [Serializable]
     public class Stat
     {
         public string name;
         public float statValue;
-        public float[] statMultiliper;
+        public float statMultiplier;
+        public StatType statType;
     }
 
     public List<Stat> stats = new List<Stat>();
@@ -31,9 +37,15 @@ public class StatsManager : MonoBehaviour
     {
         statToUpgrade.statValue += statChange;
 
-        playerController._playerHealth.maxHealth = stats[0].statValue;
-        playerController._playerHealth.healthBar.StartCoroutine(playerController._playerHealth.healthBar.UpdateHealthBar(playerController._playerHealth.currentHealth, StatsManager.instance.stats[0].statValue, .4f));
+        playerController._playerHealth.maxHealth = GetStat(StatType.health).statValue;
+        playerController._playerHealth.healthBar.StartCoroutine(playerController._playerHealth.healthBar.UpdateHealthBar(playerController._playerHealth.currentHealth, 
+            GetStat(StatType.health).statValue, .4f));
 
         HudManager.instance.UpdateStatsUI();
+    }
+
+    public Stat GetStat(StatType statType)
+    {
+        return stats.Find(x => x.statType == statType);
     }
 }

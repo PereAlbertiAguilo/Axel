@@ -30,7 +30,7 @@ public class ReloadPoint : MonoBehaviour
     {
         if (UserInput.instance.interactInput && canInteract)
         {
-            int currentMaxAmmo = Mathf.CeilToInt(StatsManager.instance.stats[4].statValue);
+            int currentMaxAmmo = Mathf.CeilToInt(StatsManager.instance.GetStat(StatsManager.StatType.ammo).statValue);
 
             if (playerAttack.currentAmmo < currentMaxAmmo && (playerAttack.throwAttack == 0 || playerAttack.throwAttack == 2))
             {

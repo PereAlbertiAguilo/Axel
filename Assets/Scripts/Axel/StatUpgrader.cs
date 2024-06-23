@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,7 +40,7 @@ public class StatUpgrader : MonoBehaviour
 
     public Rarity rarity;
 
-    public float rarityMuliplier = 1f;
+    float[] rarityMuliplier = { 1, 1.5f, 2.5f, 4, 6 };
 
     private void Awake()
     {
@@ -50,12 +51,12 @@ public class StatUpgrader : MonoBehaviour
     {
         SetRarity();
 
-        randomStatIndex = Random.Range(-1, 7) + 1;
+        randomStatIndex = Random.Range(0, StatsManager.instance.stats.Count - 1);
 
         statImage.sprite = statsSprites[randomStatIndex];
         statAmountText.text = "" + StatFromIndex(randomStatIndex).name +  ":\n" + StatFromIndex(randomStatIndex).statValue;
-        statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiliper[(int)rarity] > 0 ? " + " : " - ") +
-            Mathf.Abs(StatFromIndex(randomStatIndex).statMultiliper[(int)rarity]) + "</color>";
+        statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiplier > 0 ? " + " : " - ") +
+            Mathf.Abs(StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]) + "</color>";
     }
 
     private void Update()
@@ -63,7 +64,7 @@ public class StatUpgrader : MonoBehaviour
         if (UserInput.instance.interactInput && canInteract && !hasInteracted)
         {
             hasInteracted = true;
-            StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiliper[(int)rarity]);
+            StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]);
             _animator.SetBool("IsInRange", false);
         }
     }
@@ -74,27 +75,27 @@ public class StatUpgrader : MonoBehaviour
 
         if(randomValue > 0 && randomValue < .6f)
         {
-            rarityMuliplier = 1f;
+            //rarityMuliplier = 1f;
             rarity = Rarity.common;
         }
         else if (randomValue > .6f && randomValue < .90f)
         {
-            rarityMuliplier = 1.2f;
+            //rarityMuliplier = 1.2f;
             rarity = Rarity.uncommon;
         }
         else if(randomValue > .90f && randomValue < .95f)
         {
-            rarityMuliplier = 1.8f;
+            //rarityMuliplier = 1.8f;
             rarity = Rarity.rare;
         }
         else if (randomValue > .95f && randomValue < .98f)
         {
-            rarityMuliplier = 2.5f;
+            //rarityMuliplier = 2.5f;
             rarity = Rarity.epic;
         }
         else
         {
-            rarityMuliplier = 4f;
+            //rarityMuliplier = 4f;
             rarity = Rarity.legendary;
         }
 

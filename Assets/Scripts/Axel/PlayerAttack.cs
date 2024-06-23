@@ -35,9 +35,9 @@ public class PlayerAttack : MonoBehaviour
     {
         playerController = FindAnyObjectByType<PlayerController>();
 
-        _damageManager.damage = StatsManager.instance.stats[1].statValue;
+        _damageManager.damage = StatsManager.instance.GetStat(StatsManager.StatType.nDamage).statValue;
 
-        currentAmmo = (int)StatsManager.instance.stats[4].statValue;
+        currentAmmo = (int)StatsManager.instance.GetStat(StatsManager.StatType.ammo).statValue;
     }
 
     private void Update()
@@ -76,10 +76,10 @@ public class PlayerAttack : MonoBehaviour
                     currentAmmo--;
 
                     throwAttack = 2;
-                    Invoke(nameof(ThrowAttackReset), StatsManager.instance.stats[3].statValue);
+                    Invoke(nameof(ThrowAttackReset), StatsManager.instance.GetStat(StatsManager.StatType.aRate).statValue);
 
                     DamageManager throwDamage = Instantiate(throwingAttack, transform.position, transform.rotation).GetComponent<DamageManager>();
-                    throwDamage.damage = StatsManager.instance.stats[2].statValue;
+                    throwDamage.damage = StatsManager.instance.GetStat(StatsManager.StatType.tDamage).statValue;
 
                     if(currentAmmo <= 0)
                     {

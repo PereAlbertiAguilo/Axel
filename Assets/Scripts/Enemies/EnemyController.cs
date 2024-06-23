@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
 
     [HideInInspector] public Rigidbody2D _enemyRigidbody;
 
-    AIPath _aIPath;
+    [HideInInspector] public AIPath _aIPath;
     AIDestinationSetter _destinationSetter;
     SpriteRenderer _spriteRenderer;
     EnemiesManager enemiesManager;

@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
         Vignette tmp;
         if (volumeProfile.TryGet(out tmp)) vignette = tmp;
 
-        _playerHealth.maxHealth = StatsManager.instance.stats[0].statValue;
-        _playerHealth.currentHealth = StatsManager.instance.stats[0].statValue;
+        _playerHealth.maxHealth = StatsManager.instance.GetStat(StatsManager.StatType.health).statValue;
+        _playerHealth.currentHealth = StatsManager.instance.GetStat(StatsManager.StatType.health).statValue;
     }
 
     private void Update()
@@ -115,9 +115,9 @@ public class PlayerController : MonoBehaviour
 
             dashTrail.Play();
 
-            Invoke(nameof(DashReset), StatsManager.instance.stats[7].statValue);
+            Invoke(nameof(DashReset), StatsManager.instance.GetStat(StatsManager.StatType.dCooldown).statValue);
             Invoke(nameof(MoveReset), .16f);
-            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(StatsManager.instance.stats[7].statValue));
+            HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(StatsManager.instance.GetStat(StatsManager.StatType.dCooldown).statValue));
         }
     }
 
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     {
         moveDir = new Vector2(horizontalInput, verticalInput);
 
-        _playerRigidbody.AddForce(moveDir * StatsManager.instance.stats[5].statValue * 100, ForceMode2D.Force);
+        _playerRigidbody.AddForce(moveDir * StatsManager.instance.GetStat(StatsManager.StatType.speed).statValue * 100, ForceMode2D.Force);
 
         if (canDash == 2)
         {
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
             Vector2 viewDir = new Vector2(horizontalView == 0 ? horizontalInput : horizontalView, verticalView == 0 ? verticalInput : verticalView);
 
-            _playerRigidbody.AddForce(viewDir * StatsManager.instance.stats[6].statValue * 100, ForceMode2D.Impulse);
+            _playerRigidbody.AddForce(viewDir * StatsManager.instance.GetStat(StatsManager.StatType.dSpeed).statValue * 100, ForceMode2D.Impulse);
 
             canMove = false;
         }

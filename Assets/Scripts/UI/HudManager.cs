@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -58,7 +59,7 @@ public class HudManager : MonoBehaviour
 
         if (!PauseMenu.instance.paused) Timer();
 
-        currentHealthText.text = "" + playerController._playerHealth.currentHealth;
+        currentHealthText.text = "" + Math.Round(playerController._playerHealth.currentHealth, 2);
     }
 
     void Timer()
@@ -123,6 +124,6 @@ public class HudManager : MonoBehaviour
         }
 
         EmptyAmmoBar();
-        StartCoroutine(FillAmmoBar(Mathf.CeilToInt(StatsManager.instance.stats[4].statValue), playerAttack.throwAttackReloadTime));
+        StartCoroutine(FillAmmoBar(Mathf.CeilToInt(StatsManager.instance.GetStat(StatsManager.StatType.ammo).statValue), playerAttack.throwAttackReloadTime));
     }
 }

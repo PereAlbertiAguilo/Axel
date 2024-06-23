@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] Image healthBar;
+    public Image healthBar;
 
     public IEnumerator UpdateHealthBar(float currentHealth, float maxHealth, float duration)
     {
