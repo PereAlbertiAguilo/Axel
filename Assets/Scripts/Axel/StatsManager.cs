@@ -10,6 +10,8 @@ public class StatsManager : MonoBehaviour
 
     public static StatsManager instance;
 
+    public bool canModifyStats = true;
+
     public enum StatType
     {
         health, nDamage, tDamage, aRate, ammo, speed, dSpeed, dCooldown
@@ -35,6 +37,8 @@ public class StatsManager : MonoBehaviour
 
     public void UpgradeStat(Stat statToUpgrade, float statChange)
     {
+        print("caca");
+
         statToUpgrade.statValue += statChange;
 
         playerController._playerHealth.maxHealth = GetStat(StatType.health).statValue;

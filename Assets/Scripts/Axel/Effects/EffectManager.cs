@@ -1,100 +1,159 @@
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
+using UnityEngine.Events;
+using static EffectManager;
 
 public class EffectManager : MonoBehaviour
 {
-    [Range(1, 10)]
-    public int effectPower = 1;
-
-    public float duration = 2f;
-    float currentTime;
-
-    bool effectOn = false;
-
-    private void Start()
+    public enum EffectType
     {
-        StatsManager.Stat statSlowness = StatsManager.instance.GetStat(StatsManager.StatType.speed);
-        StatsManager.Stat statWeakness = StatsManager.instance.GetStat(StatsManager.StatType.nDamage);
-        Health playerHealth = FindObjectOfType<PlayerController>()._playerHealth;
-
-        StartCoroutine(Slowness(statSlowness.statValue, (i) => statSlowness.statValue = i, (i) => statSlowness.statValue = i));
-        StartCoroutine(Delay(Dot(playerHealth, 2, (i) => playerHealth.currentHealth = i)));
-        StartCoroutine(Weakness(statWeakness.statValue, (i) => statWeakness.statValue = i, (i) => statWeakness.statValue = i));
+        slowness, dot, weakness
     }
 
-    private void Update()
+
+    [Serializable]
+    public class Effect
     {
-        if (effectOn)
+        public string name;
+        [Range(1, 10)]
+        public int effectPower = 1;
+        public float duration = 2f;
+        public float currentTime;
+        public EffectType type;
+        [HideInInspector] public bool effectActive = false;
+    }
+
+    [Space]
+
+    public List<Effect> effects = new List<Effect>(1);
+
+    public void EnemyEffect()
+    {
+        foreach (Effect effect in effects)
         {
-            if(currentTime > 0)
+            switch (effect.type)
             {
-                currentTime -= Time.deltaTime;
+                case EffectType.slowness:
+                    StatsManager.Stat statSlowness = StatsManager.instance.GetStat(StatsManager.StatType.speed);
+                    StartCoroutine(Slowness(statSlowness.statValue, (i) => statSlowness.statValue = i, (i) => statSlowness.statValue = i));
+                    break;
+                case EffectType.dot:
+                    Health playerHealth = FindObjectOfType<PlayerController>()._playerHealth;
+                    StartCoroutine(Dot(playerHealth));
+                    break;
+                case EffectType.weakness:
+                    StatsManager.Stat statWeakness = StatsManager.instance.GetStat(StatsManager.StatType.nDamage);
+                    StartCoroutine(Weakness(statWeakness.statValue, (i) => statWeakness.statValue = i, (i) => statWeakness.statValue = i));
+                    break;
             }
-            else
+        }
+    }
+
+    public void PlayerEffect(GameObject enemy)
+    {
+        foreach (Effect effect in effects)
+        {
+            switch (effect.type)
             {
-                effectOn = false;
-                currentTime = duration;
+                case EffectType.slowness:
+                    AIPath aIPath = enemy.GetComponent<AIPath>();
+                    StartCoroutine(Slowness(aIPath.maxSpeed, (i) => aIPath.maxSpeed = i, (i) => aIPath.maxSpeed = i));
+                    break;
+                case EffectType.dot:
+                    Health enemyHealth = enemy.GetComponent<Health>();
+                    StartCoroutine(Dot(enemyHealth));
+                    break;
+                case EffectType.weakness:
+                    DamageManager enemyDamage = enemy.GetComponent<DamageManager>();
+                    StartCoroutine(Weakness(enemyDamage.damage, (i) => enemyDamage.damage = i, (i) => enemyDamage.damage = i));
+                    break;
             }
         }
     }
 
     public IEnumerator Slowness(float startValue, Action<float> changeValue, Action<float> resetValue)
     {
-        effectOn = true;
+        Effect slownessEffect = GetEffectFromType(EffectType.slowness);
+
+        StartTimer(slownessEffect);
 
         float currentValue = startValue;
-        currentValue -= PowFromValue(startValue);
+        currentValue -= PowFromValue(slownessEffect.effectPower, startValue, 11);
         changeValue(currentValue);
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(slownessEffect.duration);
 
         resetValue(startValue);
     }
 
-    public IEnumerator Dot(Health health, float dotPower, Action<float> changeValue)
+    public IEnumerator Dot(Health health)
     {
-        effectOn = true;
+        Effect dotEffect = GetEffectFromType(EffectType.dot);
 
-        float currentHealth = health.currentHealth;
+        StartTimer(dotEffect);
 
-        while (effectOn)
+        float dotDamage = PowFromValue(dotEffect.effectPower, PowFromValue(2.5f, health.maxHealth, 100), 11);
+
+        while (dotEffect.effectActive)
         {
-            currentHealth -= PowFromValue(dotPower);
+            yield return new WaitForSeconds(.4f);
 
-            changeValue(currentHealth);
-
-            health.healthBar.StartCoroutine(health.healthBar.UpdateHealthBar(currentHealth, health.maxHealth, .1f));
-
-            yield return new WaitForSeconds(.75f);
+            if (health != null)
+            {
+                health.RemoveHealth(dotDamage, null);
+                health.damagePopUp.PopUp(dotDamage, .25f);
+            }
         }
     }
 
     public IEnumerator Weakness(float startValue, Action<float> changeValue, Action<float> resetValue)
     {
-        effectOn = true;
+        Effect weaknessEffect = GetEffectFromType(EffectType.weakness);
+
+        StartTimer(weaknessEffect);
 
         float currentValue = startValue;
-        currentValue -= PowFromValue(startValue);
+        currentValue -= PowFromValue(weaknessEffect.effectPower, startValue, 11);
         changeValue(currentValue);
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(weaknessEffect.duration);
 
         resetValue(startValue);
     }
 
-    IEnumerator Delay(IEnumerator enumerator) 
+    void StartTimer(Effect effect)
     {
-        yield return new WaitForSeconds(1f);
+        effect.effectActive = true;
+        effect.currentTime = effect.duration;
+        StatsManager.instance.canModifyStats = false;
 
-        StartCoroutine(enumerator);
+        StopCoroutine(Timer(effect));
+        StartCoroutine(Timer(effect));
     }
 
-    float PowFromValue(float value)
+    IEnumerator Timer(Effect effect)
     {
-        return effectPower * value / 11;
+        while (effect.currentTime > 0)
+        {
+            effect.currentTime -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        effect.effectActive = false;
+        StatsManager.instance.canModifyStats = true;
+    }
+
+    float PowFromValue(float powRange, float value, float maxPercent)
+    {
+        return powRange * value / maxPercent;
+    }
+
+    Effect GetEffectFromType(EffectType type)
+    {
+        return effects.Find(x => x.type == type);
     }
 }

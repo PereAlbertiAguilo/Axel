@@ -119,7 +119,7 @@ public class HudManager : MonoBehaviour
 
         foreach (Transform stat in statsLayout.transform)
         {
-            stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = "" + sm.stats[index].statValue;
+            stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = "" + Math.Round(sm.stats[index].statValue, 2);
             index++;
         }
 

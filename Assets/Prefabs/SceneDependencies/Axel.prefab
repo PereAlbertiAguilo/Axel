@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 9180226358699103878}
   - component: {fileID: 5306035957520986931}
   - component: {fileID: 1838553344415558034}
+  - component: {fileID: 4602120989548386291}
   - component: {fileID: 8604484191206652037}
   - component: {fileID: 6032427611312421085}
   - component: {fileID: 3781513095618569786}
@@ -280,13 +281,13 @@ MonoBehaviour:
   damagedColor: {r: 0.4, g: 0, b: 0, a: 1}
   horizontalInput: 0
   verticalInput: 0
-  horizontalView: 0
+  horizontalView: 1
   verticalView: 0
   canMove: 1
   canTakeDamage: 1
   canDash: 0
-  _playerHealth: {fileID: 0}
-  _playerAnimator: {fileID: 0}
+  _playerHealth: {fileID: 9180226358699103878}
+  _playerAnimator: {fileID: 8604484191206652037}
   currentEnemiesManager: {fileID: 0}
   _playerRigidbody: {fileID: 0}
   volumeProfile: {fileID: 11400000, guid: 029f96b48e3e04f47a0fb3d9051e4b76, type: 2}
@@ -305,6 +306,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 0}
+  damagePopUp: {fileID: 4602120989548386291}
 --- !u!114 &5306035957520986931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +365,19 @@ MonoBehaviour:
     statValue: 1
     statMultiplier: -0.02
     statType: 7
+--- !u!114 &4602120989548386291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238990602538030816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc664f678564db649bed8f9198e5a089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpText: {fileID: 6726927762978442877, guid: 64aedbbe560c4b7448d9d22741fd7de7, type: 3}
 --- !u!95 &8604484191206652037
 Animator:
   serializedVersion: 5
@@ -546,8 +561,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638613d0d9d6bc347a47e7f1b1935f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPower: 5
-  duration: 5
+  effects:
+  - name: Dot
+    effectPower: 5
+    duration: 5
+    currentTime: 0
+    type: 1
+    effectActive: 0
+  - name: Slowness
+    effectPower: 5
+    duration: 5
+    currentTime: 0
+    type: 0
+    effectActive: 0
 --- !u!114 &3162771016866195884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,8 +620,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.5}
-  m_Size: {x: 2, y: 1}
+  m_Offset: {x: 0, y: -1}
+  m_Size: {x: 1.5, y: 1}
   m_Direction: 1
 --- !u!1 &7020429121938117111
 GameObject:
@@ -650,7 +676,7 @@ MonoBehaviour:
   - {fileID: 0}
   attackIndex: 0
   attack: 0
-  attackDelay: 0.4
+  attackDelay: 0.5
   throwAttack: 0
   currentAmmo: 6
   throwAttackReloadTime: 0.75
@@ -668,7 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40b79d803f737c47b91d4d469728f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
   damage: 4
 --- !u!114 &4148886142216336277
 MonoBehaviour:

@@ -339,7 +339,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   canBeKnockbacked: 0
+  _damageManager: {fileID: 0}
   _enemyRigidbody: {fileID: 0}
+  _aIPath: {fileID: 0}
 --- !u!114 &770944641760347416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
+  healthBar: {fileID: 0}
 --- !u!114 &5549924862819558143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,7 +470,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!114 &3884341709030988344
 MonoBehaviour:
   m_ObjectHideFlags: 0

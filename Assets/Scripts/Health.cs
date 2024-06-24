@@ -8,10 +8,12 @@ public class Health : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     [HideInInspector] public HealthBar healthBar;
+    [HideInInspector] public DamagePopUp damagePopUp;
 
     private void Awake()
     {
         healthBar = GetComponent<HealthBar>();
+        damagePopUp = GetComponent<DamagePopUp>();
     }
 
     private void OnEnable()
@@ -27,7 +29,7 @@ public class Health : MonoBehaviour
 
             if(healthBar != null )
             {
-                healthBar.StartCoroutine(healthBar.UpdateHealthBar(currentHealth, maxHealth, .4f));
+                healthBar.StartCoroutine(healthBar.UpdateHealthBar(currentHealth, maxHealth, .2f));
             }
 
             if (currentHealth <= 0)

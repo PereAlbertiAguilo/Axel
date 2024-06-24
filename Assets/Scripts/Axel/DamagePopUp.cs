@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(DamageManager))]
 public class DamagePopUp : MonoBehaviour
 {
     [SerializeField] GameObject popUpText;
@@ -12,12 +12,22 @@ public class DamagePopUp : MonoBehaviour
     {
         if (collision.CompareTag("Orb"))
         {
-            DamageManager damageManager = collision.transform.parent.GetComponent<DamageManager>();
-            if (damageManager.isPlayer) damageManager.UpdateDamage(collision.transform.parent.GetComponent<PlayerAttack>() != null ?
-                StatsManager.instance.GetStat(StatsManager.StatType.nDamage).statValue : StatsManager.instance.GetStat(StatsManager.StatType.tDamage).statValue);
-
-            GameObject text = Instantiate(popUpText, transform.position, Quaternion.identity).transform.GetChild(0).gameObject;
-            text.GetComponent<TextMeshProUGUI>().text = "" + damageManager.damage;
+            PopUp(StatsManager.instance.GetStat(StatsManager.StatType.nDamage).statValue, .5f);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PopUp(GetComponent<DamageManager>().damage, .5f);
+        }
+    }
+
+    public void PopUp(float damage, float textSize)
+    {
+        TextMeshProUGUI text = Instantiate(popUpText, transform.position, Quaternion.identity).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        text.fontSize = textSize;
+        text.text = "" + Math.Round(damage, 2);
     }
 }

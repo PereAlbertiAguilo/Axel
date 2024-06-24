@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
 
     Transform player;
     PlayerController playerController;
-    DamageManager _damageManager;
+    [HideInInspector] public DamageManager _damageManager;
 
     [HideInInspector] public Rigidbody2D _enemyRigidbody;
 
@@ -93,6 +93,8 @@ public class EnemyController : MonoBehaviour
             playerController.DamagedIFrames(.75f, true,
                 Vector3.Distance(player.position, transform.position) > .1f ? direction : Vector2.zero);
             playerController._playerHealth.RemoveHealth(_damageManager.damage, playerController.Death);
+
+            if (TryGetComponent(out EffectManager effectManager)) effectManager.EnemyEffect();
         }
     }
 

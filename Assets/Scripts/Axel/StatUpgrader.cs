@@ -61,7 +61,7 @@ public class StatUpgrader : MonoBehaviour
 
     private void Update()
     {
-        if (UserInput.instance.interactInput && canInteract && !hasInteracted)
+        if (UserInput.instance.interactInput && canInteract && !hasInteracted && StatsManager.instance.canModifyStats)
         {
             hasInteracted = true;
             StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]);

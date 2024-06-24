@@ -42,6 +42,8 @@ public class OrbCollider : MonoBehaviour
             {
                 _enemyController.OnHit();
             }
+
+            if (collision.TryGetComponent(out EffectManager effectManager)) effectManager.PlayerEffect(gameObject);
         }
     }
 }
