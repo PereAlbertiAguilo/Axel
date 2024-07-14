@@ -1,45 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class SpawnRepeating : MonoBehaviour
 {
-    Transform target;
+    [HideInInspector] public float fireRate;
+    [HideInInspector] public float startDelay;
+    [HideInInspector] public bool aimToPlayer = false;
+    [HideInInspector] public float directionX;
+    [HideInInspector] public float directionY;
+    [HideInInspector] public GameObject shootingObject;
+    [HideInInspector] public int poolSize = 10;
 
-    [SerializeField] float fireRate;
+    protected List<GameObject> instances = new List<GameObject>();
 
-    [SerializeField] float startDelay;
-
-    [SerializeField] bool aimToPlayer = false;
-
-    [Range(-1f, 1f)]
-    [SerializeField] float directionX;
-    [Range(-1f, 1f)]
-    [SerializeField] float directionY;
-
-    [SerializeField] GameObject shootingObject;
-
+    float currentTime = 0;
     Quaternion rotation;
 
-    private void Start()
+    public virtual void Start()
     {
-        target = FindObjectOfType<PlayerController>().transform;
+        FillObjectPool();
 
-        var angle = (Mathf.Atan2(directionY, directionX) * Mathf.Rad2Deg) + 90;
-        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        InvokeRepeating(nameof(Shoot), startDelay, fireRate);
+        rotation = Direction.Rotation(new Vector2(directionX, directionY), Vector2.zero);
     }
+
+    private void Update()
+    {
+        if(currentTime < fireRate)
+        {
+            currentTime += Time.deltaTime;
+        }
+        else
+        {
+            Shoot();
+            currentTime = 0;
+        }
+    }
+
+    void FillObjectPool()
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            CreateInstance();
+        }
+    }
+
+    GameObject InstanceEffect(Vector3 pos)
+    {
+        foreach (GameObject instance in instances)
+        {
+            if (!instance.activeInHierarchy)
+            {
+                instance.transform.position = pos;
+                instance.transform.rotation = rotation;
+                instance.transform.SetParent(null);
+                instance.SetActive(true);
+
+                return instance;
+            }
+        }
+
+        return CreateInstance();
+    }
+
+    GameObject CreateInstance()
+    {
+        GameObject instance = Instantiate(shootingObject, transform);
+        instance.SetActive(false);
+
+        instances.Add(instance);
+
+        return instance;
+    }
+
 
     public void Shoot()
     {
-        if (aimToPlayer && target != null)
+        if (aimToPlayer)
         {
-            Vector3 direction = target.position - transform.position;
-            var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
-            rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            rotation = Direction.Rotation(PlayerController.instance.transform.position, transform.position);
         }
 
-        Instantiate(shootingObject, transform.position, rotation);
+        InstanceEffect(transform.position);
     }
 }

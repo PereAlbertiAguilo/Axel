@@ -178,10 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7605515950816524103}
   - component: {fileID: 2959523741068018813}
-  - component: {fileID: 213378739532598147}
-  - component: {fileID: 9180226358699103878}
   - component: {fileID: 5306035957520986931}
-  - component: {fileID: 1838553344415558034}
   - component: {fileID: 4602120989548386291}
   - component: {fileID: 8604484191206652037}
   - component: {fileID: 6032427611312421085}
@@ -265,48 +262,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &213378739532598147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2238990602538030816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04bef658787212f43939c25e6d1ee42c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashTrail: {fileID: 2637903016991198213}
-  damagedColor: {r: 0.4, g: 0, b: 0, a: 1}
-  horizontalInput: 0
-  verticalInput: 0
-  horizontalView: 1
-  verticalView: 0
-  canMove: 1
-  canTakeDamage: 1
-  canDash: 0
-  _playerHealth: {fileID: 9180226358699103878}
-  _playerAnimator: {fileID: 8604484191206652037}
-  currentEnemiesManager: {fileID: 0}
-  _playerRigidbody: {fileID: 0}
-  volumeProfile: {fileID: 11400000, guid: 029f96b48e3e04f47a0fb3d9051e4b76, type: 2}
---- !u!114 &9180226358699103878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2238990602538030816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95bacb790605f1b4db5042765ce86468, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  healthBar: {fileID: 0}
-  damagePopUp: {fileID: 4602120989548386291}
 --- !u!114 &5306035957520986931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,51 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
---- !u!114 &1838553344415558034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2238990602538030816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f52f07f2fb4d3df4ea4b49376e61ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats:
-  - name: Health
-    statValue: 50
-    statMultiplier: 2
-    statType: 0
-  - name: Nromal Damage
-    statValue: 3
-    statMultiplier: 0.5
-    statType: 1
-  - name: Throw Damage
-    statValue: 8
-    statMultiplier: 1
-    statType: 2
-  - name: Fire Rate
-    statValue: 1
-    statMultiplier: -0.02
-    statType: 3
-  - name: Max Ammo
-    statValue: 4
-    statMultiplier: 1
-    statType: 4
-  - name: Speed
-    statValue: 75
-    statMultiplier: 2.5
-    statType: 5
-  - name: Dash Speed
-    statValue: 40
-    statMultiplier: 1.5
-    statType: 6
-  - name: Dash Cooldown
-    statValue: 1
-    statMultiplier: -0.02
-    statType: 7
 --- !u!114 &4602120989548386291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +381,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4240512196989995838}
   - component: {fileID: 2650585343248253115}
-  - component: {fileID: 4568866958257251075}
   - component: {fileID: 3162771016866195884}
   - component: {fileID: 8938917822167554979}
   m_Layer: 0
@@ -549,31 +458,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4568866958257251075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128340564081201440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638613d0d9d6bc347a47e7f1b1935f91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effects:
-  - name: Dot
-    effectPower: 5
-    duration: 5
-    currentTime: 0
-    type: 1
-    effectActive: 0
-  - name: Slowness
-    effectPower: 5
-    duration: 5
-    currentTime: 0
-    type: 0
-    effectActive: 0
 --- !u!114 &3162771016866195884
 MonoBehaviour:
   m_ObjectHideFlags: 0

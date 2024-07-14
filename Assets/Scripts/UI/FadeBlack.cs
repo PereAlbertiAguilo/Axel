@@ -31,12 +31,10 @@ public class FadeBlack : MonoBehaviour
         _animator.Play("FadeFromBlack");
     }
 
-    public IEnumerator FadeInFadeOut(float delay)
+    public void FadeInFadeOut(float delay)
     {
         FadeToBlack();
 
-        yield return new WaitForSeconds(delay);
-
-        FadeFromBlack();
+        Invoke(nameof(FadeFromBlack), delay);
     }
 }

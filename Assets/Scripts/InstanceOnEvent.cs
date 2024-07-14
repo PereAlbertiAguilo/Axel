@@ -2,35 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstanceOnEvent : MonoBehaviour
+public class EffectOnDestroy : MonoBehaviour
 {
-    [SerializeField] GameObject instance;
+    [SerializeField] GameObject effect;
+    [SerializeField] bool effectOnHit = false;
+    [SerializeField] int poolSize = 10;
 
-    enum EventType
+    List<GameObject> instances = new List<GameObject>();
+
+    private void Start()
     {
-        onColliderEnter,
-        onDestory
-    };
+        FillObjectPool();
+    }
 
-    [SerializeField] EventType eventType;
+    void FillObjectPool()
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            CreateInstance();
+        }
+    }
+
+    GameObject InstanceEffect(Vector3 pos)
+    {
+        foreach (GameObject instance in instances)
+        {
+            if (!instance.activeInHierarchy)
+            {
+                instance.transform.position = pos;
+                instance.transform.SetParent(null);
+                instance.SetActive(true);
+
+                return instance;
+            }
+        }
+
+        return CreateInstance();
+    }
+
+    GameObject CreateInstance()
+    {
+        GameObject instance = Instantiate(effect, transform.position, Quaternion.identity);
+        instance.transform.SetParent(transform);
+        instance.SetActive(false);
+
+        instances.Add(instance);
+
+        return instance;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (eventType == EventType.onColliderEnter && collision.CompareTag("Target")) Instantiate(instance, collision.transform.position, Quaternion.identity);
+        if (collision.gameObject.CompareTag("Target") && effectOnHit) InstanceEffect(collision.transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (eventType == EventType.onColliderEnter && collision.gameObject.CompareTag("Target")) Instantiate(instance, collision.transform.position, Quaternion.identity);
+        if (collision.gameObject.CompareTag("Target") && effectOnHit) InstanceEffect(collision.transform.position);
     }
 
     private void OnDestroy()
     {
-        if (eventType == EventType.onDestory) Instantiate(instance, transform.position, Quaternion.identity);
-    }
-
-    private void OnDisable()
-    {
-        if (eventType == EventType.onDestory) Instantiate(instance, transform.position, Quaternion.identity);
+        //InstanceEffect(transform.position);
     }
 }

@@ -12,7 +12,7 @@ public class EnemiesManager : MonoBehaviour
     {
         enemiesList.Clear();
 
-        foreach (EnemyController enemy in FindObjectsOfType<EnemyController>())
+        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
         {
             enemiesList.Add(enemy.gameObject);
         }
@@ -37,7 +37,7 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
-    public EnemyController GetClosestEnemyToPoint(Vector2 point)
+    public Enemy GetClosestEnemyToPoint(Vector2 point)
     {
         int closestToPoint = 0;
         float currentDist = 999;
@@ -56,12 +56,12 @@ public class EnemiesManager : MonoBehaviour
             }
         }
 
-        return enemiesList[closestToPoint].GetComponent<EnemyController>();
+        return enemiesList[closestToPoint].GetComponent<Enemy>();
     }
 
-    public EnemyController GetNearNextEnemy(EnemyController enemy, int dir)
+    public Enemy GetNearNextEnemy(Enemy enemy, int dir)
     {
-        EnemyController newEnemy = null;
+        Enemy newEnemy = null;
 
         for (int i = 0; i < enemiesList.Count; i++)
         {
@@ -70,12 +70,12 @@ public class EnemiesManager : MonoBehaviour
                 if(dir > 0 && i + dir < enemiesList.Count)
                 {
                     print("+1");
-                    newEnemy = enemiesList[i + dir].GetComponent<EnemyController>();
+                    newEnemy = enemiesList[i + dir].GetComponent<Enemy>();
                 }
                 if (dir < 0 && i - dir > 0)
                 {
                     print("-1");
-                    newEnemy = enemiesList[i - dir].GetComponent<EnemyController>();
+                    newEnemy = enemiesList[i - dir].GetComponent<Enemy>();
                 }
             }
         }

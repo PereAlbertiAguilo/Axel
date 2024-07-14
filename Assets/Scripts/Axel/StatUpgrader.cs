@@ -51,20 +51,20 @@ public class StatUpgrader : MonoBehaviour
     {
         SetRarity();
 
-        randomStatIndex = Random.Range(0, StatsManager.instance.stats.Count - 1);
+        randomStatIndex = Random.Range(0, 3);
 
         statImage.sprite = statsSprites[randomStatIndex];
-        statAmountText.text = "" + StatFromIndex(randomStatIndex).name +  ":\n" + StatFromIndex(randomStatIndex).statValue;
-        statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiplier > 0 ? " + " : " - ") +
-            Mathf.Abs(StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]) + "</color>";
+        //statAmountText.text = "" + StatFromIndex(randomStatIndex).name +  ":\n" + StatFromIndex(randomStatIndex).statValue;
+        //statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiplier > 0 ? " + " : " - ") +
+        //    Mathf.Abs(StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]) + "</color>";
     }
 
     private void Update()
     {
-        if (UserInput.instance.interactInput && canInteract && !hasInteracted && StatsManager.instance.canModifyStats)
+        if (UserInput.instance.interactInput && canInteract && !hasInteracted /*&& StatsManager.instance.canModifyStats*/)
         {
             hasInteracted = true;
-            StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]);
+            //StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]);
             _animator.SetBool("IsInRange", false);
         }
     }
@@ -104,10 +104,7 @@ public class StatUpgrader : MonoBehaviour
         rarityText.text = rarity.ToString();
     }
 
-    StatsManager.Stat StatFromIndex(int statIndex)
-    {
-        return StatsManager.instance.stats[statIndex];
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -9,7 +9,7 @@ public class SpriteAnimation : MonoBehaviour
 
     SpriteRenderer _spriteRenderer;
 
-    public bool nextIteration = true;
+    [HideInInspector] public bool nextIteration = true;
 
     private void Start()
     {

@@ -25,19 +25,14 @@ public class HudManager : MonoBehaviour
     float timer = 0;
 
     public static HudManager instance;
-    PlayerAttack playerAttack;
-    PlayerController playerController;
 
     private void Awake()
     {
-        if(instance == null) instance = this;
+        instance = this;
     }
 
     private void Start()
     {
-        playerAttack = FindObjectOfType<PlayerAttack>();
-        playerController = FindObjectOfType<PlayerController>();
-
         UpdateStatsUI();
     }
 
@@ -59,7 +54,7 @@ public class HudManager : MonoBehaviour
 
         if (!PauseMenu.instance.paused) Timer();
 
-        currentHealthText.text = "" + Math.Round(playerController._playerHealth.currentHealth, 2);
+        currentHealthText.text = "" + Math.Round(PlayerController.instance.currentHealth, 2);
     }
 
     void Timer()
@@ -113,17 +108,14 @@ public class HudManager : MonoBehaviour
 
     public void UpdateStatsUI()
     {
-        StatsManager sm = StatsManager.instance;
+        //StatsManager sm = StatsManager.instance;
 
         int index = 0;
 
         foreach (Transform stat in statsLayout.transform)
         {
-            stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = "" + Math.Round(sm.stats[index].statValue, 2);
+            //stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = "" + Math.Round(sm.stats[index].statValue, 2);
             index++;
         }
-
-        EmptyAmmoBar();
-        StartCoroutine(FillAmmoBar(Mathf.CeilToInt(StatsManager.instance.GetStat(StatsManager.StatType.ammo).statValue), playerAttack.throwAttackReloadTime));
     }
 }

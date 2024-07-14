@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5343448945096592614}
-  - component: {fileID: 6878270370933583169}
-  - component: {fileID: 1461561377369183283}
   - component: {fileID: -6486675671899634014}
+  - component: {fileID: 5064608794702667353}
   - component: {fileID: 4663822765102328427}
   - component: {fileID: -6254775758513481796}
   - component: {fileID: 7571206785945663512}
@@ -38,32 +37,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6878270370933583169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201353720213014471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bb8c6f05e2d00b46b1d51bcdd2b8180, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTime: 6
---- !u!114 &1461561377369183283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201353720213014471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40b79d803f737c47b91d4d469728f57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
 --- !u!114 &-6486675671899634014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +49,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244eafa1b53fec7468731e9aeb4beb50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+--- !u!114 &5064608794702667353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201353720213014471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a9e1ce315297d41939ef4234d5afed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 6
 --- !u!114 &4663822765102328427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f140ff678bdecb2448dc826e1b67318d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroy: 1
+  destroy: 0
+  delay: 0.1
   collidedTag: Player
 --- !u!114 &-6254775758513481796
 MonoBehaviour:

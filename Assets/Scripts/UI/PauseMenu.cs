@@ -12,15 +12,11 @@ public class PauseMenu : MonoBehaviour
 
     public bool paused = false;
 
-    PlayerController playerController;
-
     public static PauseMenu instance;
 
     private void Awake()
     {
         instance = this;
-
-        playerController = FindObjectOfType<PlayerController>();
     }
 
     private void Update()
@@ -67,7 +63,7 @@ public class PauseMenu : MonoBehaviour
         UpdateAnimators(true);
         UpdateEnemies(true);
         paused = false;
-        playerController.canMove = true;
+        PlayerController.instance.canMove = true;
     }
 
     // Pauses the game
@@ -77,7 +73,7 @@ public class PauseMenu : MonoBehaviour
         UpdateAnimators(false);
         UpdateEnemies(false);
         paused = true;
-        playerController.canMove = false;
+        PlayerController.instance.canMove = false;
     }
 
     public void ChangeCurrentSelectedElement(GameObject selected)
@@ -103,10 +99,10 @@ public class PauseMenu : MonoBehaviour
 
     void UpdateEnemies(bool activate)
     {
-        foreach (EnemyController e in FindObjectsOfType<EnemyController>())
+        foreach (Enemy e in FindObjectsOfType<Enemy>())
         {
             e.canMove = activate;
-            e.DeactivateFollowState();
+            //e.DeactivateFollowState();
         }
     }
 

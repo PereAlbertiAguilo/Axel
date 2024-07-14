@@ -10,8 +10,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioSource sfxAudioSource;
 
+    [Space]
+
     [SerializeField] Toggle musicToggle;
     [SerializeField] Toggle sfxToggle;
+
+    [Space]
 
     [SerializeField] GameObject musicMask;
     [SerializeField] GameObject sfxMask;

@@ -9,7 +9,7 @@ public class UserInput : MonoBehaviour
     public static UserInput instance;
 
     public Vector2 moveInput {  get; private set; }
-    public Vector2 viewInput {  get; private set; }
+    public Vector2 attackDirInput {  get; private set; }
     public bool viewInputDown {  get; private set; }
     public bool attackInput { get; private set; }
     public bool attackInputUp { get; private set; }
@@ -67,7 +67,7 @@ public class UserInput : MonoBehaviour
 
     void UpdateInputs()
     {
-        viewInput = _viewAction.ReadValue<Vector2>();
+        attackDirInput = _viewAction.ReadValue<Vector2>();
         viewInputDown = _viewAction.WasPressedThisFrame();
         attackInput = _attackAction.IsPressed();
         attackInputUp = _attackAction.WasReleasedThisFrame();
@@ -76,7 +76,7 @@ public class UserInput : MonoBehaviour
         dashInput = _dashAction.WasPressedThisFrame();
         pauseInput = _pauseAction.WasPressedThisFrame();
         interactInput = _interactAction.WasPressedThisFrame();
-        isKeyboard = Input.GetJoystickNames()[0].Length < 1;
+        //isKeyboard = Input.GetJoystickNames()[Input.GetJoystickNames().Length].Length < 1;
         moveInput = _moveAction.ReadValue<Vector2>();
         statsInputDown = _statsAction.WasPressedThisFrame();
         statsInputUp = _statsAction.WasReleasedThisFrame();
