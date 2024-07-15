@@ -26,21 +26,18 @@ public class Weapon : MonoBehaviour
 
     [HideInInspector] public bool attackState = false;
 
-    public Action UseWeapon;
-
     float horizontalInput;
     float verticalInput = -1;
+    float verticalView = -1;
 
     protected float keyframeDuration = 0;
-    int animationIndex = 0;
+    int animationIndex = -1;
 
     Vector3 pos = Vector2.down;
 
     private void Start()
     {
         SetAttackAnimation();
-
-        Attack();
     }
 
     private void Update()
@@ -55,6 +52,19 @@ public class Weapon : MonoBehaviour
         {
             Attack();
         }
+
+        int playerSortingOrder = PlayerController.instance._playerSpriteRenderer.sortingOrder;
+
+        if (verticalInput != 0)
+        {
+            verticalView = verticalInput;
+        }
+        else if (horizontalInput != 0)
+        {
+            verticalView = 1;
+        }
+
+        weaponRenderer.sortingOrder = verticalView < 0 ? playerSortingOrder + 1 : playerSortingOrder - 1;
     }
 
     public virtual void Attack()
@@ -63,11 +73,9 @@ public class Weapon : MonoBehaviour
 
         weaponAnimator.SetBool("Attack", true);
 
-        UseWeapon();
-
         pos = transform.position + new Vector3(horizontalInput, verticalInput);
 
-        Invoke(nameof(AttackStateReset), PlayerController.instance.currentAttackSpeed);
+        Invoke(nameof(AttackStateReset), PlayerController.instance.attackSpeedCurrent);
 
         transform.rotation = Direction.Rotation(pos, transform.position);
     }
@@ -89,14 +97,14 @@ public class Weapon : MonoBehaviour
 
         SetFrame(0, currentTime);
 
-        SetAnimationSpeed();
-
         List<Keyframe> frame = new List<Keyframe>();
-        Keyframe key = new Keyframe(currentTime - keyframeDuration, 1);
+        Keyframe key = new Keyframe(currentTime, 1);
         frame.Add(key);
         AnimationCurve curve = new AnimationCurve(frame.ToArray());
 
         attackAnimation.SetCurve("", typeof(Transform), "m_LocalScale.z", curve);
+
+        SetAnimationSpeed();
     }
 
     void SetFrame(int frame, float currentTime)
@@ -119,14 +127,11 @@ public class Weapon : MonoBehaviour
         weaponAnimator.speed = animationDuration / PlayerController.instance.attackSpeed;
     }
 
-    public void SetWeapon(Action use)
-    {
-        UseWeapon = use;
-    }
-
     public void AttackStateReset()
     {
         attackState = false;
         weaponAnimator.SetBool("Attack", false);
+
+        CancelInvoke();
     }
 }

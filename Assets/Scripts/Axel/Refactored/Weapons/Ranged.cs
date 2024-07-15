@@ -6,9 +6,11 @@ public class Ranged : Weapon
 {
     [SerializeField] GameObject projetile;
 
-    private void Awake()
+    public override void Attack()
     {
-        SetWeapon(UseRangedWeapon);
+        UseRangedWeapon();
+
+        base.Attack();
     }
 
     public void UseRangedWeapon()

@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class Slowness : Effect
+public class Dot : Effect
 {
+    float currentDotTime = 0;
+
     public void Start()
     {
         SetEffect();
@@ -14,7 +16,16 @@ public class Slowness : Effect
         {
             currentTime += Time.deltaTime;
 
-            entity.speedCurrent = SetEffectPower(entity.speed);
+            if(currentDotTime < .4f)
+            {
+                currentDotTime += Time.deltaTime;
+            }
+            else
+            {
+                currentDotTime = 0;
+
+                entity.DealDamage(SetEffectPower(4f * entity.health / 100));
+            }
         }
         else
         {
@@ -27,7 +38,6 @@ public class Slowness : Effect
     public override void EndEffect()
     {
         currentTime = effectDuration;
-        entity.speedCurrent = entity.speed;
     }
 
     private void OnDestroy()

@@ -24,8 +24,10 @@ public class Enemy : Entity
         _enemyRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public virtual void Start()
+    public override void Start()
     {
+        base.Start();
+
         if(transform.parent.TryGetComponent(out enemiesManager)) enemiesManager.AddToEnemiesList(gameObject);
     }
 

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +24,7 @@ public class StatUpgrader : MonoBehaviour
     Animator _animator;
 
     [SerializeField] Color[] rarityColors; 
-    [SerializeField] Sprite[] statsSprites;
+    [SerializeField] Sprite[] statSprites;
 
     bool hasInteracted = false;
 
@@ -42,6 +41,8 @@ public class StatUpgrader : MonoBehaviour
 
     float[] rarityMuliplier = { 1, 1.5f, 2.5f, 4, 6 };
 
+    Entity.Stat randomStat;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -51,20 +52,21 @@ public class StatUpgrader : MonoBehaviour
     {
         SetRarity();
 
-        randomStatIndex = Random.Range(0, 3);
+        randomStatIndex = Random.Range(0, 4);
+        randomStat = (Entity.Stat)randomStatIndex;
 
-        statImage.sprite = statsSprites[randomStatIndex];
-        //statAmountText.text = "" + StatFromIndex(randomStatIndex).name +  ":\n" + StatFromIndex(randomStatIndex).statValue;
-        //statAmountText.text += "<color=green>" + (StatFromIndex(randomStatIndex).statMultiplier > 0 ? " + " : " - ") +
-        //    Mathf.Abs(StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]) + "</color>";
+        statImage.sprite = statSprites[randomStatIndex];
+        statAmountText.text = "" + randomStat.ToString().ToUpper() +  ":\n" + PlayerController.instance.GetStat(randomStat);
+        statAmountText.text += "<color=green>" + (PlayerController.instance.GetStatMultiplier(randomStat) > 0 ? " + " : " - ") +
+            Mathf.Abs(PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity]) + "</color>";
     }
 
     private void Update()
     {
-        if (UserInput.instance.interactInput && canInteract && !hasInteracted /*&& StatsManager.instance.canModifyStats*/)
+        if (UserInput.instance.interactInput && canInteract && !hasInteracted)
         {
             hasInteracted = true;
-            //StatsManager.instance.UpgradeStat(StatFromIndex(randomStatIndex), StatFromIndex(randomStatIndex).statMultiplier * rarityMuliplier[(int)rarity]);
+            PlayerController.instance.SetStat(randomStat, PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity]);
             _animator.SetBool("IsInRange", false);
         }
     }
@@ -75,27 +77,22 @@ public class StatUpgrader : MonoBehaviour
 
         if(randomValue > 0 && randomValue < .6f)
         {
-            //rarityMuliplier = 1f;
             rarity = Rarity.common;
         }
         else if (randomValue > .6f && randomValue < .90f)
         {
-            //rarityMuliplier = 1.2f;
             rarity = Rarity.uncommon;
         }
         else if(randomValue > .90f && randomValue < .95f)
         {
-            //rarityMuliplier = 1.8f;
             rarity = Rarity.rare;
         }
         else if (randomValue > .95f && randomValue < .98f)
         {
-            //rarityMuliplier = 2.5f;
             rarity = Rarity.epic;
         }
         else
         {
-            //rarityMuliplier = 4f;
             rarity = Rarity.legendary;
         }
 

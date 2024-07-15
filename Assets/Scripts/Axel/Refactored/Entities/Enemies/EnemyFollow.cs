@@ -26,7 +26,7 @@ public class EnemyFollow : Enemy
 
     private void Update()
     {
-        _aIPath.maxSpeed = currentSpeed;
+        _aIPath.maxSpeed = speedCurrent;
     }
 
     public override void MoveReset()

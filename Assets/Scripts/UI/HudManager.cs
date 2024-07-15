@@ -54,7 +54,7 @@ public class HudManager : MonoBehaviour
 
         if (!PauseMenu.instance.paused) Timer();
 
-        currentHealthText.text = "" + Math.Round(PlayerController.instance.currentHealth, 2);
+        currentHealthText.text = "" + Math.Round(PlayerController.instance.healthCurrent, 2);
     }
 
     void Timer()

@@ -5,7 +5,7 @@ public class Weakness : Effect
 {
     public void Start()
     {
-        SetEffect(entity.currentDamage);
+        SetEffect();
     }
 
     private void Update()
@@ -14,7 +14,7 @@ public class Weakness : Effect
         {
             currentTime += Time.deltaTime;
 
-            entity.currentDamage = SetEffectPower(entity.damage);
+            entity.damageCurrent = SetEffectPower(entity.damage);
         }
         else
         {
@@ -27,7 +27,7 @@ public class Weakness : Effect
     public override void EndEffect()
     {
         currentTime = effectDuration;
-        entity.currentDamage = entity.damage;
+        entity.damageCurrent = entity.damage;
     }
 
     private void OnDestroy()

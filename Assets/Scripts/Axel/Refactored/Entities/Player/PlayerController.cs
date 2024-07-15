@@ -26,13 +26,13 @@ public class PlayerController : Entity
     Vector2 moveDir;
 
     Animator _playerAnimator;
-    SpriteRenderer _playerSpriteRenderer;
 
     [SerializeField] VolumeProfile volumeProfile;
     Vignette vignette;
 
     [HideInInspector] public EnemiesManager currentEnemiesManager;
     [HideInInspector] public Rigidbody2D _playerRigidbody;
+    [HideInInspector] public SpriteRenderer _playerSpriteRenderer;
 
     public override void Awake()
     {
@@ -45,8 +45,10 @@ public class PlayerController : Entity
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
+
         verticalInput = -1;
         verticalView = -1;
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ZIndex : MonoBehaviour
 {
-    SpriteRenderer spriteRenderer;
+    [SerializeField] int offset = 0;
+    public SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -13,6 +14,6 @@ public class ZIndex : MonoBehaviour
 
     private void Update()
     {
-        spriteRenderer.sortingOrder = -(int)transform.position.y * 10;
+        spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 10);
     }
 }

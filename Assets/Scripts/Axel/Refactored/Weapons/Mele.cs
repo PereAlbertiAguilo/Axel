@@ -11,15 +11,15 @@ public class Mele : Weapon
 
     private void Awake()
     {
-        SetWeapon(UseMeleWeapon);
-
         weaponCollider = GetComponent<PolygonCollider2D>();
     }
 
-    public void UseMeleWeapon()
+    public override void Attack()
     {
         StartCoroutine(ActivateCollider());
-    } 
+
+        base.Attack();
+    }
 
     IEnumerator ActivateCollider()
     {
@@ -30,5 +30,7 @@ public class Mele : Weapon
         yield return new WaitForSeconds(keyframeDuration);
 
         weaponCollider.enabled = false;
+
+        yield return new WaitUntil(() => attackState == true);
     }
 }

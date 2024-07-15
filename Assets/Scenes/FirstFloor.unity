@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 132675266}
   - component: {fileID: 132675270}
   m_Layer: 0
-  m_Name: Player
+  m_Name: ==Player==
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,23 +213,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
-  currentHealth: 0
+  healthCurrent: 0
+  healthMultiplier: 2
   damage: 3
-  currentDamage: 0
+  damageCurrent: 0
+  damageMultiplier: 0.2
   speed: 75
-  currentSpeed: 0
+  speedCurrent: 0
+  speedMultiplier: 5
   defense: 50
-  currentDefese: 0
-  attackSpeed: 0.35
-  currentAttackSpeed: 0
+  defenseCurrent: 0
+  defenseMultiplier: 2
+  attackSpeed: 1
+  attackSpeedCurrent: 0
+  attackSpeedMultiplier: -0.01
   isMobile: 1
   canMove: 1
   canDealDamage: 1
   canTakeDamage: 1
   appliesEffects: 1
   effects:
-  - {fileID: 912468601}
-  - {fileID: 912468600}
+  - {fileID: 0}
+  effectsHolder: {fileID: 0}
   popUpMessage: {fileID: 7363197226712373237, guid: 64aedbbe560c4b7448d9d22741fd7de7, type: 3}
   dashCooldown: 0.4
   dashSpeed: 40
@@ -238,6 +243,7 @@ MonoBehaviour:
   volumeProfile: {fileID: 11400000, guid: 029f96b48e3e04f47a0fb3d9051e4b76, type: 2}
   currentEnemiesManager: {fileID: 0}
   _playerRigidbody: {fileID: 0}
+  _playerSpriteRenderer: {fileID: 0}
 --- !u!4 &132675263
 Transform:
   m_ObjectHideFlags: 0
@@ -405,6 +411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 0
+  spriteRenderer: {fileID: 0}
 --- !u!1 &265083375
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +650,7 @@ MonoBehaviour:
   weaponName: 
   weaponSprite: {fileID: 0}
   attackState: 0
-  colliderFrame: 2
+  colliderFrame: 3
 --- !u!212 &720620775
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -681,8 +689,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 148261103
+  m_SortingLayer: -1
   m_SortingOrder: 2
   m_Sprite: {fileID: -526919282, guid: ca766e39ca59b2742b3f35d48e5155dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -723,7 +731,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720620771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -762,8 +770,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.75, y: 0.75}
       - {x: -0.75, y: 0.75}
-      - {x: -0.75, y: -0.75}
-      - {x: 0.75, y: -0.75}
+      - {x: -0.75, y: -1.5}
+      - {x: 0.75, y: -1.5}
   m_UseDelaunayMesh: 0
 --- !u!114 &720620778
 MonoBehaviour:
@@ -863,8 +871,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 148261103
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 546745a3720b28641b38043cc8934bd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -889,6 +897,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: -1
+  spriteRenderer: {fileID: 0}
 --- !u!1 &912468598
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,15 +908,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 912468599}
-  - component: {fileID: 912468601}
-  - component: {fileID: 912468600}
   m_Layer: 0
-  m_Name: Effects
+  m_Name: EffectsHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &912468599
 Transform:
   m_ObjectHideFlags: 0
@@ -922,42 +930,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 132675263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &912468600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912468598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2934a110f13ab49908bfbb4283d60f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  effectDuration: 2
-  effectPower: 6
-  effectIsActive: 0
-  currentTime: 0
-  entity: {fileID: 0}
---- !u!114 &912468601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912468598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a787a8e96061094eb415fecf042e35c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  effectDuration: 2
-  effectPower: 5
-  effectIsActive: 0
-  currentTime: 0
-  entity: {fileID: 0}
 --- !u!1001 &937185123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -966,18 +938,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 566824643690728169, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: data.dataString
-      value: UEsDBBQAAAgIAAAIIexackq4WAIAABQFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMuS2jAQ/BVK57Bl8ya3BFg2BxZqSWovvghrjFXIkkuSeRb/npFsY4fUnhA9PTPdo5FvhEuTQ2yVXmrOVooB+d4h7ky+dZrgG5zpXsktv0LN+eTMpo5EPeeDWq4QD12aURlYzeMfci8cOUCwkDxROluwPcyUsQbhhAoDGNLKumyJ0K1DzvjTnbqUC556Y3e64mkadO54jEFa0A21Jta0klXIWNAsB+YkN+R+r2KHE0+TaKZiBC9DV10JwU2lhdhL7r1u8xQ0OLOMU7Tm+wcvIwRS4PvUOqHt7HWSGLCVKk0vc65xRmVZ8lOVg8uoOZTSjlQUrtFo4FWVNVf/hbuhDydaZW912zBwLWzK48MHvcTU2NZg2/C8UR76AZ2oONCdgM8U5LtaalVIhkGrC5daGOjNm78PZ7MU4kODl1KfwCL/+nqch7s3f54Jnu38IAclsBUqr9cFNF7NL9TrN8M0qBPxx8Bvum+vUBV45dpYDFUmpVO3U4V2VLLwI3NmCjtTWoJuV8hBUmEvG6xjn2/wKfZ11it1r6XqXsXqR/CU4uGGHwRPoY06PS7LpOq0ApOuCyu4hGbSLvCOg5opKcsFa1uq07aFTmjcStsXnP27WmScjHfDAYz6wQQAgkkX4t2U7SYTGg4n/ZBOid89LtEnFZtSaCUPb002xSXuWf0R6Sw1zf2yM01PS37NlGmYXCZqG2sAuS4rPISDxib4LtmCcRzQFqzl0l84uUVEqPgALHoUirzTxdlqGjVVIpLzo7IOicjMfzUi4uDHLm80HDmcXPO62J3c/wJQSwMEFAAACAgAAAgh7JRdygNtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJJ5mnmSqUmqmbGBRWpqqoGFbmpykmVKkoVFoqGphbFhoqVSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAAgh7FpySrhYAgAAFAUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7JRdygNtAAAAeAAAAAkAJAAAAAAAAAAAAAAApQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABdAwAAAAA=
-      objectReference: {fileID: 0}
-    - target: {fileID: 998701075773036982, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 998701075773036982, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
     - target: {fileID: 2009525005826505931, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
       propertyPath: m_Follow
       value: 
@@ -1025,26 +985,6 @@ PrefabInstance:
     - target: {fileID: 2684631856465007105, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848819867763708253, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848819867763708253, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848819867763708253, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848819867763708253, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848819867763708253, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8969683319743879180, guid: b8f17ff34ff04cc45b19be05b42f5a88, type: 3}
       propertyPath: m_Name
@@ -1287,7 +1227,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204373188}
   serializedVersion: 8
-  lengthInSec: 0.25
+  lengthInSec: 0.2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -1467,8 +1407,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
-      minColor: {r: 1, g: 1, b: 1, a: 1}
+      minMaxState: 2
+      minColor: {r: 0.2967693, g: 0.45741373, b: 0.5377358, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
@@ -1533,8 +1473,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.2
+      scalar: 2.3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1997,7 +1937,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.6262353
+      value: 0.5
       mode: 0
       spread: 0
       speed:
@@ -2116,7 +2056,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -2222,33 +2162,33 @@ ParticleSystem:
     m_BurstCount: 0
     m_Bursts: []
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
-      minScalar: 1
+      scalar: 0.5
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
+          value: 0.5
           inSlope: 0
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1.1208211
+          outSlope: 1.1208211
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.10204083
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -6283,7 +6223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396615533}
   m_Layer: 0
-  m_Name: ===Other==
+  m_Name: ==Other==
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

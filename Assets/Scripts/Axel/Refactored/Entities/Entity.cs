@@ -1,87 +1,157 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
+using System.Linq;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    public enum Stat
+    {
+        health, damage, speed, defense, attackSpeed
+    };
+
     [HideInInspector] public float health;
-    [HideInInspector] public float currentHealth;
+    [HideInInspector] public float healthCurrent;
+    [HideInInspector] public float healthMultiplier;
     [HideInInspector] public float damage;
-    [HideInInspector] public float currentDamage;
+    [HideInInspector] public float damageCurrent;
+    [HideInInspector] public float damageMultiplier;
     [HideInInspector] public float speed;
-    [HideInInspector] public float currentSpeed;
+    [HideInInspector] public float speedCurrent;
+    [HideInInspector] public float speedMultiplier;
     [HideInInspector] public float defense;
-    [HideInInspector] public float currentDefese;
+    [HideInInspector] public float defenseCurrent;
+    [HideInInspector] public float defenseMultiplier;
     [HideInInspector] public float attackSpeed;
-    [HideInInspector] public float currentAttackSpeed;
+    [HideInInspector] public float attackSpeedCurrent;
+    [HideInInspector] public float attackSpeedMultiplier;
     [HideInInspector] public bool isMobile;
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool canDealDamage;
     [HideInInspector] public bool canTakeDamage = true;
     [HideInInspector] public bool appliesEffects;
     [HideInInspector] public List<Effect> effects = new List<Effect>();
+    [HideInInspector] public GameObject effectsHolder;
     [HideInInspector] public GameObject popUpMessage;
+
+    public FieldInfo[] properties = typeof(Entity).GetFields();
 
     public virtual void Awake()
     {
-        currentHealth = health;
-        currentSpeed = speed;
-        currentAttackSpeed = attackSpeed;
-        currentDefese = defense;
-        currentDamage = damage;
+        healthCurrent = health;
+        speedCurrent = speed;
+        attackSpeedCurrent = attackSpeed;
+        defenseCurrent = defense;
+        damageCurrent = damage;
 
+        effectsHolder = Instantiate(new GameObject("EffectsHolder"), transform);
+    }
+
+    public virtual void Start()
+    {
+        SetStat(Stat.health, 5);
     }
 
     public void AddHealth(float healthToAdd)
     {
-        if (currentHealth < health)
+        if (healthCurrent < health)
         {
-            currentHealth += healthToAdd;
+            healthCurrent += healthToAdd;
 
             PopUpMessage("" + healthToAdd, .3f, Color.green, 0);
         }
         else
         {
-            currentHealth = health;
+            healthCurrent = health;
         }
     }
 
     public void DealDamage(float healthToRemove)
     {
-        if (currentHealth > 0)
+        if (healthCurrent > 0)
         {
-            currentHealth -= healthToRemove;
+            healthCurrent -= healthToRemove;
 
             PopUpMessage("" + healthToRemove, .3f, Color.red, 0);
 
-            if (currentHealth <= 0)
+            if (healthCurrent <= 0)
             {
-                currentHealth = 0;
+                healthCurrent = 0;
 
                 gameObject.SetActive(false);
             }
         }
     }
 
+    public void SetStat(Stat stat, float statChange)
+    {
+        FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
+        FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
+
+        float changedValue = (float)property.GetValue(this) + statChange;
+        float currentChangedValue = (float)currentProperty.GetValue(this) + statChange;
+
+        property.SetValue(this, changedValue);
+        currentProperty.SetValue(this, currentChangedValue);
+    }
+    public float GetStat(Stat stat)
+    {
+        FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
+
+        return (float)property.GetValue(this);
+    }
+
+    public float GetCurrentStat(Stat stat)
+    {
+        FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
+
+        return (float)currentProperty.GetValue(this);
+    }
+
+    public float GetStatMultiplier(Stat stat)
+    {
+        FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Multiplier");
+
+        return (float)currentProperty.GetValue(this);
+    }
+
+    string GetStatName(Stat stat)
+    {
+        return stat.ToString();
+    }
+
     public void ApplyEffect(Entity entityAttacker)
     {
         List<string> effects = new List<string>();
 
+        int index = 0;
+
         foreach (Effect effect in entityAttacker.effects)
         {
+            bool hasEffect = false;
+
+            foreach (Transform currentEffect in effectsHolder.transform)
+            {
+                if (effect.type == currentEffect.GetComponent<Effect>().type) hasEffect = true;
+            }
+
+            if (hasEffect) continue;
+
             GameObject instanceEffect = Resources.Load($"Effects/{effect.type}", typeof(GameObject)) as GameObject;
             instanceEffect.name = "" + effect.type;
 
             effects.Add("" + effect.type);
 
-            Effect newEffect = Instantiate(instanceEffect, transform).GetComponent<Effect>();
+            Effect newEffect = Instantiate(instanceEffect, effectsHolder.transform).GetComponent<Effect>();
 
             newEffect.effectDuration = effect.effectDuration;
             newEffect.effectPower = effect.effectPower;
-
+            newEffect.type = effect.type;
             newEffect.entity = this;
+
+            index++;
         }
 
         StartCoroutine(DisplayEffects(effects, .5f));

@@ -549,7 +549,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 127907025
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 1
   m_Sprite: {fileID: -454264023, guid: 74414b690d67abf4a87d1984181f1e54, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -584,15 +584,12 @@ MonoBehaviour:
   - {r: 0.27058828, g: 0.8117647, b: 0.7758281, a: 1}
   - {r: 0.7653606, g: 0.44010326, b: 0.8113208, a: 1}
   - {r: 0.8396226, g: 0.7484872, b: 0.36040404, a: 1}
-  statsSprites:
+  statSprites:
   - {fileID: 500095644, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   - {fileID: -1996246006, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: -1996246006, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: -1361479664, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: 744481619, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   - {fileID: -765882653, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: -667761099, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: -2126824408, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
+  - {fileID: 1172788161, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
+  - {fileID: -1361479664, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   randomStatIndex: 0
   rarity: 0
 --- !u!61 &5790417388036011834

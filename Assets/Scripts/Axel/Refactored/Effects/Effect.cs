@@ -23,7 +23,7 @@ public class Effect : MonoBehaviour
 
     [HideInInspector] public Entity entity;
 
-    public void SetEffect(float startValue)
+    public void SetEffect()
     {
         currentTime = 0;
     }
