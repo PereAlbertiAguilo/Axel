@@ -16,18 +16,18 @@ public class Mele : Weapon
 
     public override void Attack()
     {
-        StartCoroutine(ActivateCollider());
-
         base.Attack();
+
+        StartCoroutine(ActivateCollider());
     }
 
     IEnumerator ActivateCollider()
     {
-        yield return new WaitForSeconds(keyframeDuration * colliderFrame - keyframeDuration);
+        yield return new WaitForSeconds(keyframeDuration * colliderFrame / AnimationSpeed());
 
         weaponCollider.enabled = true;
 
-        yield return new WaitForSeconds(keyframeDuration);
+        yield return new WaitForSeconds(keyframeDuration / AnimationSpeed());
 
         weaponCollider.enabled = false;
 

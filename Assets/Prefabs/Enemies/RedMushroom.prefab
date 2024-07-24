@@ -52,6 +52,61 @@ MonoBehaviour:
   shootingObject: {fileID: 201353720213014471, guid: d575114415b1098439649aab756bf533, type: 3}
   poolSize: 10
   enemy: {fileID: 5203105537414383766}
+--- !u!1 &3609955036210053474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5207968669596110437}
+  - component: {fileID: 240447221384976800}
+  m_Layer: 0
+  m_Name: EffectsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5207968669596110437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3609955036210053474}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8980939200506487258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &240447221384976800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3609955036210053474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7796f6adddd7048b05a3153c7bb658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appliesEffects: 1
+  entity: {fileID: 5203105537414383766}
+  effectsHolder: {fileID: 0}
+  appliableEffects:
+  - name: Slowness
+    type: 0
+    duration: 1
+    power: 2
+  effectType: 0
+  effectPower: 2
+  effectDuration: 1
 --- !u!1 &4740229863244203120
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,6 +144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5207968669596110437}
   - {fileID: 6179115197086760173}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,22 +161,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
-  currentHealth: 0
+  healthCurrent: 0
   damage: 5
-  currentDamage: 0
+  damageCurrent: 0
   speed: 0
-  currentSpeed: 0
+  speedCurrent: 0
   defense: 0
-  currentDefese: 0
+  defenseCurrent: 0
   attackSpeed: 1.5
-  currentAttackSpeed: 0
+  attackSpeedCurrent: 0
   isMobile: 0
   canMove: 1
   canDealDamage: 1
   canTakeDamage: 1
-  appliesEffects: 0
-  effects: []
-  popUpMessage: {fileID: 7363197226712373237, guid: 64aedbbe560c4b7448d9d22741fd7de7, type: 3}
+  effectsManager: {fileID: 240447221384976800}
   canBeKnockbacked: 0
   _enemyRigidbody: {fileID: 3609770490996220176}
   _enemyRenderer: {fileID: 3400902059352589045}
@@ -309,3 +363,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 0
+  spriteRenderer: {fileID: 0}

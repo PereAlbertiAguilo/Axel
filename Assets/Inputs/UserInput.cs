@@ -73,7 +73,7 @@ public class UserInput : MonoBehaviour
         attackInputUp = _attackAction.WasReleasedThisFrame();
         changeAttackInput = _changeAttackAction.WasPressedThisFrame();
         lockEnemyInput = _lockEnemyAction.WasPressedThisFrame();
-        dashInput = _dashAction.WasPressedThisFrame();
+        dashInput = _dashAction.IsPressed();
         pauseInput = _pauseAction.WasPressedThisFrame();
         interactInput = _interactAction.WasPressedThisFrame();
         //isKeyboard = Input.GetJoystickNames()[Input.GetJoystickNames().Length].Length < 1;

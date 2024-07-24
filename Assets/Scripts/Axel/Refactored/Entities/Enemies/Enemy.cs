@@ -47,9 +47,9 @@ public class Enemy : Entity
 
         Invoke(nameof(MoveReset), .1f);
 
-        if (PlayerController.instance.appliesEffects)
+        if (PlayerController.instance.effectsManager.appliesEffects)
         {
-            ApplyEffect(PlayerController.instance);
+            effectsManager.ApplyEffect(PlayerController.instance.effectsManager);
         }
     }
 

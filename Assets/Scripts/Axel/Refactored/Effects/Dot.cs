@@ -12,7 +12,7 @@ public class Dot : Effect
 
     private void Update()
     {
-        if (currentTime < effectDuration)
+        if (currentTime < effectParameters.duration)
         {
             currentTime += Time.deltaTime;
 
@@ -24,7 +24,7 @@ public class Dot : Effect
             {
                 currentDotTime = 0;
 
-                entity.DealDamage(SetEffectPower(4f * entity.health / 100));
+                entity.DealDamage(SetEffectPower(5f * entity.health / 100, false));
             }
         }
         else
@@ -37,7 +37,7 @@ public class Dot : Effect
 
     public override void EndEffect()
     {
-        currentTime = effectDuration;
+        currentTime = effectParameters.duration;
     }
 
     private void OnDestroy()

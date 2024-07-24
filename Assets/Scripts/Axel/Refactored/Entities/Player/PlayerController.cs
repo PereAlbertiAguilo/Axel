@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using System.Linq;
+using System.Reflection;
 
 public class PlayerController : Entity
 {
     public static PlayerController instance;
+
+    public float healthMultiplier;
+    public float damageMultiplier;
+    public float speedMultiplier;
+    public float defenseMultiplier;
+    public float attackSpeedMultiplier;
+
+    [Space]
 
     [SerializeField] float dashCooldown;
     [SerializeField] float dashSpeed;
@@ -33,6 +43,8 @@ public class PlayerController : Entity
     [HideInInspector] public EnemiesManager currentEnemiesManager;
     [HideInInspector] public Rigidbody2D _playerRigidbody;
     [HideInInspector] public SpriteRenderer _playerSpriteRenderer;
+
+    public FieldInfo[] properties = typeof(PlayerController).GetFields();
 
     public override void Awake()
     {
@@ -126,7 +138,7 @@ public class PlayerController : Entity
     {
         moveDir = new Vector2(horizontalInput, verticalInput);
 
-        _playerRigidbody.AddForce(moveDir * speed * 100, ForceMode2D.Force);
+        _playerRigidbody.AddForce(moveDir * speedCurrent * 100, ForceMode2D.Force);
 
         if (canDash == 2)
         {
@@ -156,9 +168,9 @@ public class PlayerController : Entity
                 dir : Vector2.zero) * 1200, ForceMode2D.Impulse);
         }
 
-        if (hitingEntity.appliesEffects)
+        if (hitingEntity.effectsManager.appliesEffects)
         {
-            ApplyEffect(hitingEntity);
+            effectsManager.ApplyEffect(hitingEntity.effectsManager);
         }
     }
 
@@ -189,7 +201,42 @@ public class PlayerController : Entity
         _playerSpriteRenderer.color = Color.white;
     }
 
+    public void SetStat(Stat stat, float statChange)
+    {
+        FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
+        FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
 
+        float changedValue = (float)property.GetValue(this) + statChange;
+        float currentChangedValue = (float)currentProperty.GetValue(this) + statChange;
+
+        property.SetValue(this, changedValue);
+        currentProperty.SetValue(this, currentChangedValue);
+    }
+    public float GetStat(Stat stat)
+    {
+        FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
+
+        return (float)property.GetValue(this);
+    }
+
+    public float GetCurrentStat(Stat stat)
+    {
+        FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
+
+        return (float)currentProperty.GetValue(this);
+    }
+
+    public float GetStatMultiplier(Stat stat)
+    {
+        FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Multiplier");
+
+        return (float)currentProperty.GetValue(this);
+    }
+
+    string GetStatName(Stat stat)
+    {
+        return stat.ToString();
+    }
     void DashReset()
     {
         canDash = 0;

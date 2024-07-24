@@ -10,11 +10,11 @@ public class Slowness : Effect
 
     private void Update()
     {
-        if (currentTime < effectDuration)
+        if (currentTime < effectParameters.duration)
         {
             currentTime += Time.deltaTime;
 
-            entity.speedCurrent = SetEffectPower(entity.speed);
+            entity.speedCurrent = SetEffectPower(entity.speed, true);
         }
         else
         {
@@ -26,7 +26,7 @@ public class Slowness : Effect
 
     public override void EndEffect()
     {
-        currentTime = effectDuration;
+        currentTime = effectParameters.duration;
         entity.speedCurrent = entity.speed;
     }
 

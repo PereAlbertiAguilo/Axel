@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,8 +18,6 @@ public class Weapon : MonoBehaviour
     [HideInInspector] public Element weaponElement;
     [HideInInspector] public WeaponType weaponType;
     [HideInInspector] public float animationDuration;
-    [HideInInspector] public Animator weaponAnimator;
-    [HideInInspector] public AnimationClip attackAnimation;
     [HideInInspector] public SpriteRenderer weaponRenderer;
     [HideInInspector] public Sprite[] attackSpriteSheet;
     [HideInInspector] public string weaponName;
@@ -30,14 +29,14 @@ public class Weapon : MonoBehaviour
     float verticalInput = -1;
     float verticalView = -1;
 
-    protected float keyframeDuration = 0;
+    protected float keyframeDuration = 2;
     int animationIndex = -1;
 
     Vector3 pos = Vector2.down;
 
     private void Start()
     {
-        SetAttackAnimation();
+        keyframeDuration = attackSpriteSheet.Length / 12f / attackSpriteSheet.Length;
     }
 
     private void Update()
@@ -48,20 +47,20 @@ public class Weapon : MonoBehaviour
         horizontalInput = Mathf.Abs(horizontalInput) <= .3f ? 0 : horizontalInput;
         verticalInput = Mathf.Abs(verticalInput) <= .3f ? 0 : verticalInput;
 
+        int playerSortingOrder = PlayerController.instance._playerSpriteRenderer.sortingOrder;
+
         if (!attackState && (horizontalInput != 0 || verticalInput != 0))
         {
             Attack();
-        }
 
-        int playerSortingOrder = PlayerController.instance._playerSpriteRenderer.sortingOrder;
-
-        if (verticalInput != 0)
-        {
-            verticalView = verticalInput;
-        }
-        else if (horizontalInput != 0)
-        {
-            verticalView = 1;
+            if (verticalInput != 0)
+            {
+                verticalView = verticalInput;
+            }
+            else if (horizontalInput != 0)
+            {
+                verticalView = 1;
+            }
         }
 
         weaponRenderer.sortingOrder = verticalView < 0 ? playerSortingOrder + 1 : playerSortingOrder - 1;
@@ -71,7 +70,7 @@ public class Weapon : MonoBehaviour
     {
         attackState = true;
 
-        weaponAnimator.SetBool("Attack", true);
+        StartCoroutine(AttackAnimation());
 
         pos = transform.position + new Vector3(horizontalInput, verticalInput);
 
@@ -80,57 +79,33 @@ public class Weapon : MonoBehaviour
         transform.rotation = Direction.Rotation(pos, transform.position);
     }
 
-    public void SetAttackAnimation()
+    public IEnumerator AttackAnimation()
     {
-        attackAnimation.ClearCurves();
+        Sprite idleSprite = weaponRenderer.sprite;
 
         float currentTime = 0;
-        keyframeDuration = attackSpriteSheet.Length / attackAnimation.frameRate / attackSpriteSheet.Length;
 
-        for (int i = 0; i < attackSpriteSheet.Length; i++)
+        foreach (Sprite frame in attackSpriteSheet)
         {
-            SetFrame(i, currentTime);
+            weaponRenderer.sprite = frame;
 
             currentTime += keyframeDuration;
             animationIndex++;
+
+            yield return new WaitForSeconds(keyframeDuration / AnimationSpeed());
         }
 
-        SetFrame(0, currentTime);
-
-        List<Keyframe> frame = new List<Keyframe>();
-        Keyframe key = new Keyframe(currentTime, 1);
-        frame.Add(key);
-        AnimationCurve curve = new AnimationCurve(frame.ToArray());
-
-        attackAnimation.SetCurve("", typeof(Transform), "m_LocalScale.z", curve);
-
-        SetAnimationSpeed();
+        weaponRenderer.sprite = idleSprite;
     }
 
-    void SetFrame(int frame, float currentTime)
+    public float AnimationSpeed()
     {
-        AnimationEvent animationEvent = new AnimationEvent();
-        animationEvent.functionName = nameof(AnimationEvent);
-        animationEvent.intParameter = frame;
-        animationEvent.time = currentTime;
-
-        attackAnimation.AddEvent(animationEvent);
-    }
-
-    void AnimationEvent(int frame)
-    {
-        weaponRenderer.sprite = attackSpriteSheet[frame];
-    }
-
-    public void SetAnimationSpeed()
-    {
-        weaponAnimator.speed = animationDuration / PlayerController.instance.attackSpeed;
+        return animationDuration / PlayerController.instance.attackSpeedCurrent;
     }
 
     public void AttackStateReset()
     {
         attackState = false;
-        weaponAnimator.SetBool("Attack", false);
 
         CancelInvoke();
     }

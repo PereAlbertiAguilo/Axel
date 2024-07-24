@@ -9,12 +9,10 @@ using UnityEngine.UI;
 // TODO: Time / StageName                                                                         |
 // TODO: Money / Cins / Currency / whatever... (brainstorming)                                <---]
 
-
 public class HudManager : MonoBehaviour
 {
     [SerializeField] Image dashCooldownImage;
-    public GameObject ammoBar;
-    [SerializeField] GameObject ammoPoint;
+    [SerializeField] Image healthBarImage;
 
     [SerializeField] GameObject topBar;
     [SerializeField] GameObject statsPanel;
@@ -55,6 +53,8 @@ public class HudManager : MonoBehaviour
         if (!PauseMenu.instance.paused) Timer();
 
         currentHealthText.text = "" + Math.Round(PlayerController.instance.healthCurrent, 2);
+
+        healthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
     }
 
     void Timer()
@@ -81,41 +81,11 @@ public class HudManager : MonoBehaviour
         dashCooldownImage.fillAmount = 1;
     }
 
-    public IEnumerator FillAmmoBar(int ammoToFill, float reloadTime)
-    {
-        for (int i = 0; i < ammoToFill; i++)
-        {
-            Instantiate(ammoPoint, ammoBar.transform);
-            yield return new WaitForSeconds((reloadTime / ammoToFill) / 2);
-        }
-    }
-
-    public void EmptyAmmoBar()
-    {
-        foreach (Transform ammoPoint in ammoBar.transform)
-        {
-            Destroy(ammoPoint.gameObject);
-        }
-    }
-
-    public void UpdateAmmoBar(int currentAmmo)
-    {
-        if(currentAmmo > 0)
-        {
-            Destroy(ammoBar.transform.GetChild(ammoBar.transform.childCount - 1).gameObject);
-        }
-    }
-
     public void UpdateStatsUI()
     {
-        //StatsManager sm = StatsManager.instance;
-
-        int index = 0;
-
-        foreach (Transform stat in statsLayout.transform)
+        for (int i = 0; i < Enum.GetValues(typeof(Entity.Stat)).Length; i++)
         {
-            //stat.GetChild(2).GetComponent<TextMeshProUGUI>().text = "" + Math.Round(sm.stats[index].statValue, 2);
-            index++;
+            statsLayout.transform.GetChild(i).Find("StatInfo").GetComponent<TextMeshProUGUI>().text = "" + PlayerController.instance.GetStat((Entity.Stat)i);
         }
     }
 }

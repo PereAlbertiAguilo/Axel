@@ -13,6 +13,8 @@ public class KeybindsMenu : MonoBehaviour
 
     public List<GameObject> scrollItems = new List<GameObject>();
 
+    bool canScroll = false;
+
     private void Start()
     {
         foreach (Transform item in scrollRect.content.transform)
@@ -23,9 +25,18 @@ public class KeybindsMenu : MonoBehaviour
 
     private void Update()
     {
+        if (Input.mouseScrollDelta.y != 0)
+        {
+            canScroll = true;
+        }
+        else if(Input.anyKeyDown)
+        {
+            canScroll= false;
+        }
+
         currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 
-        if (currentSelectedGameObject != null && transform.GetChild(0).gameObject.activeInHierarchy && scrollRect.verticalScrollbar.gameObject != currentSelectedGameObject)
+        if (currentSelectedGameObject != null && transform.GetChild(0).gameObject.activeInHierarchy && scrollRect.verticalScrollbar.gameObject != currentSelectedGameObject && !canScroll)
         {
             foreach (GameObject item in scrollItems)
             {

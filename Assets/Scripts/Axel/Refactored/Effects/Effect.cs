@@ -3,20 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Effect : MonoBehaviour
 {
-    public enum EffectType
-    {
-        Slowness, Weakness, Stun, Dot
-    };
-
-    public EffectType type;
-    [Space]
-    public float effectDuration;
-    [Range(1f, 10f), Space]
-    public int effectPower;
+    public EffectParameters effectParameters;
+    
     public bool effectIsActive = false;
 
     [HideInInspector] public float currentTime;
@@ -32,8 +23,8 @@ public class Effect : MonoBehaviour
     {
     }
 
-    protected float SetEffectPower(float value)
+    protected float SetEffectPower(float value, bool inverse)
     {
-        return effectPower * value / 10;
+        return !inverse ? (effectParameters.power * value / 11) : (value / effectParameters.power);
     }
 }

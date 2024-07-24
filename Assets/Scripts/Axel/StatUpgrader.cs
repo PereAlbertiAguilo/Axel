@@ -67,6 +67,7 @@ public class StatUpgrader : MonoBehaviour
         {
             hasInteracted = true;
             PlayerController.instance.SetStat(randomStat, PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity]);
+            HudManager.instance.UpdateStatsUI();
             _animator.SetBool("IsInRange", false);
         }
     }

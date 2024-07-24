@@ -7,7 +7,7 @@ using static Weapon;
 [CustomEditor(typeof(Weapon), true)]
 public class WeaponEditor : Editor
 {
-    SerializedProperty weaponElement, weaponType, weaponAnimator, attackAnimation, weaponRenderer, attackSpriteSheet, weaponName, weaponSprite;
+    SerializedProperty weaponElement, weaponType, weaponRenderer, attackSpriteSheet, weaponName, weaponSprite;
 
     static bool UIContentsFoldout = false;
     static bool animationFoldout = false;
@@ -21,8 +21,6 @@ public class WeaponEditor : Editor
     {
         weaponElement = serializedObject.FindProperty("weaponElement");
         weaponType = serializedObject.FindProperty("weaponType");
-        weaponAnimator = serializedObject.FindProperty("weaponAnimator");
-        attackAnimation = serializedObject.FindProperty("attackAnimation");
         weaponRenderer = serializedObject.FindProperty("weaponRenderer");
         attackSpriteSheet = serializedObject.FindProperty("attackSpriteSheet");
         weaponName = serializedObject.FindProperty("weaponName");
@@ -48,11 +46,6 @@ public class WeaponEditor : Editor
 
         if (animationFoldout)
         {
-            EditorGUILayout.Space();
-
-            EditorGUILayout.PropertyField(weaponAnimator);
-            EditorGUILayout.PropertyField(attackAnimation);
-
             EditorGUILayout.Space();
 
             EditorGUILayout.PropertyField(attackSpriteSheet);
