@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 808687676781945468}
   - component: {fileID: 4976168541576680212}
   m_Layer: 0
-  m_Name: Weakness
+  m_Name: Stun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectParameters:
     name: 
-    type: 1
+    type: 2
     duration: 1
     power: 1
   effectIsActive: 0

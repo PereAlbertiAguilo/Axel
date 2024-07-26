@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    public enum Element
+    {
+        water, air, earth, fire, light, dark
+    };
+
+    public enum WeaponType
+    {
+        sword, maces, axes, hammers, dagger, orb,
+    };
+
     public static WeaponManager instance;
 
     private void Awake()

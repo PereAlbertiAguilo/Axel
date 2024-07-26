@@ -19,7 +19,7 @@ public class PopUp : MonoBehaviour
         popUpMessage = Resources.Load("PopUpMessage") as GameObject;
     }
 
-    public GameObject Message(Transform parent, string message, Color fontColor, float fontSize, float offset, float lifeTime, bool animate)
+    public GameObject Message(Transform parent, string message, Color fontColor, float fontSize, float offset, bool fade, float lifeTime, bool animate)
     {
         GameObject instance = Instantiate(popUpMessage, parent);
 
@@ -31,9 +31,9 @@ public class PopUp : MonoBehaviour
 
         if (messageText != null)
         {
-            Color newColor = new Color(fontColor.r, fontColor.g, fontColor.b, .75f);
+            //Color newColor = new Color(fontColor.r, fontColor.g, fontColor.b, fade ? 1 : .5f);
             messageText.text = message;
-            messageText.color = newColor;
+            messageText.color = fontColor;
             messageText.fontSize = fontSize;
         }
         
@@ -47,31 +47,57 @@ public class PopUp : MonoBehaviour
             animator.enabled = animate;
         }
 
+        if (fade)
+        {
+            StartCoroutine(FadeOut(messageText, lifeTime));
+        }
+
         return instance;
     }
 
     public GameObject Message(Transform parent, string message, bool animate)
     {
-        return Message(parent, message, Color.white, FONT_SIZE, 0, 1, animate);
+        return Message(parent, message, Color.white, FONT_SIZE, 0, false, 1, animate);
     }
 
     public GameObject Message(Transform parent, string message, Color fontColor, float fontSize, bool animate)
     {
-        return Message(parent, message, fontColor, fontSize, 0, 1, animate);
+        return Message(parent, message, fontColor, fontSize, 0, false, 1, animate);
     }
     
     public GameObject Message(Transform parent, string message, Color fontColor, float fontSize, float offset, bool animate)
     {
-        return Message(parent, message, fontColor, fontSize, offset, 1, animate);
+        return Message(parent, message, fontColor, fontSize, offset, false, 1, animate);
     }
 
     public GameObject Message(Transform parent, string message, float lifeTime)
     {
-        return Message(parent, message, Color.white, FONT_SIZE, 0, lifeTime, false);
+        return Message(parent, message, Color.white, FONT_SIZE, 0, false, lifeTime, false);
     }
     
     public GameObject Message(Transform parent, string message, float lifeTime, float offset)
     {
-        return Message(parent, message, Color.white, FONT_SIZE, offset, lifeTime, false);
+        return Message(parent, message, Color.white, FONT_SIZE, offset, false, lifeTime, false);
+    }
+
+    public GameObject Message(Transform parent, string message, Color fontColor, float fontSize, float lifeTime, bool fade, float offset)
+    {
+        return Message(parent, message, fontColor, fontSize, offset, fade, lifeTime, false);
+    }
+
+    IEnumerator FadeOut(TextMeshProUGUI text, float duration)
+    {
+        float timeToFade = 10 * duration / 100;
+        float currentTime = timeToFade;
+
+        yield return new WaitForSeconds(duration - timeToFade);
+
+        while (currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+            if (text != null) text.color = new Color(text.color.r, text.color.g, text.color.b, (currentTime * 2) / (timeToFade * 2));
+
+            yield return null;
+        }
     }
 }

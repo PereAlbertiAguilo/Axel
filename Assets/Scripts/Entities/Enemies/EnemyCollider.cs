@@ -14,7 +14,7 @@ public class EnemyCollider : MonoBehaviour
             {
                 playerController.OnHit(.75f, true, Direction.Normalized(PlayerController.instance.transform.position, transform.position), enemy);
 
-                playerController.DealDamage(enemy.damageCurrent);
+                playerController.RemoveHealth(enemy.damageCurrent);
             }
         }
     }
@@ -27,7 +27,7 @@ public class EnemyCollider : MonoBehaviour
             {
                 playerController.OnHit(.75f, true, Direction.Normalized(PlayerController.instance.transform.position, transform.position), enemy);
 
-                playerController.DealDamage(enemy.damageCurrent);
+                playerController.RemoveHealth(enemy.damageCurrent);
             }
         }
     }

@@ -52,7 +52,7 @@ public class HudManager : MonoBehaviour
 
         if (!PauseMenu.instance.paused) Timer();
 
-        currentHealthText.text = "" + Math.Round(PlayerController.instance.healthCurrent, 2);
+        currentHealthText.text = "" + Math.Round(PlayerController.instance.healthCurrent, 1);
 
         healthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
     }

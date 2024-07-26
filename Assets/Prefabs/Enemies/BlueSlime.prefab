@@ -116,7 +116,7 @@ MonoBehaviour:
   damageCurrent: 0
   speed: 1.5
   speedCurrent: 0
-  defense: 0
+  defense: 10
   defenseCurrent: 0
   attackSpeed: 1
   attackSpeedCurrent: 0

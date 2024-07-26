@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 using static Weapon;
 
 [CustomEditor(typeof(Weapon), true)]
 public class WeaponEditor : Editor
 {
-    SerializedProperty weaponElement, weaponType, weaponRenderer, attackSpriteSheet, weaponName, weaponSprite;
+    SerializedProperty weaponElement, weaponType, weaponRenderer, attackSpriteSheet, weaponName, weaponSprite, animationFrameRate;
 
     static bool UIContentsFoldout = false;
     static bool animationFoldout = false;
@@ -25,6 +26,7 @@ public class WeaponEditor : Editor
         attackSpriteSheet = serializedObject.FindProperty("attackSpriteSheet");
         weaponName = serializedObject.FindProperty("weaponName");
         weaponSprite = serializedObject.FindProperty("weaponSprite");
+        animationFrameRate = serializedObject.FindProperty("animationFrameRate");
     }
 
     public override void OnInspectorGUI()
@@ -40,25 +42,25 @@ public class WeaponEditor : Editor
         EditorGUILayout.PropertyField(weaponElement);
         EditorGUILayout.PropertyField(weaponType);
 
-        EditorGUILayout.Space();
+        EditorGUILayout.Space(10);
 
-        animationFoldout = EditorGUILayout.Foldout(animationFoldout, "Animation", true, EditorStyles.foldoutHeader);
+        animationFoldout = EditorGUILayout.Foldout(animationFoldout, "Animation", true, EditorStyles.toolbarButton);
+
+        EditorGUILayout.Space(10);
+
+        UIContentsFoldout = EditorGUILayout.Foldout(UIContentsFoldout, "UI Contents", true, EditorStyles.toolbarButton);
 
         if (animationFoldout)
         {
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(20);
 
+            EditorGUILayout.PropertyField(animationFrameRate);
             EditorGUILayout.PropertyField(attackSpriteSheet);
             EditorGUILayout.PropertyField(weaponRenderer);
         }
-
-        EditorGUILayout.Space();
-
-        UIContentsFoldout = EditorGUILayout.Foldout(UIContentsFoldout, "UI Contents", true, EditorStyles.foldoutHeader);
-
         if (UIContentsFoldout)
         {
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(20);
 
             EditorGUILayout.PropertyField(weaponName);
             EditorGUILayout.PropertyField(weaponSprite);

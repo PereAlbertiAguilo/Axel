@@ -57,15 +57,10 @@ public class EffectsManager : MonoBehaviour
     {
         for (int i = 0; i < messages.Count; i++)
         {
-            PopUp.instance.Message(transform.parent, messages[i], Color.yellow, .2f, 1 + (.2f * i), durations[i], false);
+            PopUp.instance.Message(transform.parent, messages[i], Color.yellow, .2f, durations[i], true, 1 + (.2f * i));
         }
 
         messages.Clear();
         durations.Clear();
     }
-
-    //public void RemoveEffects()
-    //{
-    //    appliableEffects.Clear();
-    //}
 }

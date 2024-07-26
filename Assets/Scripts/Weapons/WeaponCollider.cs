@@ -10,7 +10,7 @@ public class WeaponCollider : MonoBehaviour
         {
             enemyController.OnHit();
 
-            enemyController.DealDamage(PlayerController.instance.damageCurrent);
+            enemyController.RemoveHealth(PlayerController.instance.damageCurrent);
         }
     }
 
@@ -20,7 +20,7 @@ public class WeaponCollider : MonoBehaviour
         {
             enemyController.OnHit();
 
-            enemyController.DealDamage(PlayerController.instance.damageCurrent);
+            enemyController.RemoveHealth(PlayerController.instance.damageCurrent);
         }
     }
 }

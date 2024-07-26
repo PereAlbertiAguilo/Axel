@@ -12,6 +12,8 @@ public class EntityEditor : Editor
 
     static bool foldout = false;
 
+    
+
     protected virtual void OnEnable()
     {
         setvars();
@@ -54,6 +56,7 @@ public class EntityEditor : Editor
 
             EditorGUILayout.PropertyField(health);
             EditorGUILayout.PropertyField(defense);
+            defense.floatValue = (defense.floatValue >= health.floatValue * 2) ? (health.floatValue * 2) : (defense.floatValue <= 0 ? 0 : defense.floatValue);
 
             if (entity.isMobile) EditorGUILayout.PropertyField(speed);
 
@@ -71,5 +74,15 @@ public class EntityEditor : Editor
         EditorGUILayout.Space();
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    GUILayoutOption[] DefenseOptions(Entity entity)
+    {
+        GUILayoutOption[] defenseOptions = new GUILayoutOption[]
+        {
+
+        };
+
+        return defenseOptions;
     }
 }

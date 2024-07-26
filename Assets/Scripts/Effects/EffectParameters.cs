@@ -10,7 +10,7 @@ public class EffectParameters
 
     public enum Type
     {
-        Slowness, Weakness, Stun, Dot
+        Slowness, Weakness, Stun, Dot, DefenseBreak
     };
 
     public Type type;

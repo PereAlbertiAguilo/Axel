@@ -37,9 +37,6 @@ public class PlayerController : Entity
 
     Animator _playerAnimator;
 
-    [SerializeField] VolumeProfile volumeProfile;
-    Vignette vignette;
-
     [HideInInspector] public EnemiesManager currentEnemiesManager;
     [HideInInspector] public Rigidbody2D _playerRigidbody;
     [HideInInspector] public SpriteRenderer _playerSpriteRenderer;
@@ -63,9 +60,6 @@ public class PlayerController : Entity
 
         verticalInput = -1;
         verticalView = -1;
-
-        Vignette tmp;
-        if (volumeProfile.TryGet(out tmp)) vignette = tmp;
     }
 
     private void Update()
@@ -176,7 +170,6 @@ public class PlayerController : Entity
 
     public IEnumerator DamagedAnimation(float duration)
     {
-        Color vignetteStartColor = vignette.color.value;
         float currentTime = 0;
 
         while (currentTime < duration)
@@ -185,19 +178,16 @@ public class PlayerController : Entity
 
             if (currentTime < duration / 2f)
             {
-                vignette.color.value = Color.Lerp(vignette.color.value, damagedColor, Mathf.PingPong(Time.time, currentTime));
                 _playerSpriteRenderer.color = Color.Lerp(_playerSpriteRenderer.color, damagedColor, Mathf.PingPong(Time.time, currentTime));
             }
             else
             {
-                vignette.color.value = Color.Lerp(vignette.color.value, vignetteStartColor, Mathf.PingPong(Time.time, currentTime / 2));
                 _playerSpriteRenderer.color = Color.Lerp(_playerSpriteRenderer.color, Color.white, Mathf.PingPong(Time.time, currentTime / 2));
             }
 
             yield return null;
         }
 
-        vignette.color.value = vignetteStartColor;
         _playerSpriteRenderer.color = Color.white;
     }
 

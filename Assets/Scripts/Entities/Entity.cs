@@ -38,32 +38,35 @@ public class Entity : MonoBehaviour
         damageCurrent = damage;
     }
 
-    public virtual void Start()
-    {
-
-    }
+    public virtual void Start() { }
 
     public void AddHealth(float healthToAdd)
     {
         if (healthCurrent < health)
         {
-            healthCurrent += healthToAdd;
+            float actualHealthToAdd = healthToAdd;
 
-            PopUp.instance.Message(transform, "" + Math.Round(healthToAdd, 2), Color.green, .3f, true);
-        }
-        else
-        {
-            healthCurrent = health;
+            if(healthCurrent + healthToAdd > health)
+            {
+                actualHealthToAdd = health - healthCurrent;
+            }
+
+            healthCurrent += actualHealthToAdd;
+
+            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToAdd, 1), Color.green, .2f, true);
         }
     }
 
-    public void DealDamage(float healthToRemove)
+    public void RemoveHealth(float healthToRemove)
     {
         if (healthCurrent > 0)
         {
-            healthCurrent -= healthToRemove;
+            float healthToRemoveDefensed = defenseCurrent * (healthToRemove / 2) / health;
+            float actualHealthToRemove = healthToRemove - healthToRemoveDefensed;
 
-            PopUp.instance.Message(transform, "" + Math.Round(healthToRemove, 2), Color.red, .3f, true);
+            healthCurrent -= actualHealthToRemove;
+
+            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, .2f, true);
 
             if (healthCurrent <= 0)
             {

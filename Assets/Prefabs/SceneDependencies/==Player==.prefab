@@ -52,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponElement: 0
   weaponType: 0
-  animationDuration: 0.5
   weaponRenderer: {fileID: 4580245408528622755}
   attackSpriteSheet:
   - {fileID: -526919282, guid: ca766e39ca59b2742b3f35d48e5155dc, type: 3}
@@ -63,6 +62,8 @@ MonoBehaviour:
   weaponName: 
   weaponSprite: {fileID: 0}
   attackState: 0
+  animationFrameRate: 12
+  animationDuration: 0.5
   colliderFrame: 2
 --- !u!114 &4857745602519371083
 MonoBehaviour:
@@ -214,10 +215,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.75, y: 0.75}
-      - {x: -0.75, y: 0.75}
-      - {x: -0.75, y: -1.5}
-      - {x: 0.75, y: -1.5}
+    - - {x: 0.25, y: 0.75}
+      - {x: -0.25, y: 0.75}
+      - {x: -1.25, y: -1.2}
+      - {x: 0, y: -1.8}
+      - {x: 1.25, y: -1.2}
   m_UseDelaunayMesh: 0
 --- !u!95 &1145727364383723220
 Animator:
@@ -5215,7 +5217,7 @@ MonoBehaviour:
   speedCurrent: 0
   defense: 50
   defenseCurrent: 0
-  attackSpeed: 1
+  attackSpeed: 1.2
   attackSpeedCurrent: 0
   isMobile: 1
   canMove: 1
@@ -5231,7 +5233,6 @@ MonoBehaviour:
   dashSpeed: 30
   dashTrail: {fileID: 8415806749406996932}
   damagedColor: {r: 0.4, g: 0, b: 0, a: 1}
-  volumeProfile: {fileID: 11400000, guid: 029f96b48e3e04f47a0fb3d9051e4b76, type: 2}
   currentEnemiesManager: {fileID: 0}
   _playerRigidbody: {fileID: 0}
   _playerSpriteRenderer: {fileID: 0}
@@ -5369,7 +5370,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.35}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.475
 --- !u!114 &9217745623150722665
 MonoBehaviour:
   m_ObjectHideFlags: 0

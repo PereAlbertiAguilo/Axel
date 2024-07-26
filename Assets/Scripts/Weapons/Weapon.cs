@@ -5,25 +5,15 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public enum Element
-    {
-        water, air, earth, fire, light, dark
-    };
-
-    public enum WeaponType
-    {
-        sword, maces, axes, hammers, dagger, orb,
-    };
-
-    [HideInInspector] public Element weaponElement;
-    [HideInInspector] public WeaponType weaponType;
-    [HideInInspector] public float animationDuration;
+    [HideInInspector] public WeaponManager.Element weaponElement;
+    [HideInInspector] public WeaponManager.WeaponType weaponType;
     [HideInInspector] public SpriteRenderer weaponRenderer;
     [HideInInspector] public Sprite[] attackSpriteSheet;
     [HideInInspector] public string weaponName;
     [HideInInspector] public Sprite weaponSprite;
-
     [HideInInspector] public bool attackState = false;
+    [HideInInspector] public int animationFrameRate;
+    [HideInInspector] public float animationDuration;
 
     float horizontalInput;
     float verticalInput = -1;
@@ -36,7 +26,8 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        keyframeDuration = attackSpriteSheet.Length / 12f / attackSpriteSheet.Length;
+        keyframeDuration = attackSpriteSheet.Length / (float)animationFrameRate / attackSpriteSheet.Length;
+        animationDuration = keyframeDuration * (attackSpriteSheet.Length + 1);
     }
 
     private void Update()
@@ -100,7 +91,7 @@ public class Weapon : MonoBehaviour
 
     public float AnimationSpeed()
     {
-        return animationDuration / PlayerController.instance.attackSpeedCurrent;
+        return PlayerController.instance.attackSpeedCurrent < animationDuration ? (animationDuration / PlayerController.instance.attackSpeedCurrent) : 1;
     }
 
     public void AttackStateReset()
