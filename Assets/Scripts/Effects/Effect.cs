@@ -6,10 +6,8 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-    public EffectParameters effectParameters;
+    public EffectParameters parameters;
     
-    public bool effectIsActive = false;
-
     [HideInInspector] public float currentTime;
 
     [HideInInspector] public Entity entity;
@@ -25,6 +23,6 @@ public class Effect : MonoBehaviour
 
     protected float SetEffectPower(float value, bool inverse)
     {
-        return !inverse ? (effectParameters.power * value / 11) : (value / effectParameters.power);
+        return !inverse ? (parameters.power * value / 11) : (value / parameters.power);
     }
 }

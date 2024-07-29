@@ -1,9 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using TMPro;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -27,7 +22,7 @@ public class Entity : MonoBehaviour
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool canDealDamage;
     [HideInInspector] public bool canTakeDamage = true;
-    [HideInInspector] public EffectsManager effectsManager;
+    [HideInInspector] public EffectManager effectsManager;
 
     public virtual void Awake()
     {
@@ -61,8 +56,8 @@ public class Entity : MonoBehaviour
     {
         if (healthCurrent > 0)
         {
-            float healthToRemoveDefensed = defenseCurrent * (healthToRemove / 2) / health;
-            float actualHealthToRemove = healthToRemove - healthToRemoveDefensed;
+            float healthDefensed = defenseCurrent * (healthToRemove / 2) / health;
+            float actualHealthToRemove = healthToRemove - healthDefensed;
 
             healthCurrent -= actualHealthToRemove;
 

@@ -13,6 +13,8 @@ public class SpriteAnimation : MonoBehaviour
 
     private void Start()
     {
+        nextIteration = true;
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

@@ -47,14 +47,11 @@ MonoBehaviour:
   appliesEffects: 1
   entity: {fileID: -3052657912135841237}
   effectsHolder: {fileID: 0}
-  appliableEffects:
-  - name: Weakness
+  appliableEffect:
     type: 1
-    duration: 2
-    power: 10
-  effectType: 1
-  effectPower: 10
-  effectDuration: 2
+    duration: 1
+    power: 1
+    cooldown: 1
 --- !u!1 &4740229863244203120
 GameObject:
   m_ObjectHideFlags: 0

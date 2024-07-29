@@ -26,6 +26,7 @@ public class EnemyFollow : Enemy
 
     private void Update()
     {
+        _aIPath.canMove = canMove;
         _aIPath.maxSpeed = speedCurrent;
     }
 

@@ -7,16 +7,17 @@ public class Stun : Effect
     {
         SetEffect();
 
-        effectParameters.duration = SetEffectPower(effectParameters.duration, false);
+        parameters.duration = SetEffectPower(parameters.duration, false);
     }
 
     private void Update()
     {
-        if (currentTime < effectParameters.duration)
+        if (currentTime < parameters.duration)
         {
             currentTime += Time.deltaTime;
 
             entity.canMove = false;
+            entity.canDealDamage = false;
         }
         else
         {
@@ -28,8 +29,9 @@ public class Stun : Effect
 
     public override void EndEffect()
     {
-        currentTime = effectParameters.duration;
+        currentTime = parameters.duration;
         entity.canMove = true;
+        entity.canDealDamage = true;
     }
 
     private void OnDestroy()

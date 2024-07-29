@@ -104,6 +104,7 @@ MonoBehaviour:
   - {fileID: 939934618, guid: 20175b88c86912a4d93711842f1e27e2, type: 3}
   - {fileID: 1826894955, guid: 20175b88c86912a4d93711842f1e27e2, type: 3}
   animationDuration: 1
+  nextIteration: 1
 --- !u!58 &1824028972181221895
 CircleCollider2D:
   m_ObjectHideFlags: 0

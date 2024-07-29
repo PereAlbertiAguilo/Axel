@@ -10,7 +10,7 @@ public class EnemyCollider : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out PlayerController playerController) )
         {
-            if(playerController.canTakeDamage)
+            if(playerController.canTakeDamage && enemy.canDealDamage)
             {
                 playerController.OnHit(.75f, true, Direction.Normalized(PlayerController.instance.transform.position, transform.position), enemy);
 
@@ -23,7 +23,7 @@ public class EnemyCollider : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out PlayerController playerController))
         {
-            if (playerController.canTakeDamage)
+            if (playerController.canTakeDamage && enemy.canDealDamage)
             {
                 playerController.OnHit(.75f, true, Direction.Normalized(PlayerController.instance.transform.position, transform.position), enemy);
 

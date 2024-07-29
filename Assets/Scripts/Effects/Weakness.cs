@@ -10,7 +10,7 @@ public class Weakness : Effect
 
     private void Update()
     {
-        if (currentTime < effectParameters.duration)
+        if (currentTime < parameters.duration)
         {
             currentTime += Time.deltaTime;
 
@@ -26,7 +26,7 @@ public class Weakness : Effect
 
     public override void EndEffect()
     {
-        currentTime = effectParameters.duration;
+        currentTime = parameters.duration;
         entity.damageCurrent = entity.damage;
     }
 

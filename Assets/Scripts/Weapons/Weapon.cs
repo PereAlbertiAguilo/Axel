@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EffectManager))]
 public class Weapon : MonoBehaviour
 {
     [HideInInspector] public WeaponManager.Element weaponElement;

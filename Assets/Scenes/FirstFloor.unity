@@ -262,46 +262,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ==UI==
       objectReference: {fileID: 0}
-    - target: {fileID: 2559347457601318882, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2559347457601318882, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2559347457601318882, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2559347457601318882, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2559347457601318882, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2559347457601318882, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5612660016845998444, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5612660016845998444, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5612660016845998444, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5612660016845998444, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5802094799479663042, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -380,46 +340,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5802094799479663042, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193329199727775129, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193329199727775129, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193329199727775129, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193329199727775129, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193329199727775129, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193329199727775129, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7917965269194520391, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7917965269194520391, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7917965269194520391, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9154091776981916615, guid: ecad1301fac3e0c4b90db89160daeb1b, type: 3}
-      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

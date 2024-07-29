@@ -6,8 +6,6 @@ using UnityEngine;
 [Serializable]
 public class EffectParameters
 {
-    public string name;
-
     public enum Type
     {
         Slowness, Weakness, Stun, Dot, DefenseBreak
@@ -18,4 +16,6 @@ public class EffectParameters
     public float duration = 1;
     [Range(1f, 10f), Space]
     public int power = 1;
+    [Space]
+    public float cooldown;
 }

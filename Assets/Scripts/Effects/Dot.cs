@@ -12,7 +12,7 @@ public class Dot : Effect
 
     private void Update()
     {
-        if (currentTime < effectParameters.duration)
+        if (currentTime < parameters.duration)
         {
             currentTime += Time.deltaTime;
 
@@ -37,7 +37,7 @@ public class Dot : Effect
 
     public override void EndEffect()
     {
-        currentTime = effectParameters.duration;
+        currentTime = parameters.duration;
     }
 
     private void OnDestroy()

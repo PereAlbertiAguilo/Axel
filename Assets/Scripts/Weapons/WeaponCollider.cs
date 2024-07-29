@@ -6,7 +6,7 @@ public class WeaponCollider : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out Enemy enemyController))
+        if(collision.gameObject.TryGetComponent(out Enemy enemyController) && PlayerController.instance.canDealDamage)
         {
             enemyController.OnHit();
 
@@ -16,7 +16,7 @@ public class WeaponCollider : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Enemy enemyController))
+        if (collision.gameObject.TryGetComponent(out Enemy enemyController) && PlayerController.instance.canDealDamage)
         {
             enemyController.OnHit();
 
