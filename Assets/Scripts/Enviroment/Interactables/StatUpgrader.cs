@@ -19,7 +19,7 @@ public class StatUpgrader : MonoBehaviour
     [SerializeField] Image rarityImage;
     [SerializeField] Image statImage;
     [SerializeField] TextMeshProUGUI rarityText;
-    [SerializeField] TextMeshProUGUI statAmountText;
+    [SerializeField] TextMeshProUGUI statText;
 
     Animator _animator;
 
@@ -56,8 +56,8 @@ public class StatUpgrader : MonoBehaviour
         randomStat = (Entity.Stat)randomStatIndex;
 
         statImage.sprite = statSprites[randomStatIndex];
-        statAmountText.text = "" + randomStat.ToString().ToUpper() +  ":\n" + PlayerController.instance.GetStat(randomStat);
-        statAmountText.text += "<color=green>" + (PlayerController.instance.GetStatMultiplier(randomStat) > 0 ? " + " : " - ") +
+        statText.text = "" + randomStat.ToString().ToUpper() +  ":\n" + PlayerController.instance.GetStat(randomStat);
+        statText.text += "<color=green>" + (PlayerController.instance.GetStatMultiplier(randomStat) > 0 ? " + " : " - ") +
             Mathf.Abs(PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity]) + "</color>";
     }
 

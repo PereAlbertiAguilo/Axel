@@ -5204,13 +5204,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   healthCurrent: 0
-  damage: 4
+  damage: 5
   damageCurrent: 0
   speed: 60
   speedCurrent: 0
   defense: 50
   defenseCurrent: 0
-  attackSpeed: 1.2
+  attackSpeed: 1
   attackSpeedCurrent: 0
   isMobile: 1
   canMove: 1

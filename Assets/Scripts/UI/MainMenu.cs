@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,14 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null)
         {
-            ChangeCurrentSelectedElement(FindObjectsOfType<Button>()[FindObjectsOfType<Button>().Length - 1].gameObject);
+            foreach (Selectable selectable in Selectable.allSelectablesArray)
+            {
+                if (selectable.gameObject.activeInHierarchy)
+                {
+                    ChangeCurrentSelectedElement(selectable.gameObject);
+                    break;
+                }
+            }
         }
     }
 

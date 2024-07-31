@@ -29,7 +29,7 @@ public class EffectManager : MonoBehaviour
             if (attackerEffects.parameters.type == currentEffect.GetComponent<Effect>().parameters.type) hasEffect = true;
         }
 
-        if (hasEffect || !attackerEffects.canApplyEffect) return;
+        if (hasEffect || !attackerEffects.canApplyEffect || attackerEffects == null) return;
 
         attackerEffects.canApplyEffect = false;
 

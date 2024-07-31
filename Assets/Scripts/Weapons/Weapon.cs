@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour
 
         int playerSortingOrder = PlayerController.instance._playerSpriteRenderer.sortingOrder;
 
-        if (!attackState && (horizontalInput != 0 || verticalInput != 0))
+        if (!attackState && (horizontalInput != 0 || verticalInput != 0) && PlayerController.instance.canMove && PlayerController.instance.canDealDamage)
         {
             Attack();
 

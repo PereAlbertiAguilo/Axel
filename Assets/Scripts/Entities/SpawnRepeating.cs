@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnRepeating : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class SpawnRepeating : MonoBehaviour
         rotation = Direction.Rotation(new Vector2(directionX, directionY), Vector2.zero);
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if(currentTime < fireRate)
         {
@@ -82,5 +83,13 @@ public class SpawnRepeating : MonoBehaviour
         }
 
         InstanceEffect(transform.position);
+    }
+
+    private void OnDisable()
+    {
+        foreach (GameObject instance in instances)
+        {
+            Destroy(instance);
+        }
     }
 }

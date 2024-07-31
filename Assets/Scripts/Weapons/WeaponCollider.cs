@@ -8,9 +8,9 @@ public class WeaponCollider : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent(out Enemy enemyController) && PlayerController.instance.canDealDamage)
         {
-            enemyController.OnHit();
-
             enemyController.RemoveHealth(PlayerController.instance.damageCurrent);
+
+            enemyController.OnHit();
         }
     }
 
@@ -18,9 +18,9 @@ public class WeaponCollider : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemyController) && PlayerController.instance.canDealDamage)
         {
-            enemyController.OnHit();
-
             enemyController.RemoveHealth(PlayerController.instance.damageCurrent);
+
+            enemyController.OnHit();
         }
     }
 }

@@ -65,8 +65,6 @@ public class Room : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerController playerController = collision.GetComponent<PlayerController>();
-
             UpdateMiniMapDoors();
 
             if (enemiesManager.enemiesAlive) Invoke(nameof(CloseCurrentDoorsWithDelay), .5f);
@@ -74,8 +72,8 @@ public class Room : MonoBehaviour
             CameraController.instance.ChangeCameraPos(transform);
             miniMapDisplay.SetActive(true);
             enemiesManager.gameObject.SetActive(true);
-            playerController._playerRigidbody.velocity = Vector2.zero;
-            playerController.currentEnemiesManager = enemiesManager;
+            PlayerController.instance._playerRigidbody.velocity = Vector2.zero;
+            PlayerController.instance.currentEnemiesManager = enemiesManager;
         }
     }
 }

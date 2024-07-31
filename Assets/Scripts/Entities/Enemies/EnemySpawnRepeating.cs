@@ -20,4 +20,11 @@ public class EnemySpawnRepeating : SpawnRepeating
             }
         }
     }
+
+    public override void Update()
+    {
+        if (!enemy.canDealDamage || !enemy.canMove) return;
+
+        base.Update();
+    }
 }

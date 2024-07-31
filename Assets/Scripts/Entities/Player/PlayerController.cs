@@ -150,6 +150,8 @@ public class PlayerController : Entity
 
     public void OnHit(float iFramesDuration, bool knockBack, Vector2 dir, Entity hitingEntity)
     {
+        if (healthCurrent <= 0) return;
+
         canTakeDamage = false;
 
         Invoke(nameof(DamageReset), iFramesDuration);

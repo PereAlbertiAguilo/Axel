@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7713033814636314025}
   - component: {fileID: 5255418764122472192}
   - component: {fileID: 4565125989030622161}
+  - component: {fileID: 386754708107414108}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -102,6 +103,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &386754708107414108
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808601969283839541}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6542433603294564166
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,8 +317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: 0, y: -1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7643012070943042607
 CanvasRenderer:
@@ -344,8 +357,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 8296231
-  m_fontColor: {r: 0.15294118, g: 0.5921569, b: 0.49411768, a: 0}
+    rgba: 4286486311
+  m_fontColor: {r: 0.15294118, g: 0.5921569, b: 0.49411768, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

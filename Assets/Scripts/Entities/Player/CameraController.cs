@@ -16,8 +16,6 @@ public class CameraController : MonoBehaviour
     Pathfinding.AstarData data;
     Pathfinding.GridGraph gridGraph;
 
-    PlayerController playerController;
-
     private void Awake()
     {
         instance = this;
@@ -28,13 +26,11 @@ public class CameraController : MonoBehaviour
         astar = AstarPath.active;
         Pathfinding.AstarData data = astar.data;
         gridGraph = data.gridGraph;
-
-        playerController = FindObjectOfType<PlayerController>();
     }
 
     public async void ChangeCameraPos(Transform newPos)
     {
-        playerController.canMove = false;
+        PlayerController.instance.canMove = false;
 
         miniMapCam.transform.position = new Vector3(newPos.position.x, newPos.position.y, miniMapCam.transform.position.z);
 
@@ -43,7 +39,7 @@ public class CameraController : MonoBehaviour
 
         await Task.Delay(150);
 
-        playerController.canMove = true;
+        PlayerController.instance.canMove = true;
 
         virtualCamera.Follow = newPos;
         virtualCamera.LookAt = newPos;

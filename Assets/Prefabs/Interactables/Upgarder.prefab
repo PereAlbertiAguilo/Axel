@@ -577,19 +577,19 @@ MonoBehaviour:
   rarityImage: {fileID: 6300530369595460201}
   statImage: {fileID: 31027153917484122}
   rarityText: {fileID: 6482893787861046564}
-  statAmountText: {fileID: 7417473179733965421}
+  statText: {fileID: 7417473179733965421}
   rarityColors:
-  - {r: 0.754717, g: 0.7369171, b: 0.7369171, a: 1}
-  - {r: 0.34509802, g: 0.85882354, b: 0.51506513, a: 1}
-  - {r: 0.27058828, g: 0.8117647, b: 0.7758281, a: 1}
-  - {r: 0.7653606, g: 0.44010326, b: 0.8113208, a: 1}
-  - {r: 0.8396226, g: 0.7484872, b: 0.36040404, a: 1}
+  - {r: 0.37256038, g: 0.482, b: 0.47501448, a: 1}
+  - {r: 0.44946, g: 0.66, b: 0.6449615, a: 1}
+  - {r: 0.43521097, g: 0.78699994, b: 0.7604498, a: 1}
+  - {r: 0.25943533, g: 0.87058824, b: 0.8249798, a: 1}
+  - {r: 0, g: 1, b: 0.9253731, a: 1}
   statSprites:
-  - {fileID: 500095644, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: -1996246006, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: -765882653, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  - {fileID: 1172788161, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   - {fileID: -1361479664, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
+  - {fileID: -667108513, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
+  - {fileID: -1996246006, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
+  - {fileID: -368476673, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
+  - {fileID: 1172788161, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   randomStatIndex: 0
   rarity: 0
 --- !u!61 &5790417388036011834
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 8005733574708247539}
   - component: {fileID: 7417473179733965421}
   m_Layer: 5
-  m_Name: StatAmountText
+  m_Name: StatText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

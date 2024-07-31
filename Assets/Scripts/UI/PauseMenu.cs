@@ -19,6 +19,11 @@ public class PauseMenu : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        Resume();
+    }
+
     private void Update()
     {
         if (UserInput.instance.pauseInput)
@@ -40,10 +45,17 @@ public class PauseMenu : MonoBehaviour
 
         if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null && paused)
         {
-            ChangeCurrentSelectedElement(FindObjectsOfType<Button>()[FindObjectsOfType<Button>().Length - 1].gameObject);
+            foreach (Selectable selectable in Selectable.allSelectablesArray)
+            {
+                if (selectable.gameObject.activeInHierarchy)
+                {
+                    ChangeCurrentSelectedElement(selectable.gameObject);
+                    break;
+                }
+            }
         }
 
-        if (!Application.isPlaying && !paused)
+        if (!Application.isFocused && !paused)
         {
             pauseButton.onClick.Invoke();
             Pause();
@@ -60,6 +72,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         ChangeCurrentSelectedElement(null);
+        Cursor.visible = false;
         UpdateAnimators(true);
         UpdateEnemies(true);
         paused = false;
@@ -70,6 +83,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         ChangeCurrentSelectedElement(resumeButton.gameObject);
+        Cursor.visible = true;
         UpdateAnimators(false);
         UpdateEnemies(false);
         paused = true;
@@ -102,7 +116,6 @@ public class PauseMenu : MonoBehaviour
         foreach (Enemy e in FindObjectsOfType<Enemy>())
         {
             e.canMove = activate;
-            //e.DeactivateFollowState();
         }
     }
 

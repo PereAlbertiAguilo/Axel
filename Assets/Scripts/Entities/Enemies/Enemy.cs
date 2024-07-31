@@ -33,6 +33,8 @@ public class Enemy : Entity
 
     public void OnHit()
     {
+        if (healthCurrent <= 0) return;
+
         if (canMove && canBeKnockbacked)
         {
             _enemyRigidbody.velocity = Vector2.zero;

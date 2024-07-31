@@ -1,18 +1,21 @@
 using System.Collections;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Stun : Effect
 {
+    float currentDuration;
+
     public void Start()
     {
         SetEffect();
 
-        parameters.duration = SetEffectPower(parameters.duration, false);
+        currentDuration = SetEffectPower(parameters.duration, false);
     }
 
     private void Update()
     {
-        if (currentTime < parameters.duration)
+        if (currentTime < currentDuration)
         {
             currentTime += Time.deltaTime;
 
