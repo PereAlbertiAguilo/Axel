@@ -48,7 +48,7 @@ public class Entity : MonoBehaviour
 
             healthCurrent += actualHealthToAdd;
 
-            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToAdd, 1), Color.green, .2f, true);
+            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToAdd, 1), Color.green, .5f, true);
         }
     }
 
@@ -61,7 +61,7 @@ public class Entity : MonoBehaviour
 
             healthCurrent -= actualHealthToRemove;
 
-            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, .2f, true);
+            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, .5f, true);
 
             if (healthCurrent <= 0)
             {

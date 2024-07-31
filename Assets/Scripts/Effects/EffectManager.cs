@@ -40,7 +40,7 @@ public class EffectManager : MonoBehaviour
         newEffect.parameters = attackerEffects.parameters;
         newEffect.entity = entity;
 
-        PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type} {Math.Round(newEffect.parameters.duration, 1)} s", Color.yellow, .08f, 1, true);
+        PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type} {Math.Round(newEffect.parameters.duration, 1)} s", Color.yellow, .4f, 1, true);
 
         attackerEffects.StartCoroutine(attackerEffects.EffectCooldown(newEffect.parameters.duration + newEffect.parameters.cooldown, attackerEffects));
     }
@@ -51,7 +51,7 @@ public class EffectManager : MonoBehaviour
 
         if (attackerEffects != null)
         {
-            PopUp.instance.Message(attackerEffects.transform.parent, $"{attackerEffects.parameters.type}", Color.green, .08f, 1, true);
+            PopUp.instance.Message(attackerEffects.transform.parent, $"{attackerEffects.parameters.type}", Color.green, .4f, 1, true);
 
             attackerEffects.canApplyEffect = true;
         }
