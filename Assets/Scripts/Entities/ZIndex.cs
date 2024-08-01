@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ZIndex : MonoBehaviour
 {
+    [SerializeField] bool dynamicChange = true;
     [SerializeField] int offset = 0;
     public SpriteRenderer spriteRenderer;
 
@@ -12,8 +13,13 @@ public class ZIndex : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void Start()
     {
         spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 10);
+    }
+
+    private void Update()
+    {
+        if (dynamicChange) spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 10);
     }
 }

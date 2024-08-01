@@ -35,7 +35,7 @@ public class Enemy : Entity
     {
         if (healthCurrent <= 0) return;
 
-        if (canMove && canBeKnockbacked)
+        if (isMobile && canBeKnockbacked)
         {
             _enemyRigidbody.velocity = Vector2.zero;
             _enemyRigidbody.AddForce(-Direction.Normalized(PlayerController.instance.transform.position, transform.position) * 1000, ForceMode2D.Impulse);

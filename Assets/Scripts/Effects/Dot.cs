@@ -12,7 +12,7 @@ public class Dot : Effect
 
     private void Update()
     {
-        if (currentTime < parameters.duration)
+        if (currentTime < parameters.durationCurrent)
         {
             currentTime += Time.deltaTime;
 

@@ -40,7 +40,9 @@ public class EffectManager : MonoBehaviour
         newEffect.parameters = attackerEffects.parameters;
         newEffect.entity = entity;
 
-        PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type} {Math.Round(newEffect.parameters.duration, 1)} s", Color.yellow, .4f, 1, true);
+        PopUp.instance.Sprite(transform.parent, newEffect.parameters.type, Color.cyan, 2, 1, true, newEffect.parameters.duration, false);
+
+        PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type}", Color.cyan, .4f, 2f, true);
 
         attackerEffects.StartCoroutine(attackerEffects.EffectCooldown(newEffect.parameters.duration + newEffect.parameters.cooldown, attackerEffects));
     }

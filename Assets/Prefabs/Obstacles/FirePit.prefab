@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1849950862209476833}
   - component: {fileID: 4879028384060823800}
   - component: {fileID: 1824028972181221895}
+  - component: {fileID: 5338563209323729364}
+  - component: {fileID: 7493160526836647845}
   m_Layer: 0
   m_Name: FirePit
   m_TagString: Untagged
@@ -27,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1316538641978010849}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.5, y: 6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -72,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 148261103
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 388943069, guid: 20175b88c86912a4d93711842f1e27e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -140,3 +142,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &5338563209323729364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316538641978010849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamicChange: 0
+  offset: 0
+  spriteRenderer: {fileID: 1849950862209476833}
+--- !u!114 &7493160526836647845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316538641978010849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamicChange: 0
+  offset: 0
+  spriteRenderer: {fileID: 0}

@@ -14,6 +14,7 @@ public class EffectParameters
     public Type type;
     [Space]
     public float duration = 1;
+    [HideInInspector] public float durationCurrent = 1;
     [Range(1f, 10f), Space]
     public int power = 1;
     [Space]

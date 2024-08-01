@@ -14,6 +14,7 @@ public class Effect : MonoBehaviour
 
     public void SetEffect()
     {
+        parameters.durationCurrent = parameters.duration;
         currentTime = 0;
     }
 

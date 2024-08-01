@@ -3,18 +3,16 @@ using UnityEngine;
 
 public class DefenseBreak : Effect
 {
-    float currentDuration;
-
     public void Start()
     {
         SetEffect();
 
-        currentDuration = SetEffectPower(parameters.duration, false);
+        parameters.durationCurrent = SetEffectPower(parameters.duration, false);
     }
 
     private void Update()
     {
-        if (currentTime < currentDuration)
+        if (currentTime < parameters.durationCurrent)
         {
             currentTime += Time.deltaTime;
 

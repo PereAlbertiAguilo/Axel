@@ -10,7 +10,7 @@ public class Weakness : Effect
 
     private void Update()
     {
-        if (currentTime < parameters.duration)
+        if (currentTime < parameters.durationCurrent)
         {
             currentTime += Time.deltaTime;
 
