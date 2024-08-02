@@ -50,6 +50,7 @@ MonoBehaviour:
   parameters:
     type: 0
     duration: 1
+    durationCurrent: 1
     power: 3
     cooldown: 2
 --- !u!1 &4740229863244203120
@@ -107,13 +108,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7398e98a6f6088d49a753297bdc7f0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 25
+  health: 22
   healthCurrent: 0
   damage: 5
   damageCurrent: 0
   speed: 1.5
   speedCurrent: 0
-  defense: 10
+  defense: 5
   defenseCurrent: 0
   attackSpeed: 1
   attackSpeedCurrent: 0
@@ -391,5 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamicChange: 1
   offset: 0
   spriteRenderer: {fileID: 0}
