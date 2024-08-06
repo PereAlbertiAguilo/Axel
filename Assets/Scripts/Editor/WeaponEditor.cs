@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Rendering;
-using UnityEngine;
-using static Weapon;
 
 [CustomEditor(typeof(Weapon), true)]
+[CanEditMultipleObjects]
 public class WeaponEditor : Editor
 {
     SerializedProperty weaponElement, weaponType, weaponRenderer, attackSpriteSheet, weaponName, weaponSprite, animationFrameRate;

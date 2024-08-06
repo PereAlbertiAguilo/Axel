@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e3233fc756652b848a822259a993ec92
+guid: df72fb6b796a0a6499adb6710ff2c705
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Swords_0
+      name: FireSword_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c87c33cec9c3e1846894a9ca9f8b4114
-      internalID: 1378368695
+      spriteID: ebe9bfc2385be2d488cd32a213d36543
+      internalID: 986291812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Swords_1
+      name: FireSword_1
       rect:
         serializedVersion: 2
         x: 128
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf31afcaacce00b4facd0fd4ce0fff78
-      internalID: -62112255
+      spriteID: de5b23481158d5b4c99abc8fbe4c9385
+      internalID: -376759233
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Swords_2
+      name: FireSword_2
       rect:
         serializedVersion: 2
         x: 256
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6d827ada9eea8d41857a88a82b67046
-      internalID: -1919811816
+      spriteID: 2a2771163d3712941a800df8652e7b18
+      internalID: -397197518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Swords_3
+      name: FireSword_3
       rect:
         serializedVersion: 2
         x: 384
@@ -187,8 +187,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e69fdae0668d2a74fa58f758141f68fb
-      internalID: -1179239982
+      spriteID: 85e5dc151e9d30d4babf2d77c61420d9
+      internalID: 108804474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FireSword_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 868ea1583c0e0554c8d8dab4484f47ba
+      internalID: 1091151139
       vertices: []
       indices: 
       edges: []
@@ -204,10 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Swords_0: 1378368695
-      Swords_1: -62112255
-      Swords_2: -1919811816
-      Swords_3: -1179239982
+      FireSword_0: 986291812
+      FireSword_1: -376759233
+      FireSword_2: -397197518
+      FireSword_3: 108804474
+      FireSword_4: 1091151139
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

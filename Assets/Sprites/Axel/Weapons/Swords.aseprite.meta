@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: Swords
       frameIndex: 0
       cellRect:
-        x: 60
-        y: 39
-        width: 8
-        height: 17
+        x: 4
+        y: 3
+        width: 107
+        height: 122
       spriteId: c07c013fabaaf924a8cb8b68fa4923da
     linkedCells: []
     parentIndex: -1

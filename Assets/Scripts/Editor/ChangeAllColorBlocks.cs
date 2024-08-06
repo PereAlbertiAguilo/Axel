@@ -3,7 +3,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeAllSelectableColorInteractions : EditorWindow
+public class ChangeAllColorBlocks : EditorWindow
 {
     SerializedProperty colors;
     SerializedObject serializedObject;
@@ -11,10 +11,10 @@ public class ChangeAllSelectableColorInteractions : EditorWindow
     public ColorBlock colorBlock;
     static bool flodout = false;
 
-    [MenuItem("Window/Selectable Color Interactions")]
+    [MenuItem("Window/ChangeAllColorBlocks")]
     public static void ShowWindow()
     {
-        GetWindow(typeof(ChangeAllSelectableColorInteractions));
+        GetWindow(typeof(ChangeAllColorBlocks));
     }
 
     private void OnEnable()
@@ -38,7 +38,7 @@ public class ChangeAllSelectableColorInteractions : EditorWindow
 
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("Change All Selectables Color Interations"))
+        if (GUILayout.Button("Change All Color Blocks"))
         {
             foreach (Selectable selectable in FindObjectsOfType<Selectable>(true))
             {

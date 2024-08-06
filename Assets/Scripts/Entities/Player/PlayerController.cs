@@ -37,6 +37,7 @@ public class PlayerController : Entity
 
     Animator _playerAnimator;
 
+    [HideInInspector] public Weapon currentWeapon;
     [HideInInspector] public EnemiesManager currentEnemiesManager;
     [HideInInspector] public Rigidbody2D _playerRigidbody;
     [HideInInspector] public SpriteRenderer _playerSpriteRenderer;

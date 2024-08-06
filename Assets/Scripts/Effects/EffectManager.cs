@@ -15,6 +15,7 @@ public class EffectManager : MonoBehaviour
     private void Awake()
     {
         entity = GetComponentInParent<Entity>();
+        entity.effectsManager = this;
 
         effectsHolder = new GameObject("EffectsHolder");
         effectsHolder.transform.SetParent(transform);

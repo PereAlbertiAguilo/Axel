@@ -7,7 +7,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [HideInInspector] public WeaponManager.Element weaponElement;
-    [HideInInspector] public WeaponManager.WeaponType weaponType;
+    [HideInInspector] public WeaponManager.Type weaponType;
     [HideInInspector] public SpriteRenderer weaponRenderer;
     [HideInInspector] public Sprite[] attackSpriteSheet;
     [HideInInspector] public string weaponName;
@@ -15,6 +15,8 @@ public class Weapon : MonoBehaviour
     [HideInInspector] public bool attackState = false;
     [HideInInspector] public int animationFrameRate;
     [HideInInspector] public float animationDuration;
+
+    public float weaponAddedDamage = 0;
 
     float horizontalInput;
     float verticalInput = -1;
@@ -27,6 +29,10 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
+        gameObject.name = "Weapon";
+
+        PlayerController.instance.currentWeapon = this;
+
         keyframeDuration = attackSpriteSheet.Length / (float)animationFrameRate / attackSpriteSheet.Length;
         animationDuration = keyframeDuration * (attackSpriteSheet.Length + 1);
     }

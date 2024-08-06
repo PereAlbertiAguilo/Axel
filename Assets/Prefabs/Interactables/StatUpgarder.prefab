@@ -488,9 +488,9 @@ GameObject:
   - component: {fileID: 5790417388036011834}
   - component: {fileID: 7776248103860223374}
   m_Layer: 0
-  m_Name: Upgarder
+  m_Name: StatUpgarder
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -574,10 +574,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc24cb1db921474ea4dbd21478b6db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDelay: 1
+  hasUses: 1
+  uses: 1
   rarityImage: {fileID: 6300530369595460201}
-  statImage: {fileID: 31027153917484122}
   rarityText: {fileID: 6482893787861046564}
-  statText: {fileID: 7417473179733965421}
+  displayImage: {fileID: 31027153917484122}
+  displayText: {fileID: 7417473179733965421}
   rarityColors:
   - {r: 0.37256038, g: 0.482, b: 0.47501448, a: 1}
   - {r: 0.44946, g: 0.66, b: 0.6449615, a: 1}
@@ -590,8 +593,6 @@ MonoBehaviour:
   - {fileID: -1996246006, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   - {fileID: -368476673, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
   - {fileID: 1172788161, guid: 4fa02abe67abc814fa63637e04e6afc9, type: 3}
-  randomStatIndex: 0
-  rarity: 0
 --- !u!61 &5790417388036011834
 BoxCollider2D:
   m_ObjectHideFlags: 0

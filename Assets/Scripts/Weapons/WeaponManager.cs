@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class WeaponManager : MonoBehaviour
         water, air, earth, fire, light, dark
     };
 
-    public enum WeaponType
+    public enum Type
     {
         sword, maces, axes, hammers, dagger, orb,
     };
@@ -21,15 +22,23 @@ public class WeaponManager : MonoBehaviour
         instance = this;
     }
 
-    public void SetWeapon(string weaponFolderName, Transform holder)
+    public void SetWeapon(GameObject weapon, Transform holder)
     {
-        GameObject weapon = Resources.Load<GameObject>(weaponFolderName);
-
-        if(holder.childCount > 0)
+        foreach (Transform child in holder)
         {
-            Destroy(holder.GetChild(0).gameObject);
+            if (child.TryGetComponent(out Weapon weaponComponent))
+            {
+                Destroy(child.gameObject);
+
+                break;
+            }
         }
-        
+
         Instantiate(weapon, holder);
+    }
+
+    public GameObject LoadWeapon(Element element, Type weaponType)
+    {
+        return Resources.Load<GameObject>($"Weapons/{(int)element}{(int)weaponType}");
     }
 }
