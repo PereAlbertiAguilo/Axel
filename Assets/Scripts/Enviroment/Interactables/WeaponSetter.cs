@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,10 +7,20 @@ using UnityEngine.UI;
 
 public class WeaponSetter : RarityInteractable
 {
-    public GameObject weaponObject;
+    [Space]
+
+    public TextMeshProUGUI addedDamageText;
+    public TextMeshProUGUI addedAttackSpeedText;
+
+    [Space]
+
+    public Image effectImage;
+    public TextMeshProUGUI effectText;
 
     float[] rarityDamagesAdded = { 0, .5f, 1.5f, 2.5f, 4 };
+    float[] rarityAttackSpeedAdded = { 0, -.05f, -.1f, -.2f, -.35f };
 
+    GameObject weaponObject;
     Weapon weapon;
 
     int randomWeaponElement = 0;
@@ -18,6 +29,13 @@ public class WeaponSetter : RarityInteractable
     public override void Start()
     {
         base.Start();
+
+        StartCoroutine(GetUsebleWeapon(.1f));
+    }
+
+    IEnumerator GetUsebleWeapon(float delay)
+    {
+        yield return new WaitForSeconds(delay);
 
         weapon = GetWeapon();
 
@@ -29,16 +47,43 @@ public class WeaponSetter : RarityInteractable
 
     Weapon GetWeapon()
     {
-        randomWeaponElement = Random.Range(0, System.Enum.GetValues(typeof(WeaponManager.Element)).Length);
-        randomWeaponType = Random.Range(0, System.Enum.GetValues(typeof(WeaponManager.Type)).Length);
+        randomWeaponElement = UnityEngine.Random.Range(0, Enum.GetValues(typeof(WeaponManager.Element)).Length);
+        randomWeaponType = UnityEngine.Random.Range(0, Enum.GetValues(typeof(WeaponManager.Type)).Length);
 
         weaponObject = WeaponManager.instance.LoadWeapon((WeaponManager.Element)randomWeaponElement, (WeaponManager.Type)randomWeaponType);
 
         if (weaponObject.TryGetComponent(out Weapon weapon))
         {
-            weapon.weaponAddedDamage = rarityDamagesAdded[(int)rarity];
+            weapon.weaponAddedDamage += rarityDamagesAdded[(int)rarity];
+            weapon.weaponAddedAttackSpeed += rarityAttackSpeedAdded[(int)rarity];
+
             displayImage.sprite = weapon.weaponSprite;
-            displayText.text = weapon.weaponName;
+            displayText.text = "" + weapon.weaponName;
+
+            addedDamageText.text = "Weapon Damage: " + (weapon.weaponAddedDamage >= PlayerController.instance.currentWeapon.weaponAddedDamage ?
+                "<color=green>" : "<color=red>") + Math.Round(weapon.weaponAddedDamage, 2) + "</color>" + " [" + Math.Round(PlayerController.instance.currentWeapon.weaponAddedDamage, 2) + "]";
+            addedAttackSpeedText.text = "Weapon Attack Speed: " + (weapon.weaponAddedAttackSpeed <= PlayerController.instance.currentWeapon.weaponAddedAttackSpeed ?
+                "<color=green>" : "<color=red>") + Math.Round(weapon.weaponAddedAttackSpeed, 2) + "</color>" + " [" + Math.Round(PlayerController.instance.currentWeapon.weaponAddedAttackSpeed, 2) + "]";
+
+            if (weaponObject.TryGetComponent(out EffectManager effectManager))
+            {
+                if (effectManager.appliesEffects)
+                {
+                    effectManager.parameters.power = (int)rarity + 1;
+
+                    effectImage.transform.parent.gameObject.SetActive(true);
+                    effectText.gameObject.SetActive(true);
+
+                    effectImage.sprite = PopUp.instance.effectSprites[(int)effectManager.parameters.type];
+                    effectText.text = effectManager.parameters.type.ToString();
+                }
+                else
+                {
+                    effectImage.transform.parent.gameObject.SetActive(false);
+                    effectText.gameObject.SetActive(false);
+                }
+            }
+            
 
             return weapon;
         }
@@ -50,10 +95,39 @@ public class WeaponSetter : RarityInteractable
     {
         base.Interact();
 
-        _animator.SetBool("IsInRange", false);
+        if (hasUses) _animator.SetBool("IsInRange", false);
 
         if (weapon.attackSpriteSheet.Length <= 0) throw new System.Exception("Weapon does not have a attack animation");
 
         WeaponManager.instance.SetWeapon(weaponObject, PlayerController.instance.transform);
+
+        if (!hasUses)
+        {
+            SetRarity();
+            StartCoroutine(GetUsebleWeapon(.1f));
+        }
+
+        StartCoroutine(UpdateUIFromHUD());
+    }
+
+    IEnumerator UpdateUIFromHUD()
+    {
+        yield return new WaitForSeconds(.15f);
+
+        HudManager.instance.UpdateStatsUI();
+    }
+
+    string RarityLevelTextDisplay(Rarity rarity)
+    {
+        string posDisplay = "O";
+        string negDisplay = " I";
+        string finalDisplay = "";
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(Rarity)).Length; i++)
+        {
+            finalDisplay += (i <= (int)rarity) ? posDisplay : negDisplay;
+        }
+
+        return finalDisplay;
     }
 }

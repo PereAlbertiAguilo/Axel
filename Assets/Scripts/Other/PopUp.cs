@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PopUp : MonoBehaviour
 {
-    Sprite[] effectSprites;
+    public Sprite[] effectSprites;
 
     public static PopUp instance;
 
@@ -46,7 +46,7 @@ public class PopUp : MonoBehaviour
         return instance;
     }
 
-    public GameObject Sprite(Transform parent, EffectParameters.Type effectName, Color spriteColor, float size, float offset, bool fade, float lifeTime, bool animate)
+    public GameObject Effect(Transform parent, EffectParameters.Type effectName, Color spriteColor, float size, float offset, bool fade, float lifeTime, bool animate)
     {
         GameObject instance = Instantiate(popUpSprite, parent);
 

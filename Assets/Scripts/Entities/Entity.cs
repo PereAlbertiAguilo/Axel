@@ -22,6 +22,7 @@ public class Entity : MonoBehaviour
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool canDealDamage;
     [HideInInspector] public bool canTakeDamage = true;
+    [HideInInspector] public bool canGetKnockback = true;
     [HideInInspector] public EffectManager effectsManager;
 
     public virtual void Awake()
@@ -47,6 +48,8 @@ public class Entity : MonoBehaviour
             }
 
             healthCurrent += actualHealthToAdd;
+
+            Audio.instance.PlayOneShot(Audio.Sound.heal, .3f);
 
             PopUp.instance.Message(transform, "" + Math.Round(actualHealthToAdd, 1), Color.green, .5f, true);
         }

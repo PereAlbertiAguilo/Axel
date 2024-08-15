@@ -16,7 +16,14 @@ public class Weapon : MonoBehaviour
     [HideInInspector] public int animationFrameRate;
     [HideInInspector] public float animationDuration;
 
+    Sprite idleSprite;
+
+    [Space]
+
     public float weaponAddedDamage = 0;
+    public float weaponAddedAttackSpeed = 0;
+
+    [Space]
 
     float horizontalInput;
     float verticalInput = -1;
@@ -27,7 +34,7 @@ public class Weapon : MonoBehaviour
 
     Vector3 pos = Vector2.down;
 
-    private void Start()
+    public virtual void Start()
     {
         gameObject.name = "Weapon";
 
@@ -35,6 +42,8 @@ public class Weapon : MonoBehaviour
 
         keyframeDuration = attackSpriteSheet.Length / (float)animationFrameRate / attackSpriteSheet.Length;
         animationDuration = keyframeDuration * (attackSpriteSheet.Length + 1);
+
+        idleSprite = attackSpriteSheet[0];
     }
 
     private void Update()
@@ -72,15 +81,13 @@ public class Weapon : MonoBehaviour
 
         pos = transform.position + new Vector3(horizontalInput, verticalInput);
 
-        Invoke(nameof(AttackStateReset), PlayerController.instance.attackSpeedCurrent);
+        Invoke(nameof(AttackStateReset), ClampedAttackSpeed());
 
         transform.rotation = Direction.Rotation(pos, transform.position);
     }
 
     public IEnumerator AttackAnimation()
     {
-        Sprite idleSprite = weaponRenderer.sprite;
-
         float currentTime = 0;
 
         foreach (Sprite frame in attackSpriteSheet)
@@ -98,7 +105,7 @@ public class Weapon : MonoBehaviour
 
     public float AnimationSpeed()
     {
-        return PlayerController.instance.attackSpeedCurrent < animationDuration ? (animationDuration / PlayerController.instance.attackSpeedCurrent) : 1;
+        return ClampedAttackSpeed() < animationDuration ? (animationDuration / ClampedAttackSpeed()) : 1;
     }
 
     public void AttackStateReset()
@@ -106,5 +113,15 @@ public class Weapon : MonoBehaviour
         attackState = false;
 
         CancelInvoke();
+    }
+
+    public float ActualAttackSpeed()
+    {
+        return PlayerController.instance.attackSpeedCurrent + weaponAddedAttackSpeed;
+    }
+
+    public float ClampedAttackSpeed()
+    {
+        return Mathf.Clamp(ActualAttackSpeed(), PlayerController.instance.attackSpeedMinMax.min, PlayerController.instance.attackSpeedMinMax.max);
     }
 }

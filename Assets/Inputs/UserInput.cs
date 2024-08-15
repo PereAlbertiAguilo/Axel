@@ -10,11 +10,7 @@ public class UserInput : MonoBehaviour
 
     public Vector2 moveInput {  get; private set; }
     public Vector2 attackDirInput {  get; private set; }
-    public bool viewInputDown {  get; private set; }
-    public bool attackInput { get; private set; }
-    public bool attackInputUp { get; private set; }
-    public bool changeAttackInput { get; private set; }
-    public bool lockEnemyInput { get; private set; }
+    public bool attackDirDown {  get; private set; }
     public bool dashInput { get; private set; }
     public bool pauseInput { get; private set; }
     public bool interactInput { get; private set; }
@@ -26,10 +22,7 @@ public class UserInput : MonoBehaviour
     PlayerInput _playerInput;
 
     InputAction _moveAction;
-    InputAction _viewAction;
-    InputAction _attackAction;
-    InputAction _changeAttackAction;
-    InputAction _lockEnemyAction;
+    InputAction _attackDirAction;
     InputAction _dashAction;
     InputAction _pauseAction;
     InputAction _interactAction;
@@ -55,10 +48,7 @@ public class UserInput : MonoBehaviour
     void SetupInputActions()
     {
         _moveAction = _playerInput.actions["Move"];
-        _viewAction = _playerInput.actions["ViewMove"];
-        _attackAction = _playerInput.actions["Attack"];
-        _changeAttackAction = _playerInput.actions["Change Attack"];
-        _lockEnemyAction = _playerInput.actions["Lock Enemy"];
+        _attackDirAction = _playerInput.actions["AttackDir"];
         _dashAction = _playerInput.actions["Dash"];
         _pauseAction = _playerInput.actions["Pause"];
         _interactAction = _playerInput.actions["Interact"];
@@ -67,16 +57,11 @@ public class UserInput : MonoBehaviour
 
     void UpdateInputs()
     {
-        attackDirInput = _viewAction.ReadValue<Vector2>();
-        viewInputDown = _viewAction.WasPressedThisFrame();
-        attackInput = _attackAction.IsPressed();
-        attackInputUp = _attackAction.WasReleasedThisFrame();
-        changeAttackInput = _changeAttackAction.WasPressedThisFrame();
-        lockEnemyInput = _lockEnemyAction.WasPressedThisFrame();
+        attackDirInput = _attackDirAction.ReadValue<Vector2>();
+        attackDirDown = _attackDirAction.WasPressedThisFrame();
         dashInput = _dashAction.IsPressed();
         pauseInput = _pauseAction.WasPressedThisFrame();
         interactInput = _interactAction.WasPressedThisFrame();
-        //isKeyboard = Input.GetJoystickNames()[Input.GetJoystickNames().Length].Length < 1;
         moveInput = _moveAction.ReadValue<Vector2>();
         statsInputDown = _statsAction.WasPressedThisFrame();
         statsInputUp = _statsAction.WasReleasedThisFrame();

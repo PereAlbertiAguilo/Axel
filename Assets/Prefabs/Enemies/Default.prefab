@@ -69,6 +69,7 @@ MonoBehaviour:
   canMove: 1
   canDealDamage: 1
   canTakeDamage: 1
+  canGetKnockback: 1
   effectsManager: {fileID: 7662726635630812447}
   canBeKnockbacked: 1
   _enemyRigidbody: {fileID: 3609770490996220176}
@@ -187,8 +188,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 100
-  m_LinearDrag: 0
-  m_AngularDrag: 10
+  m_LinearDrag: 20
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -339,6 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5d2757a56a7674b959ca067361f3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dynamicChange: 1
   offset: 0
   spriteRenderer: {fileID: 0}
 --- !u!1 &5339161142901375362
@@ -388,4 +390,9 @@ MonoBehaviour:
   appliesEffects: 1
   entity: {fileID: 7366876993433027936}
   effectsHolder: {fileID: 0}
-  appliableEffects: []
+  parameters:
+    type: 0
+    duration: 1
+    durationCurrent: 1
+    power: 1
+    cooldown: 0

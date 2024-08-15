@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
 using System.Linq;
 using System.Reflection;
+using System;
+using static Entity;
 
 public class PlayerController : Entity
 {
@@ -15,6 +14,21 @@ public class PlayerController : Entity
     public float speedMultiplier;
     public float defenseMultiplier;
     public float attackSpeedMultiplier;
+
+    [Space]
+
+    public MinMaxStat healthMinMax;
+    public MinMaxStat damageMinMax;
+    public MinMaxStat defenseMinMax;
+    public MinMaxStat speedMinMax;
+    public MinMaxStat attackSpeedMinMax;
+
+    [Serializable]
+    public struct MinMaxStat
+    {
+        public float min;
+        public float max;
+    }
 
     [Space]
 
@@ -121,11 +135,18 @@ public class PlayerController : Entity
         {
             canDash = 2;
 
+            Audio.instance.PlayOneShot(Audio.Sound.swoosh, .15f);
+
             dashTrail.Play();
 
             Invoke(nameof(DashReset), dashCooldown);
             Invoke(nameof(MoveReset), .16f);
             HudManager.instance.StartCoroutine(HudManager.instance.DashCooldownBar(dashCooldown));
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            RemoveHealth(5f);
         }
     }
 
@@ -149,7 +170,7 @@ public class PlayerController : Entity
         }
     }
 
-    public void OnHit(float iFramesDuration, bool knockBack, Vector2 dir, Entity hitingEntity)
+    public void OnHit(float iFramesDuration, Entity hitingEntity)
     {
         if (healthCurrent <= 0) return;
 
@@ -158,12 +179,7 @@ public class PlayerController : Entity
         Invoke(nameof(DamageReset), iFramesDuration);
         StartCoroutine(DamagedAnimation(iFramesDuration));
 
-        if (knockBack)
-        {
-            _playerRigidbody.velocity = Vector2.zero;
-            _playerRigidbody.AddForce((dir != null && Vector3.Distance(transform.position, hitingEntity.transform.position) > .1f ? 
-                dir : Vector2.zero) * 1200, ForceMode2D.Impulse);
-        }
+        Audio.instance.PlayOneShot(Audio.Sound.hurt, .5f);
 
         if (hitingEntity.effectsManager.appliesEffects)
         {
@@ -194,6 +210,11 @@ public class PlayerController : Entity
         _playerSpriteRenderer.color = Color.white;
     }
 
+    public bool CanSetStat(Stat stat) 
+    {
+        return (Mathf.Abs(GetStat(stat)) < GetMinMaxStat(stat).max && Mathf.Abs(GetStat(stat)) > GetMinMaxStat(stat).min);
+    }
+
     public void SetStat(Stat stat, float statChange)
     {
         FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
@@ -202,9 +223,25 @@ public class PlayerController : Entity
         float changedValue = (float)property.GetValue(this) + statChange;
         float currentChangedValue = (float)currentProperty.GetValue(this) + statChange;
 
+        StatCheck(ref changedValue, stat);
+        StatCheck(ref currentChangedValue, stat);
+
         property.SetValue(this, changedValue);
         currentProperty.SetValue(this, currentChangedValue);
     }
+
+    void StatCheck(ref float value, Stat stat)
+    {
+        if (value >= GetMinMaxStat(stat).max)
+        {
+            value = GetMinMaxStat(stat).max;
+        }
+        else if (value <= GetMinMaxStat(stat).min)
+        {
+            value = GetMinMaxStat(stat).min;
+        }
+    }
+
     public float GetStat(Stat stat)
     {
         FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
@@ -212,11 +249,18 @@ public class PlayerController : Entity
         return (float)property.GetValue(this);
     }
 
+    public MinMaxStat GetMinMaxStat(Stat stat)
+    {
+        FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat) + "MinMax");
+
+        return (MinMaxStat)property.GetValue(this);
+    }
+
     public float GetCurrentStat(Stat stat)
     {
         FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
 
-        return (float)currentProperty.GetValue(this);
+        return Mathf.Clamp((float)currentProperty.GetValue(this), GetMinMaxStat(stat).min, GetMinMaxStat(stat).max);
     }
 
     public float GetStatMultiplier(Stat stat)
@@ -244,5 +288,4 @@ public class PlayerController : Entity
     {
         canTakeDamage = true;
     }
-
 }

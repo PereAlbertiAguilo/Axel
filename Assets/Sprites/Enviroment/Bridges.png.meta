@@ -134,9 +134,9 @@ TextureImporter:
       name: Bridges_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 59
         y: 13
-        width: 32
+        width: 42
         height: 70
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -176,9 +176,9 @@ TextureImporter:
       name: Bridges_3
       rect:
         serializedVersion: 2
-        x: 160
+        x: 155
         y: 16
-        width: 32
+        width: 42
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -218,9 +218,9 @@ TextureImporter:
       name: Bridges_5
       rect:
         serializedVersion: 2
-        x: 256
+        x: 251
         y: 16
-        width: 32
+        width: 42
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -260,9 +260,9 @@ TextureImporter:
       name: Bridges_7
       rect:
         serializedVersion: 2
-        x: 352
+        x: 347
         y: 16
-        width: 32
+        width: 42
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -302,9 +302,9 @@ TextureImporter:
       name: Bridges_9
       rect:
         serializedVersion: 2
-        x: 447
+        x: 443
         y: 16
-        width: 32
+        width: 42
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

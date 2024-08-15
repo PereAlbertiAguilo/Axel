@@ -51,7 +51,7 @@ MonoBehaviour:
     type: 0
     duration: 1
     durationCurrent: 1
-    power: 3
+    power: 4
     cooldown: 2
 --- !u!1 &4740229863244203120
 GameObject:
@@ -122,6 +122,7 @@ MonoBehaviour:
   canMove: 1
   canDealDamage: 1
   canTakeDamage: 1
+  canGetKnockback: 1
   effectsManager: {fileID: 3967816611729988174}
   canBeKnockbacked: 1
   _enemyRigidbody: {fileID: 3609770490996220176}
@@ -240,8 +241,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 100
-  m_LinearDrag: 0
-  m_AngularDrag: 10
+  m_LinearDrag: 20
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:

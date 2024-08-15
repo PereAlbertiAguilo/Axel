@@ -12,6 +12,8 @@ public class Effect : MonoBehaviour
 
     [HideInInspector] public Entity entity;
 
+    [HideInInspector] public Entity attakerEntity;
+
     public void SetEffect()
     {
         parameters.durationCurrent = parameters.duration;
@@ -24,6 +26,6 @@ public class Effect : MonoBehaviour
 
     protected float SetEffectPower(float value, bool inverse)
     {
-        return !inverse ? (parameters.power * value / 11) : (value / parameters.power);
+        return !inverse ? (parameters.power * value / 6) : (value / parameters.power);
     }
 }

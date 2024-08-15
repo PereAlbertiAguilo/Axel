@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    public static PauseMenu instance;
+
     [SerializeField] Button pauseButton;
     [SerializeField] Button resumeButton;
 
     public bool paused = false;
-
-    public static PauseMenu instance;
 
     private void Awake()
     {
@@ -43,19 +43,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null && paused)
-        {
-            foreach (Selectable selectable in Selectable.allSelectablesArray)
-            {
-                if (selectable.gameObject.activeInHierarchy)
-                {
-                    ChangeCurrentSelectedElement(selectable.gameObject);
-                    break;
-                }
-            }
-        }
-
-        if (!Application.isFocused && !paused)
+        if (!Application.isFocused && paused)
         {
             pauseButton.onClick.Invoke();
             Pause();
@@ -71,7 +59,7 @@ public class PauseMenu : MonoBehaviour
     // Resumes the game
     public void Resume()
     {
-        ChangeCurrentSelectedElement(null);
+        MenusManager.instance.ChangeCurrentSelectedElement(null);
         Cursor.visible = false;
         UpdateAnimators(true);
         UpdateEnemies(true);
@@ -82,18 +70,12 @@ public class PauseMenu : MonoBehaviour
     // Pauses the game
     public void Pause()
     {
-        ChangeCurrentSelectedElement(resumeButton.gameObject);
+        MenusManager.instance.ChangeCurrentSelectedElement(resumeButton.gameObject);
         Cursor.visible = true;
         UpdateAnimators(false);
         UpdateEnemies(false);
         paused = true;
         PlayerController.instance.canMove = false;
-    }
-
-    public void ChangeCurrentSelectedElement(GameObject selected)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(selected);
     }
 
     void UpdateAnimators(bool activate)
@@ -116,6 +98,11 @@ public class PauseMenu : MonoBehaviour
         foreach (Enemy e in FindObjectsOfType<Enemy>())
         {
             e.canMove = activate;
+        }
+
+        foreach (Projectile projectile in FindObjectsOfType<Projectile>())
+        {
+            projectile.enabled = activate;
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EffectOnDestroy : MonoBehaviour
 {
-    [SerializeField] GameObject effect;
+    public GameObject effect;
     [SerializeField] bool effectOnHit = false;
     [SerializeField] int poolSize = 10;
 

@@ -8,7 +8,7 @@ using UnityEngine;
 [CanEditMultipleObjects]
 public class EntityEditor : Editor
 {
-    SerializedProperty health, damage, speed, defense, attackSpeed, isMobile, canDealDamage, effectsManager;
+    SerializedProperty health, damage, speed, defense, attackSpeed, isMobile, canDealDamage, canGetKnockback, effectsManager;
 
     static bool foldout = false;
 
@@ -28,6 +28,7 @@ public class EntityEditor : Editor
         attackSpeed = serializedObject.FindProperty("attackSpeed");
         isMobile = serializedObject.FindProperty("isMobile");
         canDealDamage = serializedObject.FindProperty("canDealDamage");
+        canGetKnockback = serializedObject.FindProperty("canGetKnockback");
         effectsManager = serializedObject.FindProperty("effectsManager");
     }
 
@@ -58,7 +59,11 @@ public class EntityEditor : Editor
             EditorGUILayout.PropertyField(defense);
             defense.floatValue = (defense.floatValue >= health.floatValue * 2) ? (health.floatValue * 2) : (defense.floatValue <= 0 ? 0 : defense.floatValue);
 
-            if (entity.isMobile) EditorGUILayout.PropertyField(speed);
+            if (entity.isMobile)
+            {
+                EditorGUILayout.PropertyField(canGetKnockback);
+                EditorGUILayout.PropertyField(speed);
+            }
 
             if (entity.canDealDamage)
             {

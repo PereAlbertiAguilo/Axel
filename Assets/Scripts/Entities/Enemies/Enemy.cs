@@ -35,19 +35,11 @@ public class Enemy : Entity
     {
         if (healthCurrent <= 0) return;
 
-        if (isMobile && canBeKnockbacked)
-        {
-            _enemyRigidbody.velocity = Vector2.zero;
-            _enemyRigidbody.AddForce(-Direction.Normalized(PlayerController.instance.transform.position, transform.position) * 1000, ForceMode2D.Impulse);
-        }
-
         _enemyRenderer.color = PlayerController.instance.damagedColor;
 
         CancelInvoke();
 
-        DeactivateFollowState();
-
-        Invoke(nameof(MoveReset), .1f);
+        Invoke(nameof(ResetDamagedColor), .1f);
 
         if (PlayerController.instance.effectsManager.appliesEffects)
         {
@@ -58,7 +50,10 @@ public class Enemy : Entity
     public virtual void MoveReset()
     {
         canMove = true;
-        _enemyRigidbody.velocity = Vector2.zero;
+    }
+
+    public void ResetDamagedColor()
+    {
         _enemyRenderer.color = Color.white;
     }
 

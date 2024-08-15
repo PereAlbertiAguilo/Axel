@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -3385,27 +3385,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: GenTileset_156
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: be8907519ef49404d91151954dc4b0ba
-      internalID: -871780509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -3481,7 +3460,6 @@ TextureImporter:
       GenTileset_153: -528313845
       GenTileset_154: -1709859551
       GenTileset_155: 529777026
-      GenTileset_156: -871780509
       GenTileset_16: 944059100
       GenTileset_17: 548226179
       GenTileset_18: -904579274

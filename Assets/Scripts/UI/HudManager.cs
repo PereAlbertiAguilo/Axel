@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // TODO: Upgrading system. Items with rareity ? maybe ? idk... / treasure rooms ? / purchasable ? ] 
-// TODO: Time / StageName                                                                         |
 // TODO: Money / Cins / Currency / whatever... (brainstorming)                                <---]
 
 public class HudManager : MonoBehaviour
@@ -14,12 +14,18 @@ public class HudManager : MonoBehaviour
     [SerializeField] Image dashCooldownImage;
     [SerializeField] Image healthBarImage;
 
-    [SerializeField] GameObject topBar;
+    [Space]
+
+    [SerializeField] GameObject miniMap;
     [SerializeField] GameObject statsPanel;
     [SerializeField] GameObject statsLayout;
 
+    [Space]
+
     [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI stageText;
     [SerializeField] TextMeshProUGUI currentHealthText;
+
     float timer = 0;
 
     public static HudManager instance;
@@ -31,7 +37,9 @@ public class HudManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateStatsUI();
+        Invoke(nameof(UpdateStatsUI), .1f);
+
+        stageText.text = SceneManager.GetActiveScene().name;
     }
 
     private void Update()
@@ -40,12 +48,12 @@ public class HudManager : MonoBehaviour
         {
             if (UserInput.instance.statsInputDown)
             {
-                topBar.SetActive(false);
+                miniMap.SetActive(false);
                 statsPanel.SetActive(true);
             }
             else if (UserInput.instance.statsInputUp)
             {
-                topBar.SetActive(true);
+                miniMap.SetActive(true);
                 statsPanel.SetActive(false);
             }
         }
@@ -85,7 +93,17 @@ public class HudManager : MonoBehaviour
     {
         for (int i = 0; i < Enum.GetValues(typeof(Entity.Stat)).Length; i++)
         {
-            statsLayout.transform.GetChild(i).Find("StatInfo").GetComponent<TextMeshProUGUI>().text = "" + PlayerController.instance.GetStat((Entity.Stat)i);
+            TextMeshProUGUI currentStatText = statsLayout.transform.GetChild(i).Find("StatInfo").GetComponent<TextMeshProUGUI>();
+            string statText = "" + Math.Round(PlayerController.instance.GetStat((Entity.Stat)i), 2);
+
+            currentStatText.text = statText;
+
+            if (i == (int)Entity.Stat.damage) currentStatText.text = statText + " [" + 
+                    (PlayerController.instance.currentWeapon.weaponAddedDamage > 0 ? 
+                    "<color=green>" : "<color=red>") + PlayerController.instance.currentWeapon.weaponAddedDamage + "</color>" + "]";
+            if (i == (int)Entity.Stat.attackSpeed) currentStatText.text = statText + " [" +
+                    (PlayerController.instance.currentWeapon.weaponAddedAttackSpeed < 0 ?
+                    "<color=green>" : "<color=red>") + PlayerController.instance.currentWeapon.weaponAddedAttackSpeed + "</color>" + "]";
         }
     }
 }

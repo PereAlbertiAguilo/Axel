@@ -12,7 +12,7 @@ public class WeaponManager : MonoBehaviour
 
     public enum Type
     {
-        sword, maces, axes, hammers, dagger, orb,
+        sword, mace, axe, hammer, dagger, orb,
     };
 
     public static WeaponManager instance;
@@ -39,6 +39,6 @@ public class WeaponManager : MonoBehaviour
 
     public GameObject LoadWeapon(Element element, Type weaponType)
     {
-        return Resources.Load<GameObject>($"Weapons/{(int)element}{(int)weaponType}");
+        return Resources.Load<GameObject>($"Weapons/{weaponType}/{element}");
     }
 }

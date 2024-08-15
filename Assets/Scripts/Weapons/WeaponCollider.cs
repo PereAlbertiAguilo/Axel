@@ -8,6 +8,8 @@ public class WeaponCollider : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent(out Enemy enemyController) && PlayerController.instance.canDealDamage)
         {
+            Audio.instance.PlayOneShot(Audio.Sound.slash, .3f);
+
             enemyController.RemoveHealth(PlayerController.instance.damageCurrent + PlayerController.instance.currentWeapon.weaponAddedDamage);
 
             enemyController.OnHit();
@@ -18,6 +20,8 @@ public class WeaponCollider : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemyController) && PlayerController.instance.canDealDamage)
         {
+            Audio.instance.PlayOneShot(Audio.Sound.slash, .3f);
+
             enemyController.RemoveHealth(PlayerController.instance.damageCurrent + PlayerController.instance.currentWeapon.weaponAddedDamage);
 
             enemyController.OnHit();

@@ -172,6 +172,7 @@ MonoBehaviour:
   canMove: 1
   canDealDamage: 1
   canTakeDamage: 1
+  canGetKnockback: 1
   effectsManager: {fileID: 240447221384976800}
   canBeKnockbacked: 0
   _enemyRigidbody: {fileID: 3609770490996220176}
@@ -290,8 +291,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 100
-  m_LinearDrag: 0
-  m_AngularDrag: 10
+  m_LinearDrag: 20
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:

@@ -30,11 +30,6 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(ChangeSceneDelay(sceneName));
     }
 
-    public void SettingsAndKeyBinds(float offset)
-    {
-        cameraFollow.position = Vector2.down * offset;
-    }
-
     public void Exit()
     {
 #if UNITY_EDITOR
@@ -43,9 +38,9 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void Return(float offset)
+    public void MovePanel(float offset)
     {
-        cameraFollow.position = Vector2.up * offset;
+        cameraFollow.position = Vector3.up * offset;
     }
 
     public void ChangeCurrentSelectedElement(GameObject selected)

@@ -6,15 +6,6 @@
             "id": "ede4b8d1-4802-4dae-a915-726f9394f7af",
             "actions": [
                 {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "7d728220-3252-42d3-9ca1-cef541926080",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "6771df05-b5f8-46cd-aeec-a69204a278af",
@@ -51,31 +42,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ViewMove",
+                    "name": "AttackDir",
                     "type": "PassThrough",
                     "id": "b1a78673-a11f-47d5-98ab-bc712397a849",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Lock Enemy",
-                    "type": "Button",
-                    "id": "8f0e5272-6bbd-48e6-936b-b065742692bd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Change Attack",
-                    "type": "Button",
-                    "id": "9ece290f-5d54-4374-8c44-06ce84a567dd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "Stats",
@@ -88,28 +61,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "0012dc7a-985f-497f-b1a5-a3458a4ec6eb",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3c12eb3b-2072-4de0-9e1e-a16f2cb19ec3",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "e16a73f6-78e7-4ae8-9aec-ab87f0ae9e53",
@@ -348,51 +299,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "up",
                     "id": "80cb6277-25ee-442e-9ca4-41a5664e3752",
-                    "path": "<Gamepad>/rightStick/up",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
                     "id": "0a842659-9e9e-40a4-90a1-62ca6b2ec1e9",
-                    "path": "<Gamepad>/rightStick/down",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
                     "id": "dc572ccb-b50f-468c-bc54-5b694adea306",
-                    "path": "<Gamepad>/rightStick/left",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
                     "id": "f192bd85-6196-4240-8873-3e4ea2f2581d",
-                    "path": "<Gamepad>/rightStick/right",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -403,7 +354,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -414,7 +365,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -425,7 +376,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -436,7 +387,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -447,53 +398,64 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "ViewMove",
+                    "action": "AttackDir",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "f0488e2d-68b4-4d58-ad6c-3eb46b444cd3",
-                    "path": "<Keyboard>/q",
+                    "name": "Gamepad Alt",
+                    "id": "0316d1e2-7f42-4ba0-8136-07136988215a",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Lock Enemy",
-                    "isComposite": false,
+                    "groups": "",
+                    "action": "AttackDir",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "9e311ee7-2e27-4f31-a2cf-7b3b5b5f3d03",
-                    "path": "<Gamepad>/rightStickPress",
+                    "name": "up",
+                    "id": "6a6ff7ec-932f-4c83-80ec-8f30a4a75ecc",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackDir",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "6f73a38d-4836-4a26-b4c1-fc11c0b6f217",
+                    "path": "<Gamepad>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackDir",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "72a59b0c-5e8a-4515-a725-8bc1c2187dc1",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackDir",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "3a0cba7a-73d9-4d20-88e9-63004429dac5",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Lock Enemy",
+                    "action": "AttackDir",
                     "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8ff97784-7591-40c0-9459-322b0090dd26",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Change Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3926c67c-67bd-469a-8b1b-bc618e6660c7",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Change Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

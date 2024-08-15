@@ -26,7 +26,10 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public virtual void Interact() { }
+    public virtual void Interact()
+    {
+        Audio.instance.PlayOneShot(Audio.Sound.interact, .3f);
+    }
 
     protected bool HasInteracted()
     {
@@ -49,7 +52,7 @@ public class Interactable : MonoBehaviour
         canInteract = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && uses >= 1)
         {
@@ -58,7 +61,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public virtual void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && uses >= 1)
         {
