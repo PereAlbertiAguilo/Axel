@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -29,16 +27,27 @@ public class MenusManager : MonoBehaviour
             }
         }
 
-        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null && currentMenuIndex >= 0)
+        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null && currentMenuIndex >= 0 && Selectable.allSelectablesArray.Length > 0)
         {
+            Vector2 lastselectablePos = new Vector2(Screen.width, 0);
+            Selectable selectabelToSelect = null;
+
             foreach (Selectable selectable in Selectable.allSelectablesArray)
             {
-                if (selectable.gameObject.activeInHierarchy)
+                if (lastselectablePos.x > selectable.transform.position.x)
                 {
-                    ChangeCurrentSelectedElement(selectable.gameObject);
-                    break;
+                    selectabelToSelect = selectable;
+                    lastselectablePos = selectable.transform.position;
+                }
+
+                if (lastselectablePos.y < selectable.transform.position.y)
+                {
+                    selectabelToSelect = selectable;
+                    lastselectablePos = selectable.transform.position;
                 }
             }
+
+            ChangeCurrentSelectedElement(selectabelToSelect.gameObject);
         }
 
         // Dev tool

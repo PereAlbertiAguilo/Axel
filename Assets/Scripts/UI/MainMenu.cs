@@ -10,21 +10,6 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] Transform cameraFollow;
 
-    private void Update()
-    {
-        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null)
-        {
-            foreach (Selectable selectable in Selectable.allSelectablesArray)
-            {
-                if (selectable.gameObject.activeInHierarchy)
-                {
-                    ChangeCurrentSelectedElement(selectable.gameObject);
-                    break;
-                }
-            }
-        }
-    }
-
     public void Play(string sceneName)
     {
         StartCoroutine(ChangeSceneDelay(sceneName));
@@ -41,12 +26,6 @@ public class MainMenu : MonoBehaviour
     public void MovePanel(float offset)
     {
         cameraFollow.position = Vector3.up * offset;
-    }
-
-    public void ChangeCurrentSelectedElement(GameObject selected)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(selected);
     }
 
     IEnumerator ChangeSceneDelay(string sceneName)

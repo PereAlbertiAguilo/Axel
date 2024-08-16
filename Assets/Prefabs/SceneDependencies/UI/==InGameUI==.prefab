@@ -374,6 +374,38 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1630439191632573166}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 7399739336174771640}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ChangeCurrentMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MenusManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_IntArgument
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422338694541360789, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8717709039768003021, guid: 38d774ab4eac68642aa708071ab9d224, type: 3}
       propertyPath: m_Pivot.x
       value: 0
