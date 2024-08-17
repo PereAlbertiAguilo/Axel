@@ -77,14 +77,16 @@ public class UpdateSelectables : EditorWindow
             foreach (Selectable selectable in FindObjectsOfType<Selectable>(true))
             {
                 Undo.RecordObject(selectable.gameObject, "Update Selectables");
-                string prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(selectable);
-                GameObject prefabWeapon = PrefabUtility.LoadPrefabContents(prefabPath);
+                //string prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(selectable);
+                //GameObject seleectabelPrefabObject = PrefabUtility.LoadPrefabContents(prefabPath);
                 EditorUtility.SetDirty(selectable);
 
+                selectable.colors = colorBlock;
+                
                 switch (options)
                 {
                     case Options.ColorBlock:
-                        selectable.colors = colorBlock;
+                        
                         break;
                     case Options.Event:
 
@@ -107,8 +109,8 @@ public class UpdateSelectables : EditorWindow
                 }
 
                 EditorSceneManager.MarkSceneDirty(selectable.gameObject.scene);
-                PrefabUtility.SaveAsPrefabAsset(prefabWeapon, prefabPath);
-                PrefabUtility.UnloadPrefabContents(prefabWeapon);
+                //PrefabUtility.SaveAsPrefabAsset(seleectabelPrefabObject, prefabPath);
+                //PrefabUtility.UnloadPrefabContents(seleectabelPrefabObject);
             }
         }
 
