@@ -5,16 +5,12 @@ using Pathfinding;
 
 public class Enemy : Entity
 {
-    public bool canBeKnockbacked = true;
-
-    [Space]
-
-    public Rigidbody2D _enemyRigidbody;
-    public SpriteRenderer _enemyRenderer;
-
-    [Space]
-
+    [HideInInspector] public Rigidbody2D _enemyRigidbody;
+    [HideInInspector] public SpriteRenderer _enemyRenderer;
     [HideInInspector] public EnemiesManager enemiesManager;
+    [HideInInspector] public AudioSource audioSource;
+
+    [HideInInspector] public Color defaultColor;
 
     public override void Awake()
     {
@@ -22,24 +18,31 @@ public class Enemy : Entity
 
         _enemyRigidbody = GetComponent<Rigidbody2D>();
         _enemyRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponentInChildren<AudioSource>();
+
+        Transform parent = transform.parent;
+
+        if (parent != null) enemiesManager = parent.GetComponent<EnemiesManager>();
+
+        defaultColor = _enemyRenderer.color;
     }
 
     public override void Start()
     {
         base.Start();
 
-        if(transform.parent.TryGetComponent(out enemiesManager)) enemiesManager.AddToEnemiesList(gameObject);
+        if (enemiesManager != null) enemiesManager.AddToEnemiesList(gameObject);
     }
 
     public void OnHit()
     {
         if (healthCurrent <= 0) return;
 
+        StopAllCoroutines();
+
         _enemyRenderer.color = PlayerController.instance.damagedColor;
 
-        CancelInvoke();
-
-        Invoke(nameof(ResetDamagedColor), .1f);
+        StartCoroutine(ResetDamagedColor(defaultColor));
 
         if (PlayerController.instance.effectsManager.appliesEffects)
         {
@@ -50,20 +53,32 @@ public class Enemy : Entity
     public virtual void MoveReset()
     {
         canMove = true;
+
+        if(audioSource != null)
+        {
+            audioSource.Play();
+        }
     }
 
-    public void ResetDamagedColor()
+    public IEnumerator ResetDamagedColor(Color defaultColor)
     {
-        _enemyRenderer.color = Color.white;
+        yield return new WaitForSeconds(.2f);
+
+        _enemyRenderer.color = defaultColor;
     }
 
     public virtual void DeactivateFollowState()
     {
         canMove = false;
+
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
-        if (transform.parent.TryGetComponent(out enemiesManager)) enemiesManager.RemoveFromEnemiesList(gameObject);
+        if(enemiesManager != null) enemiesManager.RemoveFromEnemiesList(gameObject);
     }
 }

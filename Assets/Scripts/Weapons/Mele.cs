@@ -25,7 +25,7 @@ public class Mele : Weapon
     {
         yield return new WaitForSeconds(keyframeDuration * colliderFrame / AnimationSpeed());
 
-        Audio.instance.PlayOneShot(Audio.Sound.attack, .35f);
+        Audio.instance.PlayOneShot(Audio.Sound.attack, .20f);
 
         weaponCollider.enabled = true;
 

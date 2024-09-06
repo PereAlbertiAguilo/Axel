@@ -1,19 +1,21 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class Audio : MonoBehaviour
 {
     public enum Sound
     {
-        click, hurt, interact, slash, swoosh , heal, attack
+        click, hurt, interact, slash, swoosh , heal, attack, changeRoom
     }
 
     public static Audio instance;
 
-    [SerializeField] AudioSource musicAudioSource;
-    [SerializeField] AudioSource sfxAudioSource;
+    public AudioSource musicAudioSource;
+    public AudioSource sfxAudioSource;
 
     [SerializeField] AudioMixerGroup musicMixer;
     [SerializeField] AudioMixerGroup sfxMixer;
@@ -26,11 +28,12 @@ public class Audio : MonoBehaviour
         }
     }
 
-    // Plays a sound
-    public void PlayOneShot(AudioSource audioSource, AudioClip ac, float volumeScale)
+    private void Start()
     {
-        audioSource.PlayOneShot(ac, volumeScale);
+        StartCoroutine(FadeMusicIn(musicAudioSource, 5, .15f));
     }
+
+    // Plays a sound
 
     public void PlayOneShot(AudioClip ac)
     {
@@ -39,7 +42,19 @@ public class Audio : MonoBehaviour
 
     public void PlayOneShot(AudioClip ac, float volumeScale, bool randomPich)
     {
-        PlayOneShot(sfxAudioSource, ac, volumeScale);
+        PlayOneShot(CreateAudioSource(ac, randomPich), ac, volumeScale);
+    }
+
+    public void PlayOneShot(AudioSource audioSource, AudioClip ac, float volumeScale)
+    {
+        audioSource.PlayOneShot(ac, volumeScale);
+    }
+
+    public void PlayOneShot(AudioSource audioSource, AudioClip ac, float volumeScale, bool randomPich)
+    {
+        if (randomPich) audioSource.pitch = UnityEngine.Random.Range(1, 1.5f);
+
+        PlayOneShot(audioSource, ac, volumeScale);
     }
 
     public void PlayOneShot(Sound sound)
@@ -54,6 +69,13 @@ public class Audio : MonoBehaviour
         AudioClip ac = Resources.Load($"Audios/{sound}") as AudioClip;
 
         PlayOneShot(CreateAudioSource(ac, true), ac, volumeScale);
+    }
+
+    public void PlayOneShot(Sound sound, float volumeScale, bool randomPich)
+    {
+        AudioClip ac = Resources.Load($"Audios/{sound}") as AudioClip;
+
+        PlayOneShot(CreateAudioSource(ac, randomPich), ac, volumeScale);
     }
 
     AudioSource CreateAudioSource(AudioClip ac, bool randomPich)
@@ -77,5 +99,39 @@ public class Audio : MonoBehaviour
     public void ClickSound()
     {
         PlayOneShot(Sound.click, .4f);
+    }
+
+    public IEnumerator FadeMusicIn(AudioSource ac, float delay, float maxVolume)
+    {
+        float currentTime = 0;
+
+        ac.volume = 0;
+
+        while (currentTime < delay)
+        {
+            currentTime += Time.unscaledDeltaTime;
+            ac.volume = Mathf.Lerp(0, maxVolume, currentTime / delay);
+
+            yield return null;
+        }
+
+        ac.volume = maxVolume;
+    }
+
+    public IEnumerator FadeMusicOut(AudioSource ac, float delay)
+    {
+        float currentTime = 0;
+
+        float maxVolume = ac.volume;
+
+        while (currentTime < delay)
+        {
+            currentTime += Time.unscaledDeltaTime;
+            ac.volume = Mathf.Lerp(maxVolume, 0, currentTime / delay);
+
+            yield return null;
+        }
+
+        ac.volume = 0;
     }
 }

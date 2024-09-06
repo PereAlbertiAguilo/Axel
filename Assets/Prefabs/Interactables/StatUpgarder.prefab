@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc24cb1db921474ea4dbd21478b6db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDelay: 1
+  interactDelay: 0.5
   hasUses: 1
   uses: 1
   rarityImage: {fileID: 7314994438430939181}

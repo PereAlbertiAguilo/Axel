@@ -36,6 +36,21 @@ public class Entity : MonoBehaviour
 
     public virtual void Start() { }
 
+    public virtual void Update()
+    {
+        if(healthCurrent <= 0)
+        {
+            OnDeath();
+        }
+
+        if (!canMove) return;
+    }
+
+    public virtual void OnDeath()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void AddHealth(float healthToAdd)
     {
         if (healthCurrent < health)
@@ -70,7 +85,7 @@ public class Entity : MonoBehaviour
             {
                 healthCurrent = 0;
 
-                gameObject.SetActive(false);
+                canMove = false;
             }
         }
     }

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public int roomIndex = 0;
-
-    public bool openUp = false;
-    public bool openDown = false;
-    public bool openRight = false;
-    public bool openLeft = false;
-
     public GameObject miniMapUp;
     public GameObject miniMapDown;
     public GameObject miniMapRight;
@@ -23,6 +16,15 @@ public class Room : MonoBehaviour
 
     public Vector2Int roomGridPos {  get; set; }
 
+    [HideInInspector] public int roomIndex = 0;
+
+    [HideInInspector] public bool openUp = false;
+    [HideInInspector] public bool openDown = false;
+    [HideInInspector] public bool openRight = false;
+    [HideInInspector] public bool openLeft = false;
+
+    [HideInInspector] public bool roomCleared = false;
+
     private void Start()
     {
         enemiesManager.gameObject.SetActive(false);
@@ -30,11 +32,25 @@ public class Room : MonoBehaviour
 
     private void Update()
     {
-        if(!enemiesManager.enemiesAlive)
+        if(!enemiesManager.enemiesAlive && !roomCleared)
         {
+            roomCleared = true;
+
             OpenDoors();
+
+            GameManager.instance.FloorCleared();
+
+            StartCoroutine(PlaySoundDelayed(.45f));
         }
     }
+
+    IEnumerator PlaySoundDelayed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Audio.instance.PlayOneShot(Audio.Sound.changeRoom, .01f, true);
+    }
+
     public void OpenDoors()
     {
         doorsManager.OpenDoor("Up", openUp);
@@ -67,13 +83,15 @@ public class Room : MonoBehaviour
         {
             UpdateMiniMapDoors();
 
-            if (enemiesManager.enemiesAlive) Invoke(nameof(CloseCurrentDoorsWithDelay), .5f);
+            if (enemiesManager.enemiesAlive) Invoke(nameof(CloseCurrentDoorsWithDelay), .45f);
 
             CameraController.instance.ChangeCameraPos(transform);
             miniMapDisplay.SetActive(true);
             enemiesManager.gameObject.SetActive(true);
             PlayerController.instance._playerRigidbody.velocity = Vector2.zero;
             PlayerController.instance.currentEnemiesManager = enemiesManager;
+
+            if (!roomCleared) StartCoroutine(PlaySoundDelayed(.45f));
         }
     }
 }

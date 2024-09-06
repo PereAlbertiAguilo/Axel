@@ -22,7 +22,7 @@ public class EnemiesManager : MonoBehaviour
 
     public void AddToEnemiesList(GameObject enemy)
     {
-        if (!enemiesAlive) enemiesAlive = true;
+        enemiesAlive = true;
 
         enemiesList.Add(enemy);
     }

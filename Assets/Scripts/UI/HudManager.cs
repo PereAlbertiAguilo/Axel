@@ -39,7 +39,7 @@ public class HudManager : MonoBehaviour
     {
         Invoke(nameof(UpdateStatsUI), .1f);
 
-        stageText.text = SceneManager.GetActiveScene().name;
+        stageText.text = StageName();
     }
 
     private void Update()
@@ -73,6 +73,21 @@ public class HudManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(timer - minutes * 60);
 
         timerText.text = string.Format("{00:0}:{1:00}", minutes, seconds);
+    }
+
+    string StageName()
+    {
+        string finalName = "";
+
+        foreach (char character in SceneManager.GetActiveScene().name)
+        {
+            if (char.IsUpper(character)) finalName += " ";
+            finalName += character;
+        }
+
+        finalName = finalName.ToUpper();
+
+        return finalName;
     }
 
     public IEnumerator DashCooldownBar(float dashCooldown)

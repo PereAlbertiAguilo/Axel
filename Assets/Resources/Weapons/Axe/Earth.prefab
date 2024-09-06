@@ -86,8 +86,8 @@ MonoBehaviour:
     type: 4
     duration: 3
     durationCurrent: 1
-    power: 7
-    cooldown: 2
+    power: 5
+    cooldown: 0
 --- !u!114 &2822527110964356267
 MonoBehaviour:
   m_ObjectHideFlags: 0

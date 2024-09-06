@@ -43,7 +43,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (!Application.isFocused && paused)
+        if (!Application.isFocused && !paused)
         {
             pauseButton.onClick.Invoke();
             Pause();
@@ -59,51 +59,21 @@ public class PauseMenu : MonoBehaviour
     // Resumes the game
     public void Resume()
     {
+        paused = false;
         MenusManager.instance.ChangeCurrentSelectedElement(null);
         Cursor.visible = false;
-        UpdateAnimators(true);
-        UpdateEnemies(true);
-        paused = false;
         PlayerController.instance.canMove = true;
+        Time.timeScale = 1;
     }
 
     // Pauses the game
     public void Pause()
     {
+        paused = true;
         MenusManager.instance.ChangeCurrentSelectedElement(resumeButton.gameObject);
         Cursor.visible = true;
-        UpdateAnimators(false);
-        UpdateEnemies(false);
-        paused = true;
         PlayerController.instance.canMove = false;
-    }
-
-    void UpdateAnimators(bool activate)
-    {
-        foreach(Animator a in FindObjectsOfType<Animator>(true))
-        {
-            if (a == FadeBlack.instance._animator) continue;
-            a.enabled = activate;
-        }
-        foreach(SpriteAnimation a in FindObjectsOfType<SpriteAnimation>())
-        {
-            if(!activate) a.StopAllCoroutines();
-            a.enabled = activate;
-            a.nextIteration = activate;
-        }
-    }
-
-    void UpdateEnemies(bool activate)
-    {
-        foreach (Enemy e in FindObjectsOfType<Enemy>())
-        {
-            e.canMove = activate;
-        }
-
-        foreach (Projectile projectile in FindObjectsOfType<Projectile>())
-        {
-            projectile.enabled = activate;
-        }
+        Time.timeScale = 0;
     }
 
     // Goes to the main menu
@@ -118,7 +88,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         FadeBlack.instance.FadeToBlack();
 
-        yield return new WaitForSeconds(.42f);
+        Audio.instance.StartCoroutine(Audio.instance.FadeMusicOut(Audio.instance.musicAudioSource, .5f));
+
+        yield return new WaitForSeconds(1f);
 
         SceneManager.LoadScene(sceneName);
     }

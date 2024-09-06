@@ -79,7 +79,7 @@ public class Ranged : Weapon
 
     public void Shoot()
     {
-        Audio.instance.PlayOneShot(Audio.Sound.attack, .35f);
+        Audio.instance.PlayOneShot(Audio.Sound.attack, .20f);
 
         InstatiateObject(new Vector2(transform.position.x + UserInput.instance.attackDirInput.x, transform.position.y + UserInput.instance.attackDirInput.y));
     }

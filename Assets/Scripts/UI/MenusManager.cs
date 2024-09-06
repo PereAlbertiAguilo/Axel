@@ -27,29 +27,6 @@ public class MenusManager : MonoBehaviour
             }
         }
 
-        if (Input.anyKeyDown && EventSystem.current.currentSelectedGameObject == null && currentMenuIndex >= 0 && Selectable.allSelectablesArray.Length > 0)
-        {
-            Vector2 lastselectablePos = new Vector2(Screen.width, 0);
-            Selectable selectabelToSelect = null;
-
-            foreach (Selectable selectable in Selectable.allSelectablesArray)
-            {
-                if (lastselectablePos.x > selectable.transform.position.x)
-                {
-                    selectabelToSelect = selectable;
-                    lastselectablePos = selectable.transform.position;
-                }
-
-                if (lastselectablePos.y < selectable.transform.position.y)
-                {
-                    selectabelToSelect = selectable;
-                    lastselectablePos = selectable.transform.position;
-                }
-            }
-
-            ChangeCurrentSelectedElement(selectabelToSelect.gameObject);
-        }
-
         // Dev tool
         if (Input.GetKeyDown(KeyCode.U))
         {

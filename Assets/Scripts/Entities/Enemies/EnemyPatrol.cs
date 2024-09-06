@@ -17,8 +17,10 @@ public class EnemyPatrol : Enemy
         _patrol = GetComponent<Patrol>();
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+
         _aIPath.maxSpeed = speedCurrent;
     }
 

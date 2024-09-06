@@ -77,8 +77,10 @@ public class PlayerController : Entity
         verticalView = -1;
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+
         if (!canMove) return;
 
         PlayerInput();

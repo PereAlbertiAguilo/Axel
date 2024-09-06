@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeactivateOverTime : MonoBehaviour
 {
-    [SerializeField] float lifeTime = 2f;
+    public float lifeTime = 2f;
 
     private void OnEnable()
     {
@@ -12,7 +12,7 @@ public class DeactivateOverTime : MonoBehaviour
         Invoke(nameof(Deactivate), lifeTime);
     }
 
-    void Deactivate()
+    public void Deactivate()
     {
         gameObject.SetActive(false);
     }

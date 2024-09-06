@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1;
         FadeBlack.instance.FadeToBlack();
 
-        yield return new WaitForSeconds(.42f);
+        yield return new WaitForSeconds(1f);
 
         SceneManager.LoadScene(sceneName);
     }

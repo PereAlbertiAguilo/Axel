@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Pathfinding;
 
 public class RoomManager : MonoBehaviour
 {
+    public static RoomManager instance { get; private set;}
+
     [SerializeField] string floorFolderName;
     [SerializeField] string treasureRoomsFolderName;
 
@@ -44,8 +47,21 @@ public class RoomManager : MonoBehaviour
 
     int treasuereRoomIndex;
 
+    AstarPath astar;
+    Pathfinding.AstarData data;
+    Pathfinding.GridGraph gridGraph;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
+        astar = AstarPath.active;
+        Pathfinding.AstarData data = astar.data;
+        gridGraph = data.gridGraph;
+
         Time.timeScale = 0;
 
         roomGrid = new int[gridSize.x, gridSize.y];
@@ -96,7 +112,14 @@ public class RoomManager : MonoBehaviour
 
             generationComplete = true;
             Time.timeScale = 1;
+
+            Invoke(nameof(GrdGraphScan), .1f);
         }
+    }
+
+    void GrdGraphScan()
+    {
+        gridGraph.Scan();
     }
 
     void StartRoomGenerationFromRoom(Vector2Int roomIndex)
@@ -111,7 +134,7 @@ public class RoomManager : MonoBehaviour
         Room initialRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity).GetComponent<Room>();
 
         initialRoom.transform.parent = transform;   
-        initialRoom.gameObject.name = $"Room_Initial_{roomCount}";
+        initialRoom.gameObject.name = $"Initial";
         initialRoom.roomGridPos = roomIndex;
         initialRoom.roomIndex = roomCount - 1;
         rooms.Add(initialRoom.gameObject);
@@ -135,7 +158,7 @@ public class RoomManager : MonoBehaviour
         Room newRoom = Instantiate(randomLoad, GetPositionFromGridIndex(roomIndex), Quaternion.identity).GetComponent<Room>();
 
         newRoom.transform.parent = transform; 
-        newRoom.gameObject.name = $"Room_{roomCount}";
+        newRoom.gameObject.name = $"Normal";
         newRoom.roomGridPos = roomIndex;
         newRoom.roomIndex = roomCount - 1;
         rooms.Add(newRoom.gameObject);
@@ -155,12 +178,15 @@ public class RoomManager : MonoBehaviour
         Room newLastRoom = Instantiate(randomLoad, lastRoomPos, Quaternion.identity).GetComponent<Room>();
 
         newLastRoom.transform.parent = transform;
-        newLastRoom.gameObject.name = $"Room_Last_{roomCount}";
+        newLastRoom.gameObject.name = $"Last";
         newLastRoom.roomGridPos = lastRoom.roomGridPos;
         newLastRoom.roomIndex = lastRoom.roomIndex;
         OpenDoors(newLastRoom, lastRoom.roomGridPos.x, lastRoom.roomGridPos.y);
 
+        int removedIndex = lastRoom.roomIndex;
+
         Destroy(rooms.Last());
+        rooms.RemoveAt(removedIndex);
 
         rooms.Add(newLastRoom.gameObject);
     }
@@ -175,12 +201,15 @@ public class RoomManager : MonoBehaviour
         Room especialRoom = Instantiate(randomLoad, replacedRoomPos, Quaternion.identity).GetComponent<Room>();
 
         especialRoom.transform.parent = transform;
-        especialRoom.gameObject.name = $"Room_Special_{roomCount}";
+        especialRoom.gameObject.name = $"Special";
         especialRoom.roomGridPos = replacedRoom.roomGridPos;
         especialRoom.roomIndex = replacedRoom.roomIndex;
         OpenDoors(especialRoom, replacedRoom.roomGridPos.x, replacedRoom.roomGridPos.y);
 
-        Destroy(rooms[replacedRoom.roomIndex]);
+        int removedIndex = replacedRoom.roomIndex;
+
+        Destroy(rooms[removedIndex]);
+        rooms.RemoveAt(removedIndex);
 
         rooms.Add(especialRoom.gameObject);
     }

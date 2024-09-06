@@ -101,9 +101,9 @@ MonoBehaviour:
   effectsHolder: {fileID: 0}
   parameters:
     type: 2
-    duration: 2
+    duration: 1
     durationCurrent: 1
-    power: 10
+    power: 5
     cooldown: 2
 --- !u!1 &4740229863244203120
 GameObject:
@@ -174,10 +174,10 @@ MonoBehaviour:
   canTakeDamage: 1
   canGetKnockback: 1
   effectsManager: {fileID: 240447221384976800}
-  canBeKnockbacked: 0
   _enemyRigidbody: {fileID: 3609770490996220176}
   _enemyRenderer: {fileID: 3400902059352589045}
   enemiesManager: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &-615685401891377849
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class Weakness : Effect
         {
             currentTime += Time.deltaTime;
 
-            entity.damageCurrent = SetEffectPower(entity.damage, true);
+            entity.damageCurrent = SetEffectPower(entity.damage, false);
         }
         else
         {

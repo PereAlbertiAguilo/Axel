@@ -8,7 +8,7 @@ public class EnemyCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerController playerController) )
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController))
         {
             if(playerController.canTakeDamage && enemy.canDealDamage)
             {
