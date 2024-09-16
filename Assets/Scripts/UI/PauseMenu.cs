@@ -64,6 +64,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         PlayerController.instance.canMove = true;
         Time.timeScale = 1;
+        Audio.instance.UpdateSFX(false);
     }
 
     // Pauses the game
@@ -74,24 +75,12 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
         PlayerController.instance.canMove = false;
         Time.timeScale = 0;
+        Audio.instance.UpdateSFX(true);
     }
 
     // Goes to the main menu
     public void Menu()
     {
-        StartCoroutine(ChangeSceneDelay("MainMenu"));
-    }
-
-    // Adds a delay before changeing the scene
-    IEnumerator ChangeSceneDelay(string sceneName)
-    {
-        Time.timeScale = 1;
-        FadeBlack.instance.FadeToBlack();
-
-        Audio.instance.StartCoroutine(Audio.instance.FadeMusicOut(Audio.instance.musicAudioSource, .5f));
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadScene(sceneName);
+        MenusManager.instance.StartCoroutine(MenusManager.instance.ChangeSceneDelay("MainMenu"));
     }
 }

@@ -70,7 +70,7 @@ public class Weapon : MonoBehaviour
             }
         }
 
-        weaponRenderer.sortingOrder = verticalView < 0 ? playerSortingOrder + 1 : playerSortingOrder - 1;
+        weaponRenderer.sortingOrder = verticalView < 0 ? playerSortingOrder + 3 : playerSortingOrder - 3;
     }
 
     public virtual void Attack()

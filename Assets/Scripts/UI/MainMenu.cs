@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play(string sceneName)
     {
-        StartCoroutine(ChangeSceneDelay(sceneName));
+        MenusManager.instance.StartCoroutine(MenusManager.instance.ChangeSceneDelay(sceneName));
     }
 
     public void Exit()
@@ -26,15 +26,5 @@ public class MainMenu : MonoBehaviour
     public void MovePanel(float offset)
     {
         cameraFollow.position = Vector3.up * offset;
-    }
-
-    IEnumerator ChangeSceneDelay(string sceneName)
-    {
-        Time.timeScale = 1;
-        FadeBlack.instance.FadeToBlack();
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadScene(sceneName);
     }
 }

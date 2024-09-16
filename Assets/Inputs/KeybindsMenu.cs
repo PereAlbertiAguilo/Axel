@@ -36,15 +36,17 @@ public class KeybindsMenu : MonoBehaviour
 
         currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 
-        if (currentSelectedGameObject != null && transform.GetChild(0).gameObject.activeInHierarchy && scrollRect.verticalScrollbar.gameObject != currentSelectedGameObject && !canScroll)
+        if (currentSelectedGameObject != null && transform.GetChild(0).gameObject.activeInHierarchy && 
+            scrollRect.verticalScrollbar.gameObject != currentSelectedGameObject && !canScroll)
         {
+
             foreach (GameObject item in scrollItems)
             {
                 float itemRectY = item.GetComponent<RectTransform>().localPosition.y;
 
                 if (item == currentSelectedGameObject)
                 {
-                    scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.deltaTime * 5);
+                    scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.unscaledDeltaTime * 5);
                 }
                 else
                 {
@@ -52,7 +54,7 @@ public class KeybindsMenu : MonoBehaviour
                     {
                         if (childItem.gameObject == currentSelectedGameObject)
                         {
-                            scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.deltaTime * 5);
+                            scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.unscaledDeltaTime * 5);
                         }
                     }
                 }

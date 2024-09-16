@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -50,8 +51,8 @@ public class Entity : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
-    public void AddHealth(float healthToAdd)
+        
+    public virtual void AddHealth(float healthToAdd)
     {
         if (healthCurrent < health)
         {
@@ -70,7 +71,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void RemoveHealth(float healthToRemove)
+    public virtual void RemoveHealth(float healthToRemove)
     {
         if (healthCurrent > 0)
         {
@@ -79,7 +80,7 @@ public class Entity : MonoBehaviour
 
             healthCurrent -= actualHealthToRemove;
 
-            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, .5f, true);
+            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, (defenseCurrent < defense) ? .65f : .4f, true);
 
             if (healthCurrent <= 0)
             {
@@ -88,5 +89,21 @@ public class Entity : MonoBehaviour
                 canMove = false;
             }
         }
+    }
+
+    public virtual IEnumerator JiggleAnimation(int power)
+    {
+        Vector3 initialScale = transform.localScale;
+
+        for (int i = 0; i < power; i++)
+        {
+            float x = UnityEngine.Random.Range(-.025f, .025f);
+
+            transform.localScale = new Vector2(initialScale.x + x, initialScale.y + (-x));
+
+            yield return new WaitForSeconds(.025f);
+        }
+
+        transform.localScale = initialScale;
     }
 }

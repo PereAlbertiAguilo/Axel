@@ -26,6 +26,6 @@ public class Effect : MonoBehaviour
 
     protected float SetEffectPower(float value, bool inverse)
     {
-        return !inverse ? (parameters.power * value / 6) : (value / parameters.power);
+        return !inverse ? (parameters.power * value / 7) : (value / parameters.power);
     }
 }

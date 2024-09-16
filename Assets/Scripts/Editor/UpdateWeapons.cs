@@ -30,6 +30,8 @@ public class UpdateWeapons : EditorWindow
     public GameObject newParticle;
     public GameObject[] weapons;
 
+    Vector2 scrollPos = Vector2.zero;
+
     [MenuItem("Window/UpdateWeapons")]
     public static void ShowWindow()
     {
@@ -57,6 +59,8 @@ public class UpdateWeapons : EditorWindow
     void OnGUI()
     {
         serializedObject.Update();
+
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(_changeByElement);
@@ -92,6 +96,8 @@ public class UpdateWeapons : EditorWindow
 
         EditorGUILayout.PropertyField(_weapons);
 
+        EditorGUILayout.EndScrollView();
+
         EditorGUILayout.Space();
 
         if (GUILayout.Button($"Update Weapons by {(changeByElement ? "Element" : "Type")}"))
@@ -102,22 +108,20 @@ public class UpdateWeapons : EditorWindow
                 string prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(weaponObject);
                 GameObject prefabWeapon = PrefabUtility.LoadPrefabContents(prefabPath);
 
-                if (prefabWeapon.TryGetComponent(out EffectManager effectManager) && 
-                    prefabWeapon.TryGetComponent(out Weapon weapon) && 
-                    prefabWeapon.TryGetComponent(out EffectOnDestroy effectOnDestroy))
+                if (prefabWeapon.TryGetComponent(out Weapon weapon))
                 {
                     if (changeByElement)
                     {
                         if (weapon.weaponElement == element)
                         {
-                            ActionWithOptions(weapon, effectManager, effectOnDestroy);
+                            ActionWithOptions(weapon);
                         }
                     }
                     else
                     {
                         if (weapon.weaponType == type)
                         {
-                            ActionWithOptions(weapon, effectManager, effectOnDestroy);
+                            ActionWithOptions(weapon);
                         }
                     }
                 }
@@ -130,18 +134,18 @@ public class UpdateWeapons : EditorWindow
         serializedObject.ApplyModifiedProperties();
     }
 
-    void ActionWithOptions(Weapon weapon, EffectManager effectManager, EffectOnDestroy effectOnDestroy)
+    void ActionWithOptions(Weapon weapon)
     {
         switch (options)
         {
             case Options.Effects:
                 if (appliesEffects)
                 {
-                    effectManager.parameters = newEffectParameters;
+                    weapon.GetComponent<EffectManager>().parameters = newEffectParameters;
                 }
                 else
                 {
-                    effectManager.appliesEffects = appliesEffects;
+                    weapon.GetComponent<EffectManager>().appliesEffects = appliesEffects;
                 }
                 break;
 
@@ -151,7 +155,7 @@ public class UpdateWeapons : EditorWindow
                 break;
 
             case Options.Particle:
-                effectOnDestroy.effect = newParticle;
+                weapon.GetComponent<EffectOnDestroy>().effect = newParticle;
                 break;
         }
     }

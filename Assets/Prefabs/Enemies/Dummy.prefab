@@ -123,6 +123,7 @@ MonoBehaviour:
   _enemyRenderer: {fileID: 0}
   enemiesManager: {fileID: 0}
   audioSource: {fileID: 0}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &4840704781419873844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,9 +221,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.2}
-  m_Size: {x: 0.7, y: 0.7}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0.4}
+  m_Size: {x: 0.7, y: 1}
+  m_Direction: 0
 --- !u!50 &2726120469384268894
 Rigidbody2D:
   serializedVersion: 4
@@ -263,5 +264,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dynamicChange: 1
-  offset: -1
+  offset: 0
   spriteRenderer: {fileID: 0}

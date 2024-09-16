@@ -80,10 +80,10 @@ MonoBehaviour:
   effectsHolder: {fileID: 0}
   parameters:
     type: 0
-    duration: 3
+    duration: 2.5
     durationCurrent: 1
-    power: 7
-    cooldown: 2
+    power: 4
+    cooldown: 2.5
 --- !u!212 &6009362941602339166
 SpriteRenderer:
   m_ObjectHideFlags: 0

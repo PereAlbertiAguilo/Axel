@@ -14,7 +14,7 @@ public class EnemyCollider : MonoBehaviour
             {
                 playerController.RemoveHealth(enemy.damageCurrent);
 
-                playerController.OnHit(.75f, enemy);
+                playerController.OnHit(.5f, enemy);
             }
         }
     }
@@ -27,7 +27,7 @@ public class EnemyCollider : MonoBehaviour
             {
                 playerController.RemoveHealth(enemy.damageCurrent);
 
-                playerController.OnHit(.75f, enemy);
+                playerController.OnHit(.5f, enemy);
             }
         }
     }

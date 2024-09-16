@@ -42,8 +42,7 @@ public class EffectManager : MonoBehaviour
         newEffect.entity = entity;
         newEffect.attakerEntity = attackerEffectManager.entity;
 
-        PopUp.instance.Effect(transform.parent, newEffect.parameters.type, Color.cyan, 2, 1, true, newEffect.parameters.duration, false);
-        PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type}", Color.cyan, .4f, 2f, true);
+        DisplayEffectPopUp(newEffect);
 
         attackerEffectManager.StartCoroutine(attackerEffectManager.EffectCooldown(newEffect.parameters.duration + newEffect.parameters.cooldown, attackerEffectManager));
     }
@@ -58,5 +57,13 @@ public class EffectManager : MonoBehaviour
 
             attackerEffects.canApplyEffect = true;
         }
+    }
+
+    void DisplayEffectPopUp(Effect newEffect)
+    {
+        float offset = transform.parent.GetComponent<Collider2D>().bounds.extents.y + .5f;
+
+        PopUp.instance.Effect(transform.parent, newEffect.parameters.type, Color.cyan, 2, offset, true, newEffect.parameters.duration, false);
+        PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type}", Color.cyan, .4f, offset + .75f, true);
     }
 }

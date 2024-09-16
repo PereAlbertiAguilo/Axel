@@ -69,7 +69,7 @@ public class WeaponSetter : RarityInteractable
             {
                 if (effectManager.appliesEffects)
                 {
-                    effectManager.parameters.power = (int)rarity + 1;
+                    effectManager.parameters.power = (int)rarity + 2;
 
                     effectImage.transform.parent.gameObject.SetActive(true);
                     effectText.gameObject.SetActive(true);

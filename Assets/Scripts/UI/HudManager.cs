@@ -13,10 +13,10 @@ public class HudManager : MonoBehaviour
 {
     [SerializeField] Image dashCooldownImage;
     [SerializeField] Image healthBarImage;
+    [SerializeField] Image delayedHealthBarImage;
 
     [Space]
 
-    [SerializeField] GameObject miniMap;
     [SerializeField] GameObject statsPanel;
     [SerializeField] GameObject statsLayout;
 
@@ -48,21 +48,21 @@ public class HudManager : MonoBehaviour
         {
             if (UserInput.instance.statsInputDown)
             {
-                miniMap.SetActive(false);
                 statsPanel.SetActive(true);
             }
             else if (UserInput.instance.statsInputUp)
             {
-                miniMap.SetActive(true);
                 statsPanel.SetActive(false);
             }
         }
 
         if (!PauseMenu.instance.paused) Timer();
 
-        currentHealthText.text = "" + Math.Round(PlayerController.instance.healthCurrent, 1);
+        currentHealthText.text = PlayerController.instance.healthCurrent.ToString("0.0");
 
         healthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
+
+        delayedHealthBarImage.fillAmount = Mathf.Lerp(delayedHealthBarImage.fillAmount, PlayerController.instance.healthCurrent / PlayerController.instance.health, Time.deltaTime / .5f);
     }
 
     void Timer()
@@ -102,6 +102,24 @@ public class HudManager : MonoBehaviour
         }
 
         dashCooldownImage.fillAmount = 1;
+    }
+
+    public IEnumerator HealthBar(float duration)
+    {
+        float currentTime = 0;
+
+        healthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.unscaledDeltaTime;
+
+            delayedHealthBarImage.fillAmount = Mathf.Lerp(delayedHealthBarImage.fillAmount, PlayerController.instance.healthCurrent / PlayerController.instance.health, currentTime / duration);
+
+            yield return null;
+        }
+
+        //delayedHealthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
     }
 
     public void UpdateStatsUI()

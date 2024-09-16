@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -7,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class RuleTileFromSheet : EditorWindow
 {
-    SerializedProperty _ruleTile, _spriteSheet, _defaultRandomTile, _randomSpirtes;
+    SerializedProperty _ruleTile, _spriteSheet, _defaultRandomTile, _randomSpirtes, _perlinScale;
     SerializedObject serializedObject;
 
     public RuleTile ruleTile;
@@ -15,6 +14,9 @@ public class RuleTileFromSheet : EditorWindow
 
     public Sprite defaultRandomTile;
     public Sprite[] randomSpirtes;
+
+    [Range(0, 1)]
+    public float perlinScale = .5f;
 
     Vector2 scrollPos = Vector2.zero;
 
@@ -36,8 +38,7 @@ public class RuleTileFromSheet : EditorWindow
         _spriteSheet = serializedObject.FindProperty("spriteSheet");
         _defaultRandomTile = serializedObject.FindProperty("defaultRandomTile");
         _randomSpirtes = serializedObject.FindProperty("randomSpirtes");
-
-
+        _perlinScale = serializedObject.FindProperty("perlinScale");
     }
 
     void OnGUI()
@@ -63,6 +64,10 @@ public class RuleTileFromSheet : EditorWindow
             EditorGUILayout.Space();
 
             EditorGUILayout.PropertyField(_randomSpirtes);
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.PropertyField(_perlinScale);
         }
 
         EditorGUILayout.EndScrollView();
@@ -107,6 +112,22 @@ public class RuleTileFromSheet : EditorWindow
 
                     EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
                 }
+            }
+
+            if (GUILayout.Button("Set randomens seed of random tiles"))
+            {
+                Undo.RecordObject(ruleTile, "Set randnom tile form index");
+                EditorUtility.SetDirty(ruleTile);
+
+                foreach (RuleTile.TilingRule tile in ruleTile.m_TilingRules)
+                {
+                    if (tile.m_Output == RuleTile.TilingRuleOutput.OutputSprite.Random)
+                    {
+                        tile.m_PerlinScale = perlinScale;
+                    }
+                }
+
+                EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
             }
         }
 

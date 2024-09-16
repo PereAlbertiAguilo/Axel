@@ -81,8 +81,8 @@ MonoBehaviour:
     type: 5
     duration: 1
     durationCurrent: 1
-    power: 1
-    cooldown: 2
+    power: 3
+    cooldown: 0.5
 --- !u!212 &6009362941602339166
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -38,11 +38,10 @@ public class Enemy : Entity
     {
         if (healthCurrent <= 0) return;
 
-        StopAllCoroutines();
-
         _enemyRenderer.color = PlayerController.instance.damagedColor;
 
         StartCoroutine(ResetDamagedColor(defaultColor));
+        StartCoroutine(JiggleAnimation(10));
 
         if (PlayerController.instance.effectsManager.appliesEffects)
         {
@@ -56,7 +55,7 @@ public class Enemy : Entity
 
         if(audioSource != null)
         {
-            audioSource.Play();
+            audioSource.mute = canMove;
         }
     }
 
@@ -73,7 +72,7 @@ public class Enemy : Entity
 
         if (audioSource != null)
         {
-            audioSource.Stop();
+            audioSource.mute = canMove;
         }
     }
 

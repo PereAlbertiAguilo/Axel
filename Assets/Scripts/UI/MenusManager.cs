@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,5 +44,18 @@ public class MenusManager : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(selected);
+    }
+
+    public IEnumerator ChangeSceneDelay(string sceneName)
+    {
+        Time.timeScale = 1;
+        FadeBlack.instance.FadeToBlack();
+
+        Audio.instance.StopAllCoroutines();
+        Audio.instance.StartCoroutine(Audio.instance.FadeAudioOut(Audio.instance.musicAudioSource, .5f));
+
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene(sceneName);
     }
 }

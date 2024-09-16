@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +21,8 @@ public class Boss : Enemy
     {
         base.Start();
 
-        Audio.instance.StartCoroutine(Audio.instance.FadeMusicIn(_audioSource, 2.5f, .15f));
-        Audio.instance.StartCoroutine(Audio.instance.FadeMusicOut(Audio.instance.musicAudioSource, 2.5f));
+        Audio.instance.StartCoroutine(Audio.instance.FadeAudioIn(_audioSource, 2.5f, .15f));
+        Audio.instance.StartCoroutine(Audio.instance.FadeAudioOut(Audio.instance.musicAudioSource, 2.5f));
     }
 
     public override void Update()
@@ -40,9 +37,9 @@ public class Boss : Enemy
         base.OnDeath();
 
         _audioSource.transform.SetParent(null);
-        _audioSource.AddComponent<DestroyOverTime>().lifeTime = 2.6f;
+        _audioSource.gameObject.AddComponent<DestroyOverTime>().lifeTime = 5.1f;
 
-        Audio.instance.StartCoroutine(Audio.instance.FadeMusicOut(_audioSource, 2.5f));
-        Audio.instance.StartCoroutine(Audio.instance.FadeMusicIn(Audio.instance.musicAudioSource, 2.5f, .15f));
+        Audio.instance.StartCoroutine(Audio.instance.FadeAudioOut(_audioSource, 5));
+        Audio.instance.StartCoroutine(Audio.instance.FadeAudioIn(Audio.instance.musicAudioSource, 5, .15f));
     }
 }

@@ -11,11 +11,19 @@ public class SpriteAnimation : MonoBehaviour
 
     [HideInInspector] public bool nextIteration = true;
 
+    [SerializeField] bool randomFirstFrame = true;
+    public int firstFrame = 0;
+
     private void Start()
     {
         nextIteration = true;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void OnEnable()
+    {
+        firstFrame = Random.Range(1, sprites.Length + 1);
     }
 
     private void Update()
@@ -29,9 +37,11 @@ public class SpriteAnimation : MonoBehaviour
 
     IEnumerator Animate()
     {
-        foreach (Sprite sprite in sprites)
+        for (int i = 0; i < sprites.Length; i++)
         {
-            _spriteRenderer.sprite = sprite;
+            int frame = randomFirstFrame ? Mathf.Abs(i + firstFrame - sprites.Length) : i;
+
+            _spriteRenderer.sprite = sprites[frame];
             yield return new WaitForSeconds(animationDuration / sprites.Length);
         }
 

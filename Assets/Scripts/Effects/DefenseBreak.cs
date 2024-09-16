@@ -7,7 +7,7 @@ public class DefenseBreak : Effect
     {
         SetEffect();
 
-        parameters.durationCurrent = SetEffectPower(parameters.duration, true);
+        parameters.durationCurrent = SetEffectPower(parameters.duration, true) + 1;
     }
 
     private void Update()

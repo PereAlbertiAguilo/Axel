@@ -15,6 +15,7 @@ public class Slowness : Effect
             currentTime += Time.deltaTime;
 
             entity.speedCurrent = SetEffectPower(entity.speed, true);
+            entity.attackSpeedCurrent = entity.attackSpeed * 2;
         }
         else
         {
@@ -28,6 +29,7 @@ public class Slowness : Effect
     {
         currentTime = parameters.duration;
         entity.speedCurrent = entity.speed;
+        entity.attackSpeedCurrent = entity.attackSpeed;
     }
 
     private void OnDestroy()

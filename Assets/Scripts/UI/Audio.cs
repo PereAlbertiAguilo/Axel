@@ -17,8 +17,8 @@ public class Audio : MonoBehaviour
     public AudioSource musicAudioSource;
     public AudioSource sfxAudioSource;
 
-    [SerializeField] AudioMixerGroup musicMixer;
-    [SerializeField] AudioMixerGroup sfxMixer;
+    public AudioMixerGroup musicMixer;
+    public AudioMixerGroup sfxMixer;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class Audio : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FadeMusicIn(musicAudioSource, 5, .15f));
+        StartCoroutine(FadeAudioIn(musicAudioSource, 5, .15f));
     }
 
     // Plays a sound
@@ -47,7 +47,7 @@ public class Audio : MonoBehaviour
 
     public void PlayOneShot(AudioSource audioSource, AudioClip ac, float volumeScale)
     {
-        audioSource.PlayOneShot(ac, volumeScale);
+        if (Time.timeScale > 0) audioSource.PlayOneShot(ac, volumeScale);
     }
 
     public void PlayOneShot(AudioSource audioSource, AudioClip ac, float volumeScale, bool randomPich)
@@ -101,7 +101,7 @@ public class Audio : MonoBehaviour
         PlayOneShot(Sound.click, .4f);
     }
 
-    public IEnumerator FadeMusicIn(AudioSource ac, float delay, float maxVolume)
+    public IEnumerator FadeAudioIn(AudioSource ac, float delay, float maxVolume)
     {
         float currentTime = 0;
 
@@ -118,7 +118,7 @@ public class Audio : MonoBehaviour
         ac.volume = maxVolume;
     }
 
-    public IEnumerator FadeMusicOut(AudioSource ac, float delay)
+    public IEnumerator FadeAudioOut(AudioSource ac, float delay)
     {
         float currentTime = 0;
 
@@ -133,5 +133,13 @@ public class Audio : MonoBehaviour
         }
 
         ac.volume = 0;
+    }
+
+    public void UpdateSFX(bool activate)
+    {
+        foreach (AudioSource ac in FindObjectsOfType<AudioSource>(true))
+        {
+            if (ac.outputAudioMixerGroup == sfxMixer) ac.mute = activate;
+        }
     }
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System;
-using static Entity;
 
 public class PlayerController : Entity
 {
@@ -180,6 +179,7 @@ public class PlayerController : Entity
 
         Invoke(nameof(DamageReset), iFramesDuration);
         StartCoroutine(DamagedAnimation(iFramesDuration));
+        StartCoroutine(JiggleAnimation(10));
 
         Audio.instance.PlayOneShot(Audio.Sound.hurt, .5f);
 

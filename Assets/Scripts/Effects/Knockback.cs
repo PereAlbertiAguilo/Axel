@@ -20,7 +20,7 @@ public class Knockback : Effect
 
             entityRigidbody.velocity = Vector2.zero;
             entityRigidbody.AddForce((dir != null && Vector3.Distance(entity.transform.position, attakerEntity.transform.position) > .1f ?
-                dir : Vector2.zero) * (entityRigidbody.mass * SetEffectPower(1200, false) / 50), ForceMode2D.Impulse);
+                dir : Vector2.zero) * (entityRigidbody.mass * SetEffectPower(6000, false) / 50), ForceMode2D.Impulse);
 
         }
     }
