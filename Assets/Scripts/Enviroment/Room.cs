@@ -25,9 +25,12 @@ public class Room : MonoBehaviour
 
     [HideInInspector] public bool roomCleared = false;
 
+    [HideInInspector] public bool[] doorStates;
+
     private void Start()
     {
         enemiesManager.gameObject.SetActive(false);
+        print(transform.position + " " + name + ": " + roomGridPos);
     }
 
     private void Update()
@@ -58,11 +61,13 @@ public class Room : MonoBehaviour
         doorsManager.OpenDoor("Right", openRight);
         doorsManager.OpenDoor("Left", openLeft);
 
-        UpdateMiniMapDoors();
+        UpdateRoomMiniMapDisplay(false);
     }
 
-    void UpdateMiniMapDoors()
+    void UpdateRoomMiniMapDisplay(bool activate)
     {
+        if (activate) miniMapDisplay.SetActive(true);
+
         miniMapUp.SetActive(openDown);
         miniMapDown.SetActive(openUp);
         miniMapRight.SetActive(openRight);
@@ -77,21 +82,38 @@ public class Room : MonoBehaviour
         if (openLeft) doorsManager.animatorLeft.Play("CloseDoors");
     }
 
+    void NextRoomsMiniMapUpdate()
+    {
+        if (openUp) GetRoomFromGridPos(new Vector2Int(roomGridPos.x, roomGridPos.y + 1)).UpdateRoomMiniMapDisplay(true);
+        if (openDown) GetRoomFromGridPos(new Vector2Int(roomGridPos.x, roomGridPos.y - 1)).UpdateRoomMiniMapDisplay(true);
+        if (openRight) GetRoomFromGridPos(new Vector2Int(roomGridPos.x + 1, roomGridPos.y)).UpdateRoomMiniMapDisplay(true);
+        if (openLeft) GetRoomFromGridPos(new Vector2Int(roomGridPos.x - 1, roomGridPos.y)).UpdateRoomMiniMapDisplay(true);
+    }
+
+    Room GetRoomFromGridPos(Vector2Int newRoomGridPos)
+    {
+        return RoomManager.instance.rooms.Find(x => x.GetComponent<Room>().roomGridPos ==
+        newRoomGridPos).GetComponent<Room>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            UpdateMiniMapDoors();
+            UpdateRoomMiniMapDisplay(true);
 
             if (enemiesManager.enemiesAlive) Invoke(nameof(CloseCurrentDoorsWithDelay), .45f);
 
+            Invoke(nameof(NextRoomsMiniMapUpdate), .2f);
+
             CameraController.instance.ChangeCameraPos(transform);
-            miniMapDisplay.SetActive(true);
-            enemiesManager.gameObject.SetActive(true);
             PlayerController.instance._playerRigidbody.velocity = Vector2.zero;
             PlayerController.instance.currentEnemiesManager = enemiesManager;
 
+            enemiesManager.gameObject.SetActive(true);
+
             if (!roomCleared) StartCoroutine(PlaySoundDelayed(.45f));
+
         }
     }
 }

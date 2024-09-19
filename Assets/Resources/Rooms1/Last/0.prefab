@@ -5104,6 +5104,7 @@ MonoBehaviour:
   openRight: 0
   openLeft: 0
   roomCleared: 0
+  doorStates: 
 --- !u!61 &6674072998742642515
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7225,6 +7226,18 @@ PrefabInstance:
     - target: {fileID: 4120943153077008542, guid: d48f7c9afdeb50243bf6ccb415752180, type: 3}
       propertyPath: m_Name
       value: MinimapMask
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988213774047145269, guid: d48f7c9afdeb50243bf6ccb415752180, type: 3}
+      propertyPath: m_Color.b
+      value: 0.1021271
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988213774047145269, guid: d48f7c9afdeb50243bf6ccb415752180, type: 3}
+      propertyPath: m_Color.g
+      value: 0.18153869
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988213774047145269, guid: d48f7c9afdeb50243bf6ccb415752180, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8018868
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
