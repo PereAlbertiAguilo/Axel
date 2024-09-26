@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 669962406, guid: 11823da855a7a2c4bbfb2037e50e6d23, type: 3}
   - {fileID: -1939334029, guid: 11823da855a7a2c4bbfb2037e50e6d23, type: 3}
   weaponName: AIR HAMMER
-  weaponSprite: {fileID: -2146553919, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -800768516, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

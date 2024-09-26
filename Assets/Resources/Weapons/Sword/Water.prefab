@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -1469100319, guid: ca766e39ca59b2742b3f35d48e5155dc, type: 3}
   - {fileID: -716816920, guid: ca766e39ca59b2742b3f35d48e5155dc, type: 3}
   weaponName: WATER SWORD
-  weaponSprite: {fileID: 1688690201, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -801832446, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5
@@ -86,7 +86,7 @@ MonoBehaviour:
     type: 0
     duration: 2.5
     durationCurrent: 1
-    power: 4
+    power: 2
     cooldown: 2.5
 --- !u!114 &2822527110964356267
 MonoBehaviour:

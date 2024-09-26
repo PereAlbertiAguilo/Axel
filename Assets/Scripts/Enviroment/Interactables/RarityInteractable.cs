@@ -57,7 +57,7 @@ public class RarityInteractable : Interactable
             rarity = Rarity.legendary;
         }
 
-        rarityImage.color = rarityColors[(int)rarity];
+        rarityImage.color = new Color(rarityColors[(int)rarity].r, rarityColors[(int)rarity].g, rarityColors[(int)rarity].b, rarityImage.color.a);
         rarityText.color = rarityColors[(int)rarity];
         rarityText.text = rarity.ToString();
     }

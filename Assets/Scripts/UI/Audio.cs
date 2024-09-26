@@ -9,7 +9,7 @@ public class Audio : MonoBehaviour
 {
     public enum Sound
     {
-        click, hurt, interact, slash, swoosh , heal, attack, changeRoom
+        click, hurt, interact, slash, swoosh , heal, attack, changeRoom, squash
     }
 
     public static Audio instance;

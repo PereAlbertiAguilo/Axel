@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -1123142195, guid: 24f684974578aea4f859495e4f0978d7, type: 3}
   - {fileID: 1844872233, guid: 24f684974578aea4f859495e4f0978d7, type: 3}
   weaponName: DARK AXE
-  weaponSprite: {fileID: 1114719023, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1787278932, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

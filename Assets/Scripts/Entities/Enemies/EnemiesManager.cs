@@ -8,23 +8,19 @@ public class EnemiesManager : MonoBehaviour
 
     public bool enemiesAlive = true;
 
-    public List<GameObject> FillEnemiesList()
+    private void Start()
     {
-        enemiesList.Clear();
-
-        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+        foreach (Transform enemy in transform)
         {
             enemiesList.Add(enemy.gameObject);
         }
-
-        return enemiesList;
     }
 
     public void AddToEnemiesList(GameObject enemy)
     {
         enemiesAlive = true;
 
-        enemiesList.Add(enemy);
+        if(!enemiesList.Contains(enemy)) enemiesList.Add(enemy);
     }
 
     public void RemoveFromEnemiesList(GameObject enemy)
@@ -34,6 +30,14 @@ public class EnemiesManager : MonoBehaviour
         if(enemiesList.Count <= 0)
         {
             enemiesAlive = false;
+        }
+    }
+
+    public void UpdateEnemies(bool activate)
+    {
+        foreach (Transform enemy in transform)
+        {
+            enemy.gameObject.SetActive(activate);
         }
     }
 

@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 109045505, guid: fc89eb7bee32dd146a44573075c45df6, type: 3}
   - {fileID: -2043896138, guid: fc89eb7bee32dd146a44573075c45df6, type: 3}
   weaponName: DARK MACE
-  weaponSprite: {fileID: -778576895, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1318861714, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

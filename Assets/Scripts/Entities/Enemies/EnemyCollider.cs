@@ -8,7 +8,7 @@ public class EnemyCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerController playerController))
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController) && enemy != null)
         {
             if(playerController.canTakeDamage && enemy.canDealDamage)
             {
@@ -21,7 +21,7 @@ public class EnemyCollider : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerController playerController))
+        if (collision.gameObject.TryGetComponent(out PlayerController playerController) && enemy != null)
         {
             if (playerController.canTakeDamage && enemy.canDealDamage)
             {

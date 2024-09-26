@@ -13,6 +13,8 @@ public class MenusManager : MonoBehaviour
 
     int currentMenuIndex = 0;
 
+    [HideInInspector] public bool inTransition;
+
     private void Awake()
     {
         instance = this;
@@ -31,7 +33,16 @@ public class MenusManager : MonoBehaviour
         // Dev tool
         if (Input.GetKeyDown(KeyCode.U))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            ChangeScene(SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            PlayerPrefs.DeleteKey(SceneManager.GetActiveScene().name);
+            ChangeScene(SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameManager.instance.RestartGame();
         }
     }
 
@@ -46,8 +57,10 @@ public class MenusManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(selected);
     }
 
-    public IEnumerator ChangeSceneDelay(string sceneName)
+    IEnumerator ChangeSceneDelay(string sceneName)
     {
+        inTransition = true;
+
         Time.timeScale = 1;
         FadeBlack.instance.FadeToBlack();
 
@@ -57,5 +70,10 @@ public class MenusManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ChangeScene(string sceneName)
+    {
+        StartCoroutine(ChangeSceneDelay(sceneName));
     }
 }

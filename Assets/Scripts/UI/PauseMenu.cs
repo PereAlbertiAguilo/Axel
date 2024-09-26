@@ -12,7 +12,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Button pauseButton;
     [SerializeField] Button resumeButton;
 
-    public bool paused = false;
+    public bool isPaused = false;
+
+    public bool canPause = false;
 
     private void Awake()
     {
@@ -22,13 +24,15 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         Resume();
+
+        Invoke(nameof(PauseStartDelay), 2f);
     }
 
     private void Update()
     {
         if (UserInput.instance.pauseInput)
         {
-            if (paused)
+            if (isPaused)
             {
                 if (transform.GetChild(0).gameObject.activeInHierarchy)
                 {
@@ -36,30 +40,24 @@ public class PauseMenu : MonoBehaviour
                     Resume();
                 }
             }
-            else
+            else if (Time.timeScale <= 1 && !GameManager.instance.isGameOver && !MenusManager.instance.inTransition && canPause)
             {
                 pauseButton.onClick.Invoke();
                 Pause();
             }
         }
 
-        if (!Application.isFocused && !paused)
+        if (!Application.isFocused && !isPaused && Time.timeScale != 0 && !GameManager.instance.isGameOver)
         {
-            pauseButton.onClick.Invoke();
-            Pause();
-        }
-
-        // Dev tool
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //pauseButton.onClick.Invoke();
+            //Pause();
         }
     }
 
     // Resumes the game
     public void Resume()
     {
-        paused = false;
+        isPaused = false;
         MenusManager.instance.ChangeCurrentSelectedElement(null);
         Cursor.visible = false;
         PlayerController.instance.canMove = true;
@@ -70,7 +68,7 @@ public class PauseMenu : MonoBehaviour
     // Pauses the game
     public void Pause()
     {
-        paused = true;
+        isPaused = true;
         MenusManager.instance.ChangeCurrentSelectedElement(resumeButton.gameObject);
         Cursor.visible = true;
         PlayerController.instance.canMove = false;
@@ -81,6 +79,11 @@ public class PauseMenu : MonoBehaviour
     // Goes to the main menu
     public void Menu()
     {
-        MenusManager.instance.StartCoroutine(MenusManager.instance.ChangeSceneDelay("MainMenu"));
+        MenusManager.instance.ChangeScene("MainMenu");
+    }
+
+    void PauseStartDelay()
+    {
+        canPause = true;
     }
 }

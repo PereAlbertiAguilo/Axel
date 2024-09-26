@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 891046485, guid: 9aa6b77db465dd6439941b6c3220691b, type: 3}
   - {fileID: -396871125, guid: 9aa6b77db465dd6439941b6c3220691b, type: 3}
   weaponName: WATER MACE
-  weaponSprite: {fileID: -624727665, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 88320865, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

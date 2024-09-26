@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 249907278, guid: f01453d74e947a4418db8a93770ae890, type: 3}
   - {fileID: -1885289000, guid: f01453d74e947a4418db8a93770ae890, type: 3}
   weaponName: WATER HAMMER
-  weaponSprite: {fileID: -259666129, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -1914669560, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

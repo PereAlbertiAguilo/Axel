@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 334406610, guid: 3289365cf4938b1469e79bba5e0093e4, type: 3}
   - {fileID: -1656792900, guid: 3289365cf4938b1469e79bba5e0093e4, type: 3}
   weaponName: FIRE HAMMER
-  weaponSprite: {fileID: -2043539041, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 89692966, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

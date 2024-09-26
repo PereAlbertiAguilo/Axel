@@ -233,11 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee2637f42687a24385337ca2427745a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDeathVFX: {fileID: 0}
   health: 22
   healthCurrent: 0
   damage: 5
   damageCurrent: 0
-  speed: 1.5
+  speed: 150
   speedCurrent: 0
   defense: 5
   defenseCurrent: 0
@@ -253,6 +254,7 @@ MonoBehaviour:
   _enemyRenderer: {fileID: 0}
   enemiesManager: {fileID: 0}
   audioSource: {fileID: 0}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
   entitySpeed: 0
 --- !u!114 &188829320218314588
 MonoBehaviour:
@@ -379,7 +381,7 @@ Rigidbody2D:
     m_Bits: 64
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1360912858243917351
 MonoBehaviour:
@@ -400,6 +402,8 @@ MonoBehaviour:
   - {fileID: -990663082, guid: a0234a160a4a8e449ae8f380da3513b7, type: 3}
   animationDuration: 0.5
   nextIteration: 1
+  randomFirstFrame: 1
+  firstFrame: 0
 --- !u!114 &5099594556121046839
 MonoBehaviour:
   m_ObjectHideFlags: 0

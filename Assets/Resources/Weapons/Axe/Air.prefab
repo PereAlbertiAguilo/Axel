@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 470961670, guid: b1bfdc6d8df93df4cb3b699ac1222d10, type: 3}
   - {fileID: -215926570, guid: b1bfdc6d8df93df4cb3b699ac1222d10, type: 3}
   weaponName: AIR AXE
-  weaponSprite: {fileID: 1318861714, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1671141401, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 1662556310, guid: 9f5021c508154ec4e8b23d938efa072e, type: 3}
   - {fileID: -729881573, guid: 9f5021c508154ec4e8b23d938efa072e, type: 3}
   weaponName: EARTH AXE
-  weaponSprite: {fileID: 1464717957, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1114719023, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

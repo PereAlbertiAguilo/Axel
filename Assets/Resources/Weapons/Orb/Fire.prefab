@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: -1318922987, guid: fc12444c39ea16f40b70b9ca9cc58c6a, type: 3}
   - {fileID: -387941335, guid: fc12444c39ea16f40b70b9ca9cc58c6a, type: 3}
   weaponName: FIRE ORB
-  weaponSprite: {fileID: -560175649, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -1239517689, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

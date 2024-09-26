@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -9591567, guid: 769597e0ac9a3cc41aa11f41ce1fec8b, type: 3}
   - {fileID: -1645642954, guid: 769597e0ac9a3cc41aa11f41ce1fec8b, type: 3}
   weaponName: EARTH MACE
-  weaponSprite: {fileID: 88320865, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -500809196, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

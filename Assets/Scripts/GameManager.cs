@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public bool floorCleared = false;
 
+    public bool isGameOver = false;
+
     private void Awake()
     {
         instance = this;
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        DataPersistenceManager.instance.gameData.currentFloor = SceneManager.GetActiveScene().name;
+
         floorIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
@@ -38,5 +42,28 @@ public class GameManager : MonoBehaviour
         floorCleared = lastRoom.roomCleared;
 
         return floorCleared;
+    }
+
+    public void ResetGameData()
+    {
+        PlayerController.instance.canMove = false;
+
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string key = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+
+            if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
+        }
+
+        PlayerController.instance.ResetStats();
+        PlayerPrefs.SetInt("Continue", 1);
+        DataPersistenceManager.instance.NewGame();
+    }
+
+    public void RestartGame()
+    {
+        ResetGameData();
+
+        MenusManager.instance.ChangeScene(SceneManager.GetSceneByBuildIndex(1).name);
     }
 }

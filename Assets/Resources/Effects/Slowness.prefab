@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a787a8e96061094eb415fecf042e35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectParameters:
-    name: 
+  parameters:
     type: 0
     duration: 1
+    durationCurrent: 1
     power: 1
-  effectIsActive: 0
+    cooldown: 0
   currentTime: 0
   entity: {fileID: 0}
+  attakerEntity: {fileID: 0}

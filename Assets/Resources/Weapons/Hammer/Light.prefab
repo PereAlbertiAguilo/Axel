@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: -51138806, guid: b5e0b5d7b32b8e646bffa89287a45fe0, type: 3}
   - {fileID: -1602951632, guid: b5e0b5d7b32b8e646bffa89287a45fe0, type: 3}
   weaponName: LIGHT HAMMER
-  weaponSprite: {fileID: -1914669560, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1079685205, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

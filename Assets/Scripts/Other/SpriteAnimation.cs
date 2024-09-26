@@ -23,7 +23,7 @@ public class SpriteAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        firstFrame = Random.Range(1, sprites.Length + 1);
+        firstFrame = Random.Range(1, sprites.Length);
     }
 
     private void Update()
@@ -39,7 +39,7 @@ public class SpriteAnimation : MonoBehaviour
     {
         for (int i = 0; i < sprites.Length; i++)
         {
-            int frame = randomFirstFrame ? Mathf.Abs(i + firstFrame - sprites.Length) : i;
+            int frame = randomFirstFrame ? (((i + firstFrame) > (sprites.Length - 1)) ? (i + firstFrame - sprites.Length) : (i + firstFrame)) : i;
 
             _spriteRenderer.sprite = sprites[frame];
             yield return new WaitForSeconds(animationDuration / sprites.Length);

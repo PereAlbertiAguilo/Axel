@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : MonoBehaviour, IDataPersistence
 {
+    public GameObject savedWeaponObject;
+
     public enum Element
     {
         water, air, earth, fire, light, dark
@@ -17,12 +19,26 @@ public class WeaponManager : MonoBehaviour
 
     public static WeaponManager instance;
 
+    float savedAddedDamage;
+    float savedAddedAttackSpeed;
+
+    int effectPower;
+
     private void Awake()
     {
         instance = this;
     }
 
-    public void SetWeapon(GameObject weapon, Transform holder)
+    private void Start()
+    {
+        Weapon savedWeapon = SetWeapon(savedWeaponObject, PlayerController.instance.transform);
+
+        savedWeapon.weaponAddedDamage = savedAddedDamage;
+        savedWeapon.weaponAddedAttackSpeed = savedAddedAttackSpeed;
+        savedWeapon.gameObject.GetComponent<EffectManager>().parameters.power = effectPower;
+    }
+
+    public Weapon SetWeapon(GameObject weapon, Transform holder)
     {
         foreach (Transform child in holder)
         {
@@ -34,11 +50,25 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        Instantiate(weapon, holder);
+        return Instantiate(weapon, holder).GetComponent<Weapon>();
     }
 
     public GameObject LoadWeapon(Element element, Type weaponType)
     {
         return Resources.Load<GameObject>($"Weapons/{weaponType}/{element}");
+    }
+
+    public void LoadData(GameData data)
+    {
+        savedWeaponObject = LoadWeapon(data.weaponElement, data.weaponType);
+
+        savedAddedDamage = data.weaponAddedDamage;
+        savedAddedAttackSpeed = data.weaponAddedAttackSpeed;
+        effectPower = data.effectPower;
+    }
+
+    public void SaveData(GameData data)
+    {
+        
     }
 }

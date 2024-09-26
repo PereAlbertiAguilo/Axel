@@ -16,7 +16,7 @@ public class EffectParameters
     public float duration = 1;
     [HideInInspector] public float durationCurrent = 1;
     [Range(2f, 6f),Min(2), Space]
-    public int power = 1;
+    public int power = 2;
     [Space]
     public float cooldown;
 }

@@ -15,11 +15,11 @@ public class ZIndex : MonoBehaviour
 
     private void Start()
     {
-        spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 10);
+        spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 100);
     }
 
     private void Update()
     {
-        if (dynamicChange) spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 10);
+        if (dynamicChange) spriteRenderer.sortingOrder = -(int)((transform.position.y - offset) * 100);
     }
 }

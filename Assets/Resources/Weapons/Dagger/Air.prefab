@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: -214741042, guid: 27092ae2caf7cd143add0396353bf45e, type: 3}
   - {fileID: -469610227, guid: 27092ae2caf7cd143add0396353bf45e, type: 3}
   weaponName: AIR DAGGER
-  weaponSprite: {fileID: 89692966, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1701458677, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

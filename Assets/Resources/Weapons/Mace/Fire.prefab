@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 124317148, guid: cd642d191d059e2418294d7cd4f88ccf, type: 3}
   - {fileID: 1207820051, guid: cd642d191d059e2418294d7cd4f88ccf, type: 3}
   weaponName: FIRE MACE
-  weaponSprite: {fileID: -628026526, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -778576895, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

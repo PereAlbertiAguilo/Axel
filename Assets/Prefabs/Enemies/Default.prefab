@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7398e98a6f6088d49a753297bdc7f0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDeathVFX: {fileID: 0}
   health: 25
   healthCurrent: 0
   damage: 5
@@ -71,10 +72,11 @@ MonoBehaviour:
   canTakeDamage: 1
   canGetKnockback: 1
   effectsManager: {fileID: 7662726635630812447}
-  canBeKnockbacked: 1
   _enemyRigidbody: {fileID: 3609770490996220176}
   _enemyRenderer: {fileID: 0}
   enemiesManager: {fileID: 0}
+  audioSource: {fileID: 0}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6794373128228146432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +202,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &3884341709030988344
 MonoBehaviour:
@@ -328,6 +330,8 @@ MonoBehaviour:
   - {fileID: 1962490694, guid: 2c8ba4bd1452b4f41a2574491a767d8b, type: 3}
   animationDuration: 1
   nextIteration: 1
+  randomFirstFrame: 1
+  firstFrame: 0
 --- !u!114 &3692648625588724672
 MonoBehaviour:
   m_ObjectHideFlags: 0

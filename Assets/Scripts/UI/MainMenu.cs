@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,9 +6,33 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] Transform cameraFollow;
 
+    [SerializeField] Button continueButon;
+
+    private void Start()
+    {
+        if(PlayerPrefs.HasKey("Continue"))
+        {
+            continueButon.interactable = PlayerPrefs.GetInt("Continue") > 0;
+        }
+    }
+
     public void Play(string sceneName)
     {
-        MenusManager.instance.StartCoroutine(MenusManager.instance.ChangeSceneDelay(sceneName));
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string key = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+
+            if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
+        }
+
+        PlayerPrefs.SetInt("Continue", 1);
+        DataPersistenceManager.instance.NewGame();
+        MenusManager.instance.ChangeScene(sceneName);
+    }
+
+    public void Continue()
+    {
+        MenusManager.instance.ChangeScene(DataPersistenceManager.instance.gameData.currentFloor);
     }
 
     public void Exit()

@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: -1153441297, guid: bc3ff964fa38b9e439cf35ddebb1276f, type: 3}
   - {fileID: 177670027, guid: bc3ff964fa38b9e439cf35ddebb1276f, type: 3}
   weaponName: DARK ORB
-  weaponSprite: {fileID: -1974270184, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1899635472, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

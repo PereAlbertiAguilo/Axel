@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponSetter : RarityInteractable
+public class WeaponSetter : RarityInteractable, IDataPersistence
 {
     [Space]
 
@@ -75,7 +75,7 @@ public class WeaponSetter : RarityInteractable
                     effectText.gameObject.SetActive(true);
 
                     effectImage.sprite = PopUp.instance.effectSprites[(int)effectManager.parameters.type];
-                    effectText.text = effectManager.parameters.type.ToString();
+                    effectText.text = "Weapon Effect: " + effectManager.parameters.type.ToString();
                 }
                 else
                 {
@@ -95,7 +95,7 @@ public class WeaponSetter : RarityInteractable
     {
         base.Interact();
 
-        if (hasUses) _animator.SetBool("IsInRange", false);
+        if (hasUses) animator.SetBool("IsInRange", false);
 
         if (weapon.attackSpriteSheet.Length <= 0) throw new System.Exception("Weapon does not have a attack animation");
 
@@ -108,6 +108,14 @@ public class WeaponSetter : RarityInteractable
         }
 
         StartCoroutine(UpdateUIFromHUD());
+
+        Weapon currentWeapon = weaponObject.GetComponent<Weapon>();
+
+        DataPersistenceManager.instance.gameData.weaponElement = currentWeapon.weaponElement;
+        DataPersistenceManager.instance.gameData.weaponType = currentWeapon.weaponType;
+        DataPersistenceManager.instance.gameData.weaponAddedDamage = currentWeapon.weaponAddedDamage;
+        DataPersistenceManager.instance.gameData.weaponAddedAttackSpeed = currentWeapon.weaponAddedAttackSpeed;
+        DataPersistenceManager.instance.gameData.effectPower = currentWeapon.gameObject.GetComponent<EffectManager>().parameters.power;
     }
 
     IEnumerator UpdateUIFromHUD()
@@ -129,5 +137,16 @@ public class WeaponSetter : RarityInteractable
         }
 
         return finalDisplay;
+    }
+
+    public void LoadData(GameData data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SaveData(GameData data)
+    {
+
+        
     }
 }

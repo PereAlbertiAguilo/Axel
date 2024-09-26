@@ -14,6 +14,7 @@ public class UserInput : MonoBehaviour
     public bool dashInput { get; private set; }
     public bool pauseInput { get; private set; }
     public bool interactInput { get; private set; }
+    public bool statsInput { get; private set; }
     public bool statsInputDown { get; private set; }
     public bool statsInputUp { get; private set; }
 
@@ -63,6 +64,7 @@ public class UserInput : MonoBehaviour
         pauseInput = _pauseAction.WasPressedThisFrame();
         interactInput = _interactAction.WasPressedThisFrame();
         moveInput = _moveAction.ReadValue<Vector2>();
+        statsInput = _statsAction.IsPressed();
         statsInputDown = _statsAction.WasPressedThisFrame();
         statsInputUp = _statsAction.WasReleasedThisFrame();
     }

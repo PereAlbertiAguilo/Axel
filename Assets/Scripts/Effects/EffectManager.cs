@@ -27,10 +27,10 @@ public class EffectManager : MonoBehaviour
 
         foreach (Transform currentEffect in effectsHolder.transform)
         {
-            if (attackerEffectManager.parameters.type == currentEffect.GetComponent<Effect>().parameters.type) hasEffect = true;
+            if (currentEffect.GetComponent<Effect>() != null) hasEffect = true;
         }
 
-        if (hasEffect || !attackerEffectManager.canApplyEffect || attackerEffectManager == null) return;
+        if (hasEffect || !attackerEffectManager.canApplyEffect || attackerEffectManager == null || !attackerEffectManager.gameObject.activeInHierarchy) return;
 
         attackerEffectManager.canApplyEffect = false;
 
@@ -51,7 +51,7 @@ public class EffectManager : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldown);
 
-        if (attackerEffects != null)
+        if (attackerEffects != null )
         {
             PopUp.instance.Message(attackerEffects.transform.parent, $"{attackerEffects.parameters.type}", Color.green, .4f, 1, true);
 
@@ -61,7 +61,7 @@ public class EffectManager : MonoBehaviour
 
     void DisplayEffectPopUp(Effect newEffect)
     {
-        float offset = transform.parent.GetComponent<Collider2D>().bounds.extents.y + .5f;
+        float offset = transform.parent.GetComponent<Collider2D>().bounds.size.y + .5f;
 
         PopUp.instance.Effect(transform.parent, newEffect.parameters.type, Color.cyan, 2, offset, true, newEffect.parameters.duration, false);
         PopUp.instance.Message(transform.parent, $"{newEffect.parameters.type}", Color.cyan, .4f, offset + .75f, true);

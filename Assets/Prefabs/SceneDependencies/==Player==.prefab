@@ -4972,6 +4972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6906017d05f06344784170354b81cad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityName: Axel
+  onDeathVFX: {fileID: 0}
   health: 50
   healthCurrent: 0
   damage: 5
@@ -4988,6 +4990,11 @@ MonoBehaviour:
   canTakeDamage: 1
   canGetKnockback: 1
   effectsManager: {fileID: 7507414887838109443}
+  healthStartValue: 50
+  damageStartValue: 5
+  defenseStartValue: 50
+  speedStartValue: 60
+  attackSpeedStartValue: 1
   healthMultiplier: 3.5
   damageMultiplier: 1
   speedMultiplier: 7.5
@@ -5016,6 +5023,7 @@ MonoBehaviour:
   currentEnemiesManager: {fileID: 0}
   _playerRigidbody: {fileID: 0}
   _playerSpriteRenderer: {fileID: 0}
+  lastHitByName: 
 --- !u!212 &7845927118872907861
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fc6d92c59e21e408860a8b8d3abf89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDeathVFX: {fileID: 0}
   health: 75
   healthCurrent: 0
   damage: 15
@@ -341,7 +342,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &5329561180621037583
 MonoBehaviour:

@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -1152943723, guid: f82b1e97aebeebd4bb7596c1926d2a72, type: 3}
   - {fileID: -575782864, guid: f82b1e97aebeebd4bb7596c1926d2a72, type: 3}
   weaponName: AIR SWORD
-  weaponSprite: {fileID: -801832446, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -215286590, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

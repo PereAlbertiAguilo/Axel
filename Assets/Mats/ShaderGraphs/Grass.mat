@@ -50,10 +50,10 @@ Material:
     - _Pixelization: 16
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TexturePower: 1.2
+    - _TexturePower: 2
     m_Colors:
     - _Offset: {r: 0, g: 0.5, b: 0, a: 0}
-    - _Tiling: {r: 0.05, g: 0.05, b: 0, a: 0}
+    - _Tiling: {r: 0.05, g: -0.05, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8385741014554627985
 MonoBehaviour:

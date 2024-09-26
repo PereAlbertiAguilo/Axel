@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 1865385066, guid: 51e2aa96ea0ed4e4fa5c26eabc211408, type: 3}
   - {fileID: 813402920, guid: 51e2aa96ea0ed4e4fa5c26eabc211408, type: 3}
   weaponName: LIGHT SWORD
-  weaponSprite: {fileID: -1054385475, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1934579656, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

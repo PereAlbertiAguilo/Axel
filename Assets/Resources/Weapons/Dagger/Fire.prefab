@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: -2128040582, guid: bce90e55791342c47be4f6b43928f43b, type: 3}
   - {fileID: -350545613, guid: bce90e55791342c47be4f6b43928f43b, type: 3}
   weaponName: FIRE DAGGER
-  weaponSprite: {fileID: 1357381779, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 492619735, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

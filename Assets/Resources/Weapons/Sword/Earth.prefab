@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -424793860, guid: 7544e39475a2a6145a324b8757d6e57f, type: 3}
   - {fileID: 119993386, guid: 7544e39475a2a6145a324b8757d6e57f, type: 3}
   weaponName: EARTH SWORD
-  weaponSprite: {fileID: -215286590, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -2043138369, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

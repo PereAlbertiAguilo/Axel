@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 438347170, guid: b424cc128c3e0bf439c37b006762369c, type: 3}
   - {fileID: -25270125, guid: b424cc128c3e0bf439c37b006762369c, type: 3}
   weaponName: WATER ORB
-  weaponSprite: {fileID: 1701458677, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -33528531, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

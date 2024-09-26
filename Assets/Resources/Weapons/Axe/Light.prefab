@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 801561862, guid: aacd479af8a5ef54ab5ccbb1ea08334f, type: 3}
   - {fileID: 2013845809, guid: aacd479af8a5ef54ab5ccbb1ea08334f, type: 3}
   weaponName: LIGHT AXE
-  weaponSprite: {fileID: 1671141401, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -2146553919, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: -2088343001, guid: d3f05ff756d2967419a6d21626572255, type: 3}
   - {fileID: 441829745, guid: d3f05ff756d2967419a6d21626572255, type: 3}
   weaponName: DARK HAMMER
-  weaponSprite: {fileID: -800768516, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1357381779, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

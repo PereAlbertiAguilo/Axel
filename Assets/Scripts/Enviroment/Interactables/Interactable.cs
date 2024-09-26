@@ -9,14 +9,11 @@ public class Interactable : MonoBehaviour
     [HideInInspector] public bool hasUses = false;
     [HideInInspector, Min(1)] public int uses = 1;
 
-    protected Animator _animator;
+    public Animator animator;
 
     protected bool canInteract = false;
 
-    public virtual void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    public virtual void Awake() { }
 
     public virtual void Update()
     {
@@ -57,7 +54,7 @@ public class Interactable : MonoBehaviour
         if (collision.CompareTag("Player") && uses >= 1)
         {
             StartCoroutine(InteractDelay());
-            _animator.SetBool("IsInRange", true);
+            animator.SetBool("IsInRange", true);
         }
     }
 
@@ -67,7 +64,7 @@ public class Interactable : MonoBehaviour
         {
             StopAllCoroutines();
             canInteract = false;
-            _animator.SetBool("IsInRange", false);
+            animator.SetBool("IsInRange", false);
         }
     }
 }

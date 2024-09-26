@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -250792989, guid: 7ca6a09d371658b4eadef3af3aa51793, type: 3}
   - {fileID: -1170479744, guid: 7ca6a09d371658b4eadef3af3aa51793, type: 3}
   weaponName: AIR MACE
-  weaponSprite: {fileID: 438124501, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -628026526, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 800933228, guid: 19b022df8e327d540b0942b215ffef16, type: 3}
   - {fileID: -953916550, guid: 19b022df8e327d540b0942b215ffef16, type: 3}
   weaponName: FIRE AXE
-  weaponSprite: {fileID: -1453241795, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -259666129, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

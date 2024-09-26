@@ -110,36 +110,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Weapons_0
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 108
-        width: 16
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 85f91cf5d518a5a40a72349845934adc
-      internalID: 1688690201
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Weapons_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 108
+        x: 16
+        y: 107
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -155,12 +134,12 @@ TextureImporter:
       name: Weapons_2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 108
+        x: 32
+        y: 107
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -176,12 +155,12 @@ TextureImporter:
       name: Weapons_3
       rect:
         serializedVersion: 2
-        x: 64
-        y: 108
+        x: 48
+        y: 107
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -197,12 +176,12 @@ TextureImporter:
       name: Weapons_4
       rect:
         serializedVersion: 2
-        x: 80
-        y: 108
+        x: 64
+        y: 107
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -218,12 +197,12 @@ TextureImporter:
       name: Weapons_5
       rect:
         serializedVersion: 2
-        x: 96
-        y: 108
+        x: 80
+        y: 107
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -239,12 +218,12 @@ TextureImporter:
       name: Weapons_6
       rect:
         serializedVersion: 2
-        x: 16
-        y: 87
+        x: 96
+        y: 107
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,36 +236,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_7
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 87
-        width: 16
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e2ef0e4623af615429e21cf07a90bab8
-      internalID: 438124501
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Weapons_8
       rect:
         serializedVersion: 2
-        x: 48
-        y: 87
+        x: 16
+        y: 86
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -302,12 +260,12 @@ TextureImporter:
       name: Weapons_9
       rect:
         serializedVersion: 2
-        x: 64
-        y: 87
+        x: 32
+        y: 86
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -323,12 +281,12 @@ TextureImporter:
       name: Weapons_10
       rect:
         serializedVersion: 2
-        x: 80
-        y: 87
+        x: 48
+        y: 86
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -344,12 +302,12 @@ TextureImporter:
       name: Weapons_11
       rect:
         serializedVersion: 2
-        x: 96
-        y: 87
+        x: 64
+        y: 86
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -365,12 +323,12 @@ TextureImporter:
       name: Weapons_12
       rect:
         serializedVersion: 2
-        x: 16
-        y: 66
+        x: 80
+        y: 86
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -386,12 +344,12 @@ TextureImporter:
       name: Weapons_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 66
+        x: 96
+        y: 86
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -404,36 +362,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_14
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 66
-        width: 16
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ff51713107da6241809f3a858a4b399
-      internalID: 1464717957
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Weapons_15
       rect:
         serializedVersion: 2
-        x: 64
-        y: 66
+        x: 16
+        y: 65
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -449,12 +386,12 @@ TextureImporter:
       name: Weapons_16
       rect:
         serializedVersion: 2
-        x: 80
-        y: 66
+        x: 32
+        y: 65
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -470,12 +407,12 @@ TextureImporter:
       name: Weapons_17
       rect:
         serializedVersion: 2
-        x: 96
-        y: 66
+        x: 48
+        y: 65
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -491,12 +428,12 @@ TextureImporter:
       name: Weapons_18
       rect:
         serializedVersion: 2
-        x: 16
-        y: 45
+        x: 64
+        y: 65
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -512,12 +449,12 @@ TextureImporter:
       name: Weapons_19
       rect:
         serializedVersion: 2
-        x: 32
-        y: 45
+        x: 80
+        y: 65
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -533,12 +470,12 @@ TextureImporter:
       name: Weapons_20
       rect:
         serializedVersion: 2
-        x: 48
-        y: 45
+        x: 96
+        y: 65
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -551,36 +488,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_21
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 45
-        width: 16
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1005c1b11dcdb6b49bf92bc9e09f0e98
-      internalID: -2043539041
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Weapons_22
       rect:
         serializedVersion: 2
-        x: 80
-        y: 45
+        x: 16
+        y: 44
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -596,12 +512,12 @@ TextureImporter:
       name: Weapons_23
       rect:
         serializedVersion: 2
-        x: 96
-        y: 45
+        x: 32
+        y: 44
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -617,12 +533,12 @@ TextureImporter:
       name: Weapons_24
       rect:
         serializedVersion: 2
-        x: 16
-        y: 24
+        x: 48
+        y: 44
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -638,12 +554,12 @@ TextureImporter:
       name: Weapons_25
       rect:
         serializedVersion: 2
-        x: 32
-        y: 24
+        x: 64
+        y: 44
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -659,12 +575,12 @@ TextureImporter:
       name: Weapons_26
       rect:
         serializedVersion: 2
-        x: 48
-        y: 24
+        x: 80
+        y: 44
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -680,12 +596,12 @@ TextureImporter:
       name: Weapons_27
       rect:
         serializedVersion: 2
-        x: 64
-        y: 24
+        x: 96
+        y: 44
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -698,36 +614,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_28
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 24
-        width: 16
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 71dbc5ded29125749abe9ef94e4ba5eb
-      internalID: 1600555615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Weapons_29
       rect:
         serializedVersion: 2
-        x: 96
-        y: 24
+        x: 16
+        y: 23
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -743,12 +638,12 @@ TextureImporter:
       name: Weapons_30
       rect:
         serializedVersion: 2
-        x: 16
-        y: 3
+        x: 32
+        y: 23
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -764,12 +659,12 @@ TextureImporter:
       name: Weapons_31
       rect:
         serializedVersion: 2
-        x: 32
-        y: 3
+        x: 48
+        y: 23
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -785,12 +680,12 @@ TextureImporter:
       name: Weapons_32
       rect:
         serializedVersion: 2
-        x: 48
-        y: 3
+        x: 64
+        y: 23
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -806,12 +701,12 @@ TextureImporter:
       name: Weapons_33
       rect:
         serializedVersion: 2
-        x: 64
-        y: 3
+        x: 80
+        y: 23
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -827,12 +722,12 @@ TextureImporter:
       name: Weapons_34
       rect:
         serializedVersion: 2
-        x: 80
-        y: 3
+        x: 96
+        y: 23
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -845,22 +740,127 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_35
+      name: Weapons_36
       rect:
         serializedVersion: 2
-        x: 96
-        y: 3
+        x: 16
+        y: 2
         width: 16
-        height: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5409406fff7e258409277d926e6d32b1
-      internalID: -1974270184
+      spriteID: a60abb24c83bb1b4ab26175d1957ae25
+      internalID: -33528531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapons_37
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 2
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1693eaef53a6ce049a6d7102955c3362
+      internalID: 1860247108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapons_38
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 2
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70555108fb1fe8d4a882692f3a7b1dac
+      internalID: 1593356709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapons_39
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 2
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17c36122bd932ab42b40c656b6ba4da4
+      internalID: -1239517689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapons_40
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 2
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b94590488af5cdf4a8a41cff2a56a1af
+      internalID: 674298287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapons_41
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 2
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de99d7904d95f144c94f74f91fba963d
+      internalID: 1899635472
       vertices: []
       indices: 
       edges: []
@@ -906,7 +906,13 @@ TextureImporter:
       Weapons_33: -560175649
       Weapons_34: 505263228
       Weapons_35: -1974270184
+      Weapons_36: -33528531
+      Weapons_37: 1860247108
+      Weapons_38: 1593356709
+      Weapons_39: -1239517689
       Weapons_4: -1054385475
+      Weapons_40: 674298287
+      Weapons_41: 1899635472
       Weapons_5: 1934579656
       Weapons_6: -624727665
       Weapons_7: 438124501

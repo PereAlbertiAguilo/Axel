@@ -50,14 +50,14 @@ public class StatUpgrader : RarityInteractable
 
         if (PlayerController.instance.CanSetStat(randomStat))
         {
-            PlayerController.instance.SetStat(randomStat, PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity]);
+            PlayerController.instance.SetStat(randomStat, PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity], true);
             HudManager.instance.UpdateStatsUI();
         }
 
         if (!hasUses)
             GetStat();
         else
-            _animator.SetBool("IsInRange", false);
+            animator.SetBool("IsInRange", false);
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)

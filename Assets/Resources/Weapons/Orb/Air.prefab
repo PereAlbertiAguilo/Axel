@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 1016304840, guid: f178b39b795d31046892331acae1591a, type: 3}
   - {fileID: -1517005500, guid: f178b39b795d31046892331acae1591a, type: 3}
   weaponName: AIR ORB
-  weaponSprite: {fileID: -701857685, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 1860247108, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

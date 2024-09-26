@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: -1164554314, guid: 8eddc3b3645596a498805b2578553520, type: 3}
   - {fileID: -860210502, guid: 8eddc3b3645596a498805b2578553520, type: 3}
   weaponName: LIGHT ORB
-  weaponSprite: {fileID: 505263228, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 674298287, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

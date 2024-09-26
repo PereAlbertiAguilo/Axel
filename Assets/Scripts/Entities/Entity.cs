@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public enum Stat
-    {
-        health, defense, speed, damage, attackSpeed
-    };
+    public string entityName;
+    [Space]
+    public GameObject onDeathVFX;
+    [Space]
 
     [HideInInspector] public float health;
     [HideInInspector] public float healthCurrent;
@@ -26,6 +26,11 @@ public class Entity : MonoBehaviour
     [HideInInspector] public bool canGetKnockback = true;
     [HideInInspector] public EffectManager effectsManager;
 
+    public enum Stat
+    {
+        health, defense, speed, damage, attackSpeed
+    };
+
     public virtual void Awake()
     {
         healthCurrent = health;
@@ -33,6 +38,8 @@ public class Entity : MonoBehaviour
         attackSpeedCurrent = attackSpeed;
         defenseCurrent = defense;
         damageCurrent = damage;
+
+        if (onDeathVFX == null) onDeathVFX = Resources.Load("VFX/Puff") as GameObject;
     }
 
     public virtual void Start() { }
@@ -49,6 +56,10 @@ public class Entity : MonoBehaviour
 
     public virtual void OnDeath()
     {
+        Audio.instance.PlayOneShot(Audio.Sound.squash, .15f);
+
+        Instantiate(onDeathVFX, transform.position, Quaternion.identity);
+
         gameObject.SetActive(false);
     }
         
@@ -94,14 +105,26 @@ public class Entity : MonoBehaviour
     public virtual IEnumerator JiggleAnimation(int power)
     {
         Vector3 initialScale = transform.localScale;
+        float duration = .5f;
+        float currentTime = 0;
+        float offset = .1f;
 
-        for (int i = 0; i < power; i++)
+        while (currentTime < duration / 3)
         {
-            float x = UnityEngine.Random.Range(-.025f, .025f);
+            currentTime += Time.deltaTime;
 
-            transform.localScale = new Vector2(initialScale.x + x, initialScale.y + (-x));
+            transform.localScale = Vector3.Lerp(initialScale, new Vector3(initialScale.x - offset, initialScale.y - offset, 0), currentTime / (duration / 3));
 
-            yield return new WaitForSeconds(.025f);
+            yield return null;
+        }
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector4.one, currentTime / duration);
+
+            yield return null;
         }
 
         transform.localScale = initialScale;

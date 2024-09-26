@@ -40,7 +40,9 @@ public class EnemyAirFollow : Enemy
     {
         if (canMove)
         {
-            _enemyRigidbody.MovePosition(transform.position + Direction.Normalized(target.position, transform.position) * Time.fixedDeltaTime * entitySpeed);
+            Vector3 direction = Direction.Normalized(target.position, transform.position);
+
+            _enemyRigidbody.AddForce(direction * Time.deltaTime * entitySpeed * 1000, ForceMode2D.Force);
         }
     }
 }

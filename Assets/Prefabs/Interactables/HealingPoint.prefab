@@ -215,9 +215,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f57364b1dda6248b9a0d537eef61a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDelay: 1
+  interactDelay: 0.5
   hasUses: 0
   uses: 1
+  animator: {fileID: 8225497768168852435}
   healthToAdd: 10
 --- !u!61 &1390197424512096408
 BoxCollider2D:
@@ -377,8 +378,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.6
-  m_fontSizeBase: 0.6
+  m_fontSize: 0.75
+  m_fontSizeBase: 0.75
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

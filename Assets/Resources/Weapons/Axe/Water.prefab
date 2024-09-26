@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -1916236023, guid: 7742d098ca2c3be44b3e050d14456b40, type: 3}
   - {fileID: -848716574, guid: 7742d098ca2c3be44b3e050d14456b40, type: 3}
   weaponName: WATER AXE
-  weaponSprite: {fileID: 1905759683, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -1453241795, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

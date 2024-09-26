@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: -1381380668, guid: d8cb1761188bc9649a7ea62538d981cc, type: 3}
   - {fileID: -1576619931, guid: d8cb1761188bc9649a7ea62538d981cc, type: 3}
   weaponName: DARK SWORD
-  weaponSprite: {fileID: 1934579656, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -624727665, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

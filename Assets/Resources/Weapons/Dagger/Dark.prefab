@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 854016242, guid: 5d35ae7bb60128f40806fc423feaec5c, type: 3}
   - {fileID: 1551414967, guid: 5d35ae7bb60128f40806fc423feaec5c, type: 3}
   weaponName: DARK DAGGER
-  weaponSprite: {fileID: 261807435, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: 505263228, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

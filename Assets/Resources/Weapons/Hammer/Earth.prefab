@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: -217773114, guid: 8f25187c4ac9ac2429b4315fce382274, type: 3}
   - {fileID: 121927851, guid: 8f25187c4ac9ac2429b4315fce382274, type: 3}
   weaponName: EARTH HAMMER
-  weaponSprite: {fileID: 1787278932, guid: e3233fc756652b848a822259a993ec92, type: 3}
+  weaponSprite: {fileID: -1737467037, guid: e3233fc756652b848a822259a993ec92, type: 3}
   attackState: 0
   animationFrameRate: 12
   animationDuration: 0.5

@@ -3,10 +3,21 @@ using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : Entity
+public class PlayerController : Entity, IDataPersistence
 {
     public static PlayerController instance;
+
+    [Space]
+
+    public float healthStartValue;
+    public float damageStartValue;
+    public float defenseStartValue;
+    public float speedStartValue;
+    public float attackSpeedStartValue;
+
+    [Space]
 
     public float healthMultiplier;
     public float damageMultiplier;
@@ -56,6 +67,8 @@ public class PlayerController : Entity
     [HideInInspector] public SpriteRenderer _playerSpriteRenderer;
 
     public FieldInfo[] properties = typeof(PlayerController).GetFields();
+
+    [HideInInspector] public string lastHitByName;
 
     public override void Awake()
     {
@@ -183,10 +196,21 @@ public class PlayerController : Entity
 
         Audio.instance.PlayOneShot(Audio.Sound.hurt, .5f);
 
+        lastHitByName = hitingEntity.entityName;
+
         if (hitingEntity.effectsManager.appliesEffects)
         {
             effectsManager.ApplyEffect(hitingEntity.effectsManager);
         }
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+
+        GameManager.instance.isGameOver = true;
+
+        GameOverMenu.instance.SetGameOverPanel();
     }
 
     public IEnumerator DamagedAnimation(float duration)
@@ -212,18 +236,37 @@ public class PlayerController : Entity
         _playerSpriteRenderer.color = Color.white;
     }
 
+    public void ResetStats()
+    {
+        foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+        {
+            SetStat(stat, (float)GetStatStartValue(stat).GetValue(this), false);
+        }
+    }
+
     public bool CanSetStat(Stat stat) 
     {
         return (Mathf.Abs(GetStat(stat)) < GetMinMaxStat(stat).max && Mathf.Abs(GetStat(stat)) > GetMinMaxStat(stat).min);
     }
 
-    public void SetStat(Stat stat, float statChange)
+    public void SetStat(Stat stat, float statChange, bool addValue)
     {
         FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat));
         FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
 
-        float changedValue = (float)property.GetValue(this) + statChange;
-        float currentChangedValue = (float)currentProperty.GetValue(this) + statChange;
+        float changedValue = 0;
+        float currentChangedValue = 0;
+
+        if (addValue)
+        {
+            changedValue = (float)property.GetValue(this) + statChange;
+            currentChangedValue = (float)currentProperty.GetValue(this) + statChange;
+        }
+        else
+        {
+            changedValue = statChange;
+            currentChangedValue = statChange;
+        }
 
         StatCheck(ref changedValue, stat);
         StatCheck(ref currentChangedValue, stat);
@@ -258,6 +301,13 @@ public class PlayerController : Entity
         return (MinMaxStat)property.GetValue(this);
     }
 
+    public FieldInfo GetStatStartValue(Stat stat)
+    {
+        FieldInfo property = properties.ToList().Find(p => p.Name == GetStatName(stat) + "StartValue");
+
+        return property;
+    }
+
     public float GetCurrentStat(Stat stat)
     {
         FieldInfo currentProperty = properties.ToList().Find(p => p.Name == GetStatName(stat) + "Current");
@@ -281,7 +331,7 @@ public class PlayerController : Entity
         canDash = 0;
     }
 
-    void MoveReset()
+    public void MoveReset()
     {
         canMove = true;
     }
@@ -289,5 +339,31 @@ public class PlayerController : Entity
     void DamageReset()
     {
         canTakeDamage = true;
+    }
+
+    public void LoadData(GameData data)
+    {
+        health = data.health;
+        healthCurrent = data.healthCurrent;
+        defense = data.defense;
+        defenseCurrent = data.defenseCurrent;
+        damage = data.damage;
+        damageCurrent = data.damageCurrent;
+        attackSpeed = data.attackSpeed;
+        attackSpeedCurrent = data.attackSpeedCurrent;
+
+        if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name)) transform.position = data.playerPos;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.health = health;
+        data.healthCurrent = healthCurrent;
+        data.defense = defense;
+        data.defenseCurrent = defenseCurrent;
+        data.damage = damage;
+        data.damageCurrent = damageCurrent;
+        data.attackSpeed = attackSpeed;
+        data.attackSpeedCurrent = attackSpeedCurrent;
     }
 }
