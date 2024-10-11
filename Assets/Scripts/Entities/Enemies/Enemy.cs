@@ -6,25 +6,20 @@ using Pathfinding;
 public class Enemy : Entity
 {
     [HideInInspector] public Rigidbody2D _enemyRigidbody;
-    [HideInInspector] public SpriteRenderer _enemyRenderer;
     [HideInInspector] public EnemiesManager enemiesManager;
     [HideInInspector] public AudioSource audioSource;
-
-    [HideInInspector] public Color defaultColor;
 
     public override void Awake()
     {
         base.Awake();
 
         _enemyRigidbody = GetComponent<Rigidbody2D>();
-        _enemyRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponentInChildren<AudioSource>();
 
         Transform parent = transform.parent;
 
         if (parent != null) enemiesManager = parent.GetComponent<EnemiesManager>();
-
-        defaultColor = _enemyRenderer.color;
     }
 
     public override void Start()
@@ -38,10 +33,8 @@ public class Enemy : Entity
     {
         if (healthCurrent <= 0) return;
 
-        _enemyRenderer.color = PlayerController.instance.damagedColor;
-
-        StartCoroutine(ResetDamagedColor(defaultColor));
-        StartCoroutine(JiggleAnimation(10));
+        StartCoroutine(DamagedAnimation(.5f));
+        StartCoroutine(JiggleAnimation(.5f));
 
         if (PlayerController.instance.effectsManager.appliesEffects)
         {
@@ -57,13 +50,6 @@ public class Enemy : Entity
         {
             audioSource.mute = canMove;
         }
-    }
-
-    public IEnumerator ResetDamagedColor(Color defaultColor)
-    {
-        yield return new WaitForSeconds(.2f);
-
-        _enemyRenderer.color = defaultColor;
     }
 
     public virtual void DeactivateFollowState()

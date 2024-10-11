@@ -46,21 +46,20 @@ public class Ranged : Weapon
         foreach (GameObject instance in instances)
         {
             if (!instance.activeInHierarchy)
-            {                
+            {             
                 return ActivateInstance(instance, pos);
             }
         }
 
         GameObject newInstance = CreateInstance();
-
         return ActivateInstance(newInstance, pos);
     }
 
     GameObject CreateInstance()
     {
         GameObject instance = Instantiate(projetile, transform);
-        instance.SetActive(false);
 
+        instance.SetActive(false);
         instances.Add(instance);
 
         return instance;
@@ -68,10 +67,10 @@ public class Ranged : Weapon
 
     GameObject ActivateInstance(GameObject instance, Vector2 pos)
     {
-        instance.transform.position = pos;
-        instance.transform.rotation = transform.rotation;
-        instance.transform.SetParent(null);
         instance.SetActive(true);
+        instance.transform.position = pos;
+        instance.transform.SetParent(null);
+        instance.transform.rotation = transform.rotation;
 
         return instance;
     }

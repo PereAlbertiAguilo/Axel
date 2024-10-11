@@ -23,6 +23,7 @@ public class GiantSlimeBoss : Boss
     float currentAttackSpeed;
 
     bool halfLifeSpawn = false;
+    bool attack = true;
 
     AIPath _aIPath;
     AIDestinationSetter _destinationSetter;
@@ -55,31 +56,21 @@ public class GiantSlimeBoss : Boss
 
         if (!canMove) return;
 
-        if (currentAttackSpeed <= 0)
+        if (attack)
         {
-            _animator.Play("GiantSlimeAttack");
+            attack = false;
 
-            currentAttackSpeed = attackSpeedCurrent;
-
-            switch (attackIndex)
-            {
-                case 0: StartCoroutine(Attack(4)); break; 
-                case 1: 
-                    StartCoroutine(Attack(8)); 
-                    currentAttackSpeed = attackSpeedCurrent / 1.5f;
-                    break;
-                case 2: 
-                    StartCoroutine(Attack(12));
-                    currentAttackSpeed = attackSpeedCurrent * 2.5f;
-                    break;
-            }
-
-            attackIndex = attackIndex < 2 ? (attackIndex + 1) : 0;
+            StartCoroutine(Attack());
         }
-        else
-        {
-            currentAttackSpeed -= Time.deltaTime;
-        }
+
+        //if (currentAttackSpeed <= 0)
+        //{
+            
+        //}
+        //else
+        //{
+        //    currentAttackSpeed -= Time.deltaTime;
+        //}
 
         if (healthCurrent <= health * 0.5f && !halfLifeSpawn)
         {
@@ -89,6 +80,32 @@ public class GiantSlimeBoss : Boss
         }
     }
 
+    public IEnumerator Attack()
+    {
+        _animator.Play("GiantSlimeAttack");
+
+        currentAttackSpeed = attackSpeedCurrent;
+
+        switch (attackIndex)
+        {
+            case 0: StartCoroutine(BulletAttack(4)); break;
+            case 1:
+                StartCoroutine(BulletAttack(8));
+                currentAttackSpeed = attackSpeedCurrent / 1.5f;
+                break;
+            case 2:
+                StartCoroutine(BulletAttack(12));
+                currentAttackSpeed = attackSpeedCurrent * 2.5f;
+                break;
+        }
+
+        attackIndex = attackIndex < 2 ? (attackIndex + 1) : 0;
+
+        yield return new WaitForSeconds(currentAttackSpeed);
+
+        attack = true;
+    }
+
     public override void OnDeath()
     {
         SpawnMinions();
@@ -96,7 +113,7 @@ public class GiantSlimeBoss : Boss
         base.OnDeath();
     }
 
-    public IEnumerator Attack(int bulletsAmount)
+    public IEnumerator BulletAttack(int bulletsAmount)
     {
         float angleOffset = Random.Range(0, 360);
 

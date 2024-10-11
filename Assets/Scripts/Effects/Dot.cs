@@ -24,7 +24,7 @@ public class Dot : Effect
             {
                 currentDotTime = 0;
 
-                entity.RemoveHealth(SetEffectPower(5f * entity.health / 100, false));
+                targetEntity.RemoveHealth(SetEffectPower(attackerEntity.damageCurrent * 0.60f, false));
             }
         }
         else

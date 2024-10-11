@@ -64,7 +64,6 @@ public class PlayerController : Entity, IDataPersistence
     [HideInInspector] public Weapon currentWeapon;
     [HideInInspector] public EnemiesManager currentEnemiesManager;
     [HideInInspector] public Rigidbody2D _playerRigidbody;
-    [HideInInspector] public SpriteRenderer _playerSpriteRenderer;
 
     public FieldInfo[] properties = typeof(PlayerController).GetFields();
 
@@ -78,7 +77,7 @@ public class PlayerController : Entity, IDataPersistence
 
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
-        _playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public override void Start()
@@ -192,7 +191,7 @@ public class PlayerController : Entity, IDataPersistence
 
         Invoke(nameof(DamageReset), iFramesDuration);
         StartCoroutine(DamagedAnimation(iFramesDuration));
-        StartCoroutine(JiggleAnimation(10));
+        StartCoroutine(JiggleAnimation(iFramesDuration));
 
         Audio.instance.PlayOneShot(Audio.Sound.hurt, .5f);
 
@@ -202,6 +201,8 @@ public class PlayerController : Entity, IDataPersistence
         {
             effectsManager.ApplyEffect(hitingEntity.effectsManager);
         }
+
+        GameManager.instance.SlowMo(.5f);
     }
 
     public override void OnDeath()
@@ -211,29 +212,6 @@ public class PlayerController : Entity, IDataPersistence
         GameManager.instance.isGameOver = true;
 
         GameOverMenu.instance.SetGameOverPanel();
-    }
-
-    public IEnumerator DamagedAnimation(float duration)
-    {
-        float currentTime = 0;
-
-        while (currentTime < duration)
-        {
-            currentTime += Time.deltaTime;
-
-            if (currentTime < duration / 2f)
-            {
-                _playerSpriteRenderer.color = Color.Lerp(_playerSpriteRenderer.color, damagedColor, Mathf.PingPong(Time.time, currentTime));
-            }
-            else
-            {
-                _playerSpriteRenderer.color = Color.Lerp(_playerSpriteRenderer.color, Color.white, Mathf.PingPong(Time.time, currentTime / 2));
-            }
-
-            yield return null;
-        }
-
-        _playerSpriteRenderer.color = Color.white;
     }
 
     public void ResetStats()
@@ -357,13 +335,16 @@ public class PlayerController : Entity, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        data.health = health;
-        data.healthCurrent = healthCurrent;
-        data.defense = defense;
-        data.defenseCurrent = defenseCurrent;
-        data.damage = damage;
-        data.damageCurrent = damageCurrent;
-        data.attackSpeed = attackSpeed;
-        data.attackSpeedCurrent = attackSpeedCurrent;
+        if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name))
+        {
+            data.health = health;
+            data.healthCurrent = healthCurrent;
+            data.defense = defense;
+            data.defenseCurrent = defenseCurrent;
+            data.damage = damage;
+            data.damageCurrent = damageCurrent;
+            data.attackSpeed = attackSpeed;
+            data.attackSpeedCurrent = attackSpeedCurrent;
+        }
     }
 }

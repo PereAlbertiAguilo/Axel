@@ -27,6 +27,7 @@ public class GameData
     public string currentFloor;
 
     public RoomStructure[] roomStructures;
+    public CollectableStructure[] collectableStructures;
 
     public Vector2 playerPos;
 
@@ -52,6 +53,6 @@ public class GameData
 
         currentFloor = "FirstFloor";
 
-        playerPos = new Vector2(0, 3);
+        playerPos = new Vector2(0, 0.5f);
     }
 }

@@ -73,7 +73,6 @@ public class SettingsManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("fullScreenActive", active ? 1 : 0);
 
-        Screen.SetResolution(active ? Screen.currentResolution.width : Screen.currentResolution.width / 2,
-            active ? Screen.currentResolution.height : Screen.currentResolution.height / 2, active);
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, active);
     }
 }

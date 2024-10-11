@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,10 +9,10 @@ public class Room : MonoBehaviour
 {
     [HideInInspector] public string prefabPath;
 
-    public GameObject miniMapUp;
-    public GameObject miniMapDown;
-    public GameObject miniMapRight;
-    public GameObject miniMapLeft;
+    [HideInInspector] public GameObject miniMapUp;
+    [HideInInspector] public GameObject miniMapDown;
+    [HideInInspector] public GameObject miniMapRight;
+    [HideInInspector] public GameObject miniMapLeft;
 
     public DoorsManager doorsManager;
     public EnemiesManager enemiesManager;
@@ -20,19 +22,30 @@ public class Room : MonoBehaviour
     public Vector2Int roomGridPos {  get; set; }
 
     [HideInInspector] public int roomIndex = 0;
+    public int exitsAmount = 0;
 
-    [HideInInspector] public bool openUp = false;
-    [HideInInspector] public bool openDown = false;
-    [HideInInspector] public bool openRight = false;
-    [HideInInspector] public bool openLeft = false;
+    [Space]
+
+    public bool openUp = false;
+    public bool openDown = false;
+    public bool openRight = false;
+    public bool openLeft = false;
+
+    [Space]
 
     public bool roomCleared = false;
     public bool roomEntered = false;
+    public bool roomLocked = false;
+    public bool rewardGiven = false;
 
     [HideInInspector] public bool[] doorStates;
 
     public virtual void Start()
     {
+        miniMapUp = miniMapDisplay.transform.GetChild(0).gameObject;
+        miniMapDown = miniMapDisplay.transform.GetChild(1).gameObject;
+        miniMapRight = miniMapDisplay.transform.GetChild(2).gameObject;
+        miniMapLeft = miniMapDisplay.transform.GetChild(3).gameObject;
     }
 
     private void Update()
@@ -48,37 +61,55 @@ public class Room : MonoBehaviour
         roomCleared = true;
 
         RoomManager.instance.SaveRoomData(roomIndex);
+        GameManager.instance.SlowMo(1f);
+
+        if (!rewardGiven)
+        {
+            rewardGiven = true;
+
+            CollectiblesManager cm = CollectiblesManager.instance;
+            cm.SpawnCollectable(cm.GetRandomCollectable(), transform.position, cm.index);
+        }
 
         OpenDoors();
 
         StartCoroutine(PlaySoundDelayed(.45f));
     }
 
-    IEnumerator PlaySoundDelayed(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        Audio.instance.PlayOneShot(Audio.Sound.changeRoom, .01f, true);
-    }
 
     public void OpenDoors()
     {
-        doorsManager.OpenDoor("Up", openUp);
-        doorsManager.OpenDoor("Down", openDown);
-        doorsManager.OpenDoor("Right", openRight);
-        doorsManager.OpenDoor("Left", openLeft);
-
-        UpdateRoomMiniMapDisplay(false, false);
+        StartCoroutine(OpenDoorsWhenGenerationComplete());
     }
 
-    public void UpdateRoomMiniMapDisplay(bool activate, bool current)
+    IEnumerator OpenDoorsWhenGenerationComplete()
+    {
+        yield return new WaitUntil(() => RoomManager.instance.generationComplete);
+
+        doorsManager.OpenDoors("Up", openUp);
+        doorsManager.OpenDoors("Down", openDown);
+        doorsManager.OpenDoors("Right", openRight);
+        doorsManager.OpenDoors("Left", openLeft);
+
+        UpdateRoomMiniMapDisplay(false, false, openUp, openDown, openRight, openLeft);
+    }
+
+    public void CloseDoors()
+    {
+        if (openUp) doorsManager.animatorUp.Play("CloseDoors");
+        if (openDown) doorsManager.animatorDown.Play("CloseDoors");
+        if (openRight) doorsManager.animatorRight.Play("CloseDoors");
+        if (openLeft) doorsManager.animatorLeft.Play("CloseDoors");
+    }
+
+    public void UpdateRoomMiniMapDisplay(bool activate, bool current, bool up, bool down, bool right, bool left)
     {
         if (activate) miniMapDisplay.SetActive(true);
 
-        miniMapUp.SetActive(openDown);
-        miniMapDown.SetActive(openUp);
-        miniMapRight.SetActive(openRight);
-        miniMapLeft.SetActive(openLeft);
+        miniMapUp.SetActive(up);
+        miniMapDown.SetActive(down);
+        miniMapRight.SetActive(right);
+        miniMapLeft.SetActive(left);
 
         if (current)
         {
@@ -89,22 +120,37 @@ public class Room : MonoBehaviour
         }
     }
 
-    void CloseCurrentDoorsWithDelay()
-    {
-        if (openUp) doorsManager.animatorUp.Play("CloseDoors");
-        if (openDown) doorsManager.animatorDown.Play("CloseDoors");
-        if (openRight) doorsManager.animatorRight.Play("CloseDoors");
-        if (openLeft) doorsManager.animatorLeft.Play("CloseDoors");
-    }
-
     public IEnumerator NextRoomsMiniMapUpdate()
     {
         yield return new WaitUntil(() => RoomManager.instance.generationComplete);
 
-        if (openUp) GetRoomFromGridPos(new Vector2Int(roomGridPos.x, roomGridPos.y + 1)).UpdateRoomMiniMapDisplay(true, false);
-        if (openDown) GetRoomFromGridPos(new Vector2Int(roomGridPos.x, roomGridPos.y - 1)).UpdateRoomMiniMapDisplay(true, false);
-        if (openRight) GetRoomFromGridPos(new Vector2Int(roomGridPos.x + 1, roomGridPos.y)).UpdateRoomMiniMapDisplay(true, false);
-        if (openLeft) GetRoomFromGridPos(new Vector2Int(roomGridPos.x - 1, roomGridPos.y)).UpdateRoomMiniMapDisplay(true, false);
+        if (openUp)
+        {
+            Room upRoom = GetRoomFromGridPos(new Vector2Int(roomGridPos.x, roomGridPos.y + 1)); //Room up
+            if (!upRoom.roomEntered) upRoom.UpdateRoomMiniMapDisplay(true, false, false, openUp, false, false); 
+        }
+        if (openDown)
+        {
+            Room downRoom = GetRoomFromGridPos(new Vector2Int(roomGridPos.x, roomGridPos.y - 1)); //Room down
+            if (!downRoom.roomEntered) downRoom.UpdateRoomMiniMapDisplay(true, false, openDown, false, false, false); 
+        }
+        if (openRight)
+        {
+            Room rightRoom = GetRoomFromGridPos(new Vector2Int(roomGridPos.x + 1, roomGridPos.y)); //Room right
+            if (!rightRoom.roomEntered) rightRoom.UpdateRoomMiniMapDisplay(true, false, false, false, false, openRight); 
+        }
+        if (openLeft)
+        {
+            Room leftRoom = GetRoomFromGridPos(new Vector2Int(roomGridPos.x - 1, roomGridPos.y)); //Room left
+            if (!leftRoom.roomEntered) leftRoom.UpdateRoomMiniMapDisplay(true, false, false, false, openLeft, false); 
+        }
+    }
+
+    IEnumerator PlaySoundDelayed(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Audio.instance.PlayOneShot(Audio.Sound.changeRoom, .01f, true);
     }
 
     Room GetRoomFromGridPos(Vector2Int newRoomGridPos)
@@ -115,22 +161,20 @@ public class Room : MonoBehaviour
 
     IEnumerator ActivateRoom()
     {
-        roomEntered = true;
-
         RoomManager.instance.currentRoom = this;
 
-        UpdateRoomMiniMapDisplay(true, true);
-
-        if (enemiesManager.enemiesAlive) Invoke(nameof(CloseCurrentDoorsWithDelay), .45f);
-
-        StartCoroutine(NextRoomsMiniMapUpdate());
+        if (enemiesManager.enemiesAlive) Invoke(nameof(CloseDoors), .45f);
+        if (!roomCleared) StartCoroutine(PlaySoundDelayed(.45f));
+        if (!roomEntered) StartCoroutine(NextRoomsMiniMapUpdate());
 
         CameraController.instance.ChangeCameraPos(transform);
         PlayerController.instance.Invoke(nameof(PlayerController.instance.MoveReset), .5f);
         PlayerController.instance._playerRigidbody.velocity = Vector2.zero;
         PlayerController.instance.currentEnemiesManager = enemiesManager;
 
-        if (!roomCleared) StartCoroutine(PlaySoundDelayed(.45f));
+        UpdateRoomMiniMapDisplay(true, true, openUp, openDown, openRight, openLeft);
+        
+        roomEntered = true;
 
         yield return new WaitForSeconds(.45f);
 

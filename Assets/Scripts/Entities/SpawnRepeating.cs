@@ -52,10 +52,10 @@ public class SpawnRepeating : MonoBehaviour
         {
             if (!instance.activeInHierarchy)
             {
-                instance.transform.position = pos;
-                instance.transform.rotation = rotation;
-                instance.transform.SetParent(null);
                 instance.SetActive(true);
+                instance.transform.position = pos;
+                instance.transform.SetParent(null);
+                instance.transform.rotation = rotation;
 
                 return instance;
             }

@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dorDirection: 3
+  isDoorOpen: 0
 --- !u!95 &2594619721124796751
 Animator:
   serializedVersion: 5
@@ -218,6 +219,10 @@ MonoBehaviour:
   animatorDown: {fileID: 5238980898564060431}
   animatorRight: {fileID: 7391710635696075407}
   animatorLeft: {fileID: 2594619721124796751}
+  doorUp: {fileID: 308493174591978583}
+  doorDown: {fileID: 6875164733355667432}
+  doorRight: {fileID: 7483263483010731643}
+  doorLeft: {fileID: 4513975579520635234}
 --- !u!1 &6149706812023033693
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dorDirection: 2
+  isDoorOpen: 0
 --- !u!95 &7391710635696075407
 Animator:
   serializedVersion: 5
@@ -484,6 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dorDirection: 1
+  isDoorOpen: 0
 --- !u!95 &5238980898564060431
 Animator:
   serializedVersion: 5
@@ -650,6 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dorDirection: 0
+  isDoorOpen: 0
 --- !u!95 &1450525744927413868
 Animator:
   serializedVersion: 5

@@ -16,7 +16,7 @@ public class DefenseBreak : Effect
         {
             currentTime += Time.deltaTime;
 
-            entity.defenseCurrent = 0;
+            targetEntity.defenseCurrent = 0;
         }
         else
         {
@@ -29,7 +29,7 @@ public class DefenseBreak : Effect
     public override void EndEffect()
     {
         currentTime = parameters.duration;
-        entity.defenseCurrent = entity.defense;
+        targetEntity.defenseCurrent = targetEntity.defense;
     }
 
     private void OnDestroy()

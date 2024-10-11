@@ -14,6 +14,7 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private bool useEncryption;
 
     [HideInInspector] public GameData gameData;
+
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
 

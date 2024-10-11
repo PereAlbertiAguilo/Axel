@@ -39,8 +39,8 @@ public class EffectManager : MonoBehaviour
 
         Effect newEffect = Instantiate(instanceEffect, effectsHolder.transform).GetComponent<Effect>();
         newEffect.parameters = attackerEffectManager.parameters;
-        newEffect.entity = entity;
-        newEffect.attakerEntity = attackerEffectManager.entity;
+        newEffect.targetEntity = entity;
+        newEffect.attackerEntity = attackerEffectManager.entity;
 
         DisplayEffectPopUp(newEffect);
 

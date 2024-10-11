@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class KeybindsMenu : MonoBehaviour
 {
-    public GameObject currentSelectedGameObject;
+    GameObject currentSelectedGameObject;
 
     [SerializeField] ScrollRect scrollRect;
 
@@ -25,8 +25,9 @@ public class KeybindsMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0 || scrollRect.velocity.y != 0 && EventSystem.current.currentSelectedGameObject != scrollRect.verticalScrollbar.gameObject)
         {
+            MenusManager.instance.ChangeCurrentSelectedElement(scrollRect.verticalScrollbar.gameObject);
             canScroll = true;
         }
         else if(Input.anyKeyDown)
@@ -34,19 +35,20 @@ public class KeybindsMenu : MonoBehaviour
             canScroll= false;
         }
 
+        MenusManager.instance.canChangeSelectableWithMouse = !scrollRect.gameObject.activeInHierarchy;
+
         currentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
 
         if (currentSelectedGameObject != null && transform.GetChild(0).gameObject.activeInHierarchy && 
             scrollRect.verticalScrollbar.gameObject != currentSelectedGameObject && !canScroll)
         {
-
             foreach (GameObject item in scrollItems)
             {
                 float itemRectY = item.GetComponent<RectTransform>().localPosition.y;
 
                 if (item == currentSelectedGameObject)
                 {
-                    scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.unscaledDeltaTime * 5);
+                    scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.unscaledDeltaTime * 10);
                 }
                 else
                 {
@@ -54,7 +56,7 @@ public class KeybindsMenu : MonoBehaviour
                     {
                         if (childItem.gameObject == currentSelectedGameObject)
                         {
-                            scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.unscaledDeltaTime * 5);
+                            scrollRect.content.localPosition = Vector3.Lerp(scrollRect.content.localPosition, new Vector3(scrollRect.content.localPosition.x, Mathf.Abs(itemRectY), 0), Time.unscaledDeltaTime * 10);
                         }
                     }
                 }

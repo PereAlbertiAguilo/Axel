@@ -19,6 +19,7 @@ public class HudManager : MonoBehaviour
 
     [SerializeField] GameObject statsPanel;
     [SerializeField] GameObject statsLayout;
+    [SerializeField] GameObject colectablesLayout;
 
     [Space]
 
@@ -27,9 +28,11 @@ public class HudManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentFloorInitialText;
     [SerializeField] TextMeshProUGUI currentHealthText;
 
-    float timer = 0;
+    [Space]
 
-    bool keepStatsUp = false;
+    public float timer = 0;
+
+    public bool keepStatsUp = false;
 
     public static HudManager instance;
 
@@ -44,6 +47,10 @@ public class HudManager : MonoBehaviour
 
         currentFloorText.text = FloorName(true);
         currentFloorInitialText.text = FloorName(false);
+
+        timer = PlayerPrefs.HasKey("timer") ? PlayerPrefs.GetFloat("timer") : 0;
+        keepStatsUp = PlayerPrefs.HasKey("stats") ? ((PlayerPrefs.GetInt("stats") > 0) ? true : false) : false;
+        statsPanel.SetActive(keepStatsUp);
     }
 
     private void Update()
@@ -102,13 +109,17 @@ public class HudManager : MonoBehaviour
         return finalName;
     }
 
-    public IEnumerator DashCooldownBar(float dashCooldown)
+    public IEnumerator DashCooldownBar(float duration)
     {
+        float currentTime = 0;
+
         dashCooldownImage.fillAmount = 0;
 
-        while (dashCooldownImage.fillAmount < 1)
+        while (currentTime < duration)
         {
-            dashCooldownImage.fillAmount += Time.deltaTime / dashCooldown;
+            currentTime += Time.unscaledDeltaTime;
+
+            dashCooldownImage.fillAmount = Mathf.Lerp(0, 1, currentTime / duration);
 
             yield return null;
         }
@@ -126,7 +137,8 @@ public class HudManager : MonoBehaviour
         {
             currentTime += Time.unscaledDeltaTime;
 
-            delayedHealthBarImage.fillAmount = Mathf.Lerp(delayedHealthBarImage.fillAmount, PlayerController.instance.healthCurrent / PlayerController.instance.health, currentTime / duration);
+            delayedHealthBarImage.fillAmount = Mathf.Lerp(delayedHealthBarImage.fillAmount, 
+                PlayerController.instance.healthCurrent / PlayerController.instance.health, currentTime / duration);
 
             yield return null;
         }
@@ -145,10 +157,21 @@ public class HudManager : MonoBehaviour
 
             if (i == (int)Entity.Stat.damage) currentStatText.text = statText + " [" + 
                     (PlayerController.instance.currentWeapon.weaponAddedDamage > 0 ? 
-                    "<color=green>" : "<color=red>") + PlayerController.instance.currentWeapon.weaponAddedDamage + "</color>" + "]";
+                    "<color=green>" : "<color=red>") + Math.Round(PlayerController.instance.currentWeapon.weaponAddedDamage, 2) + "</color>" + "]";
             if (i == (int)Entity.Stat.attackSpeed) currentStatText.text = statText + " [" +
                     (PlayerController.instance.currentWeapon.weaponAddedAttackSpeed < 0 ?
-                    "<color=green>" : "<color=red>") + PlayerController.instance.currentWeapon.weaponAddedAttackSpeed + "</color>" + "]";
+                    "<color=green>" : "<color=red>") + Math.Round(PlayerController.instance.currentWeapon.weaponAddedAttackSpeed, 2) + "</color>" + "]";
+        }
+    }
+
+    public void UpdateCollectableUI()
+    {
+        for (int i = 0; i < Enum.GetValues(typeof(CollectiblesManager.Types)).Length; i++)
+        {
+            TextMeshProUGUI currentStatText = colectablesLayout.transform.GetChild(i).Find("Amount").GetComponent<TextMeshProUGUI>();
+            string statText = "" + CollectiblesManager.instance.GetCollectable((CollectiblesManager.Types)i).GetValue(CollectiblesManager.instance);
+
+            currentStatText.text = statText;
         }
     }
 
@@ -159,5 +182,11 @@ public class HudManager : MonoBehaviour
         yield return new WaitForSeconds(.2f);
 
         if (UserInput.instance.statsInput) keepStatsUp = false;
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetFloat("timer", timer);
+        PlayerPrefs.SetInt("stats", keepStatsUp ? 1 : 0);
     }
 }

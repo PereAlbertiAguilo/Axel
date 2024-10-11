@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] string floorFolderName;
     [SerializeField] string treasureRoomsFolderName;
+    [SerializeField] string shopRoomsFolderName;
 
     [Space]
 
@@ -18,6 +19,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] int normalRoomsAmount = 1;
     [SerializeField] int lastRoomsAmount = 1;
     [SerializeField] int treasureRoomsAmount = 1;
+    [SerializeField] int shopRoomsAmount = 1;
 
     [Space]
 
@@ -46,13 +48,14 @@ public class RoomManager : MonoBehaviour
     List<int> initialUsedRoomsIndex = new List<int>();
     List<int> normalUsedRoomsIndex = new List<int>();
     List<int> lastUsedRoomsIndex = new List<int>();
-    List<int> specialRoomsIndex = new List<int>();
+    List<int> treasureRoomsIndex = new List<int>();
+    List<int> shopRoomsIndex = new List<int>();
 
     int treasuereRoomIndex;
 
     AstarPath astar;
-    Pathfinding.AstarData data;
-    Pathfinding.GridGraph gridGraph;
+    AstarData data;
+    GridGraph gridGraph;
 
     private void Awake()
     {
@@ -62,7 +65,7 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         astar = AstarPath.active;
-        Pathfinding.AstarData data = astar.data;
+        AstarData data = astar.data;
         gridGraph = data.gridGraph;
 
         roomGrid = new int[gridSize.x, gridSize.y];
@@ -79,51 +82,69 @@ public class RoomManager : MonoBehaviour
         {
             Vector2Int roomIndex = roomQueue.Dequeue();
 
-            if (roomIndex.x > 0 && roomGrid[roomIndex.x - 1, roomIndex.y] == 0)
-            {
-                //No neighbor to the left
-                TryGenerateRoom(new Vector2Int(roomIndex.x - 1, roomIndex.y));
-            }
-            if (roomIndex.x < gridSize.x - 1 && roomGrid[roomIndex.x + 1, roomIndex.y] == 0)
-            {
-                //No neighbor to the right
-                TryGenerateRoom(new Vector2Int(roomIndex.x + 1, roomIndex.y));
-            }
-            if (roomIndex.y > 0 && roomGrid[roomIndex.x, roomIndex.y - 1] == 0)
-            {
-                //No neighbor below
-                TryGenerateRoom(new Vector2Int(roomIndex.x, roomIndex.y - 1));
-            }
-            if (roomIndex.y < gridSize.y - 1 && roomGrid[roomIndex.x, roomIndex.y + 1] == 0)
-            {
-                //No neighbor above
-                TryGenerateRoom(new Vector2Int(roomIndex.x, roomIndex.y + 1));
-            }
-
+            TryGenerateRoom(new Vector2Int(roomIndex.x - 1, roomIndex.y));
+            TryGenerateRoom(new Vector2Int(roomIndex.x + 1, roomIndex.y));
+            TryGenerateRoom(new Vector2Int(roomIndex.x, roomIndex.y - 1));
+            TryGenerateRoom(new Vector2Int(roomIndex.x, roomIndex.y + 1));
         }
-        else if (roomCount < minRooms)
+        else if (roomCount < minRooms || FloorHasOneExitRooms())
         {
             RegenerateRooms();
         }
         else if (!generationComplete)
         {
+            // Generate Special Rooms
             GenerateLastRoom();
+            GenerateSpecialRoom(treasureRoomsFolderName, treasureRoomsIndex, treasureRoomsAmount);
+            GenerateSpecialRoom(shopRoomsFolderName, shopRoomsIndex, shopRoomsAmount);
 
-            treasuereRoomIndex = Random.Range(1, roomCount - 2);
-            GenerateSpecialRoom(rooms[treasuereRoomIndex].GetComponent<Room>(), treasureRoomsFolderName);
-
-            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
-            DataPersistenceManager.instance.gameData.roomStructures = GetFloorRoomStructures().ToArray();
-
-            Invoke(nameof(GrdGraphScan), .1f);
+            Invoke(nameof(GridGraphScan), .1f);
+            FinalFoorUpdate();
 
             generationComplete = true;
-
             Time.timeScale = 1;
+
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
+            SaveRoomStructures();
         }
     }
 
-    void GrdGraphScan()
+    public void FinalFoorUpdate()
+    {
+        foreach (GameObject roomObject in rooms)
+        {
+            Room room = roomObject.GetComponent<Room>();
+
+            if (!room.enemiesManager.enemiesAlive) room.OpenDoors();
+
+            if (room.roomEntered)
+            {
+                room.StartCoroutine(room.NextRoomsMiniMapUpdate());
+                if (room.roomCleared) room.UpdateRoomMiniMapDisplay(true, true, room.openUp, room.openDown, room.openRight, room.openLeft);
+            }
+        }
+    }
+
+    bool FloorHasOneExitRooms()
+    {
+        int amountOfRoomsWithOneExit = 0;
+
+        foreach (GameObject roomObject in rooms)
+        {
+            Room room = roomObject.GetComponent<Room>();
+
+            if (room.openUp) room.exitsAmount++;
+            if (room.openDown) room.exitsAmount++;
+            if (room.openRight) room.exitsAmount++;
+            if (room.openLeft) room.exitsAmount++;
+
+            if (room.exitsAmount == 1) amountOfRoomsWithOneExit++;
+        }
+
+        return amountOfRoomsWithOneExit == 0;
+    }
+
+    void GridGraphScan()
     {
         gridGraph.Scan();
     }
@@ -132,9 +153,9 @@ public class RoomManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name))
         {
-            SetFloorRoomFromStructures(DataPersistenceManager.instance.gameData.roomStructures);
+            LoadRoomStructures(DataPersistenceManager.instance.gameData.roomStructures);
             Time.timeScale = 1;
-            Invoke(nameof(GrdGraphScan), .1f);
+            Invoke(nameof(GridGraphScan), .1f);
         }
         else if (!generationComplete)
         {
@@ -173,8 +194,8 @@ public class RoomManager : MonoBehaviour
 
         Room newRoom = SetRoom($"{floorFolderName}/Normal/{normalUsedRoomsIndex.Last()}", GetPositionFromGridIndex(roomIndex));
         UpdateRoom(newRoom, "Normal", roomIndex, roomCount - 1);
-        rooms.Add(newRoom.gameObject);
         OpenDoors(newRoom, roomIndex.x, roomIndex.y);
+        rooms.Add(newRoom.gameObject);
 
         return true;
     }
@@ -198,21 +219,84 @@ public class RoomManager : MonoBehaviour
         rooms.Add(newLastRoom.gameObject);
     }
 
-    void GenerateSpecialRoom(Room replacedRoom, string specialRoomTypeFolderName)
+    void GenerateSpecialRoom(string specialRoomTypeFolderName, List<int> roomIndex, int roomAmount)
     {
-        Vector2 replacedRoomPos = replacedRoom.transform.position;
+        Vector2Int validGridPos = Vector2Int.zero;
 
-        specialRoomsIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(specialRoomsIndex, 0, treasureRoomsAmount));
+        for (int i = 0; i < rooms.Count - 2; i++)
+        {
+            Room room = rooms[i].GetComponent<Room>();
 
-        Room especialRoom = SetRoom($"{floorFolderName}/Special/{specialRoomTypeFolderName}/{specialRoomsIndex.Last()}", replacedRoomPos);
-        UpdateRoom(especialRoom, "Special", replacedRoom.roomGridPos, replacedRoom.roomIndex);
-        OpenDoors(especialRoom, replacedRoom.roomGridPos.x, replacedRoom.roomGridPos.y);
+            int x = room.roomGridPos.x;
+            int y = room.roomGridPos.y;
 
-        int removedIndex = replacedRoom.roomIndex;
+            Vector2Int tempGridPos;
 
-        Destroy(rooms[removedIndex]);
-        rooms.RemoveAt(removedIndex);
+            if (y < gridSize.y - 1 && roomGrid[x, y + 1] == 0)
+            {
+                tempGridPos = new Vector2Int(x, y + 1);
 
+                if (roomGrid[tempGridPos.x + 1, tempGridPos.y] == 0 &&
+                    roomGrid[tempGridPos.x - 1, tempGridPos.y] == 0 &&
+                    roomGrid[tempGridPos.x, tempGridPos.y + 1] == 0)
+                {
+                    validGridPos = tempGridPos;
+                    break;
+                }
+            }
+            if (y > 0 && roomGrid[x, y - 1] == 0)
+            {
+                tempGridPos = new Vector2Int(x, y - 1);
+
+                if (roomGrid[tempGridPos.x + 1, tempGridPos.y] == 0 &&
+                    roomGrid[tempGridPos.x - 1, tempGridPos.y] == 0 &&
+                    roomGrid[tempGridPos.x, tempGridPos.y - 1] == 0)
+                {
+                    validGridPos = tempGridPos;
+                    break;
+                }
+            }
+            if (x < gridSize.x - 1 && roomGrid[x + 1, y] == 0)
+            {
+                tempGridPos = new Vector2Int(x + 1, y);
+
+                if (roomGrid[tempGridPos.x, tempGridPos.y + 1] == 0 &&
+                    roomGrid[tempGridPos.x, tempGridPos.y - 1] == 0 &&
+                    roomGrid[tempGridPos.x + 1, tempGridPos.y] == 0)
+                {
+                    validGridPos = tempGridPos;
+                    break;
+                }
+            }
+            if (x > 0 && roomGrid[x - 1, y] == 0)
+            {
+                tempGridPos = new Vector2Int(x - 1, y);
+
+                if (roomGrid[tempGridPos.x, tempGridPos.y + 1] == 0 &&
+                    roomGrid[tempGridPos.x, tempGridPos.y - 1] == 0 &&
+                    roomGrid[tempGridPos.x + 1, tempGridPos.y] == 0)
+                {
+                    validGridPos = tempGridPos;
+                    break;
+                }
+            }
+        }
+
+        if (validGridPos == Vector2Int.zero)
+        {
+            RegenerateRooms();
+            return; 
+        }
+
+        roomQueue.Enqueue(validGridPos);
+        roomGrid[validGridPos.x, validGridPos.y] = 1;
+        roomCount++;
+
+        roomIndex.Add(RandomNumberNoRepeat.GetRandomNumberFromList(roomIndex, 0, roomAmount));
+
+        Room especialRoom = SetRoom($"{floorFolderName}/Special/{specialRoomTypeFolderName}/{roomIndex.Last()}", GetPositionFromGridIndex(validGridPos));
+        UpdateRoom(especialRoom, "Special", validGridPos, roomCount - 1);
+        OpenDoors(especialRoom, validGridPos.x, validGridPos.y);
         rooms.Add(especialRoom.gameObject);
     }
 
@@ -232,6 +316,19 @@ public class RoomManager : MonoBehaviour
         room.gameObject.name = name;
         room.roomGridPos = gridPos;
         room.roomIndex = roomIndex;
+
+        int x = gridPos.x;
+        int y = gridPos.y;
+
+        Room leftRoom = GetRoomAt(new Vector2Int(x - 1, y));
+        Room rightRoom = GetRoomAt(new Vector2Int(x + 1, y));
+        Room upRoom = GetRoomAt(new Vector2Int(x, y + 1));
+        Room downRoom = GetRoomAt(new Vector2Int(x, y - 1));
+
+        if (y < gridSize.y - 1 && roomGrid[x, y + 1] != 0) upRoom.doorsManager.doorDown.isLocked = room.roomLocked;
+        if (y > 0 && roomGrid[x, y - 1] != 0) downRoom.doorsManager.doorUp.isLocked = room.roomLocked;
+        if (x < gridSize.x - 1 && roomGrid[x + 1, y] != 0) rightRoom.doorsManager.doorLeft.isLocked = room.roomLocked;
+        if (x > 0 && roomGrid[x - 1, y] != 0) leftRoom.doorsManager.doorRight.isLocked = room.roomLocked;
     }
 
     void RegenerateRooms()
@@ -289,6 +386,15 @@ public class RoomManager : MonoBehaviour
         return null;
     }
 
+    bool TryGetRoomAdjacentToGridPos(Vector2Int gridPos, Vector2Int dir)
+    {
+        Vector2Int newGridPos = gridPos + dir;
+
+        if(newGridPos.x < 0 || newGridPos.x > gridSize.x || newGridPos.y < 0 || newGridPos.y > gridSize.y) return false;
+
+        return roomGrid[newGridPos.x, newGridPos.y] != 0;
+    }
+
     int AdjacentRoomsCount(Vector2Int roomIndex)
     {
         int x = roomIndex.x;
@@ -323,7 +429,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public List<RoomStructure> GetFloorRoomStructures()
+    public void SaveRoomStructures()
     {
         List<RoomStructure> roomStructures = new List<RoomStructure>();
 
@@ -331,48 +437,18 @@ public class RoomManager : MonoBehaviour
         {
             Room room = roomInstance.GetComponent<Room>();
 
-            RoomStructure roomStructure = new RoomStructure()
-            {
-                pos = roomInstance.transform.position,
-                prefabPath = room.prefabPath,
-                gridPos = room.roomGridPos,
-                roomIndex = room.roomIndex,
-                enemiesAlive = room.enemiesManager.enemiesAlive,
-                roomEntered = room.roomEntered,
-                roomCleared = room.roomCleared,
-                openUp = room.openUp,
-                openDown = room.openDown,
-                openRight = room.openRight,
-                openLeft = room.openLeft,
-            };
+            RoomStructure roomStructure = new RoomStructure(roomInstance.transform.position, room.prefabPath, room.gameObject.name, room.roomGridPos,
+                room.roomIndex, room.enemiesManager.enemiesAlive, room.roomEntered, room.roomCleared, room.roomLocked, room.rewardGiven,
+                room.openUp, room.openDown, room.openRight, room.openLeft, room.doorsManager.doorUp.isLocked, room.doorsManager.doorDown.isLocked,
+                room.doorsManager.doorRight.isLocked, room.doorsManager.doorLeft.isLocked);
 
             roomStructures.Add(roomStructure);
         }
 
-        return roomStructures;
+        DataPersistenceManager.instance.gameData.roomStructures = roomStructures.ToArray();
     }
 
-    public void SaveRoomStructureFromGridPos(int roomIndex)
-    {
-        Room room = rooms.Find(x => x.GetComponent<Room>().roomIndex == roomIndex).GetComponent<Room>();
-
-        RoomStructure savedStructure = DataPersistenceManager.instance.gameData.roomStructures.ToList().Find(x => x.roomIndex == roomIndex);
-
-        savedStructure.prefabPath = room.prefabPath;
-        savedStructure.gridPos = room.roomGridPos;
-        savedStructure.roomIndex = room.roomIndex;
-        savedStructure.enemiesAlive = room.enemiesManager.enemiesAlive;
-        savedStructure.roomEntered = room.roomEntered;
-        savedStructure.roomCleared = room.roomCleared;
-        savedStructure.openUp = room.openUp;
-        savedStructure.openDown = room.openDown;
-        savedStructure.openRight = room.openRight;
-        savedStructure.openLeft = room.openLeft;
-
-        //Debug.Log("Enemies Alive: " + savedStructure.enemiesAlive + $", Room {savedStructure.gridPos} data saved: " + PlayerPrefs.HasKey(SceneManager.GetActiveScene().name));
-    }
-
-    void SetFloorRoomFromStructures(RoomStructure[] roomStructures)
+    void LoadRoomStructures(RoomStructure[] roomStructures)
     {
         int roomIterations = 0;
 
@@ -388,25 +464,43 @@ public class RoomManager : MonoBehaviour
             room.enemiesManager.enemiesAlive = roomStructure.enemiesAlive;
             room.roomEntered = roomStructure.roomEntered;
             room.roomCleared = roomStructure.roomCleared;
+            room.roomLocked = roomStructure.roomLocked;
+            room.rewardGiven = roomStructure.rewardGiven;
             room.openUp = roomStructure.openUp;
             room.openDown = roomStructure.openDown;
             room.openRight = roomStructure.openRight;
             room.openLeft = roomStructure.openLeft;
+            room.doorsManager.doorUp.isLocked = roomStructure.doorUpLocked;
+            room.doorsManager.doorDown.isLocked = roomStructure.doorDownLocked;
+            room.doorsManager.doorRight.isLocked = roomStructure.doorRightLocked;
+            room.doorsManager.doorLeft.isLocked = roomStructure.doorLeftLocked;
 
-            UpdateRoom(room, "SavedRoom", roomStructure.gridPos, roomStructure.roomIndex);
+            UpdateRoom(room, roomStructure.name, roomStructure.gridPos, roomStructure.roomIndex);
 
             if (!roomStructure.enemiesAlive) room.OpenDoors();
 
             if (roomStructure.roomEntered)
             {
-                room.UpdateRoomMiniMapDisplay(true, true);
                 room.StartCoroutine(room.NextRoomsMiniMapUpdate());
+                if (roomStructure.roomCleared) room.UpdateRoomMiniMapDisplay(true, true, room.openUp, room.openDown, room.openRight, room.openLeft);
             }
 
             rooms.Add(room.gameObject);
         }
 
         if (roomIterations > 0) generationComplete = true;
+    }
+
+    public void SaveRoomStructureFromGridPos(int roomIndex)
+    {
+        Room room = rooms.Find(x => x.GetComponent<Room>().roomIndex == roomIndex).GetComponent<Room>();
+
+        RoomStructure savedStructure = DataPersistenceManager.instance.gameData.roomStructures.ToList().Find(x => x.roomIndex == roomIndex);
+
+        savedStructure = new RoomStructure(room.transform.position, room.prefabPath, room.gameObject.name, room.roomGridPos,
+                room.roomIndex, room.enemiesManager.enemiesAlive, room.roomEntered, room.roomCleared, room.roomLocked, room.rewardGiven,
+                room.openUp, room.openDown, room.openRight, room.openLeft, room.doorsManager.doorUp.isLocked, room.doorsManager.doorDown.isLocked,
+                room.doorsManager.doorRight.isLocked, room.doorsManager.doorLeft.isLocked);
     }
 
     IEnumerator SaveRoomDataWhenGenerationComplete(int roomIndex)

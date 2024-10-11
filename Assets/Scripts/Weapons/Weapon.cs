@@ -54,7 +54,7 @@ public class Weapon : MonoBehaviour
         horizontalInput = Mathf.Abs(horizontalInput) <= .3f ? 0 : horizontalInput;
         verticalInput = Mathf.Abs(verticalInput) <= .3f ? 0 : verticalInput;
 
-        int playerSortingOrder = PlayerController.instance._playerSpriteRenderer.sortingOrder;
+        int playerSortingOrder = PlayerController.instance._spriteRenderer.sortingOrder;
 
         if (!attackState && (horizontalInput != 0 || verticalInput != 0) && PlayerController.instance.canMove && PlayerController.instance.canDealDamage)
         {

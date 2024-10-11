@@ -3,9 +3,19 @@ using UnityEngine;
 
 public class Slowness : Effect
 {
+    SpriteAnimation spriteAnimation;
+
+    float startValue;
+
     public void Start()
     {
         SetEffect();
+
+        if (targetEntity.TryGetComponent(out spriteAnimation))
+        {
+            startValue = spriteAnimation.speed;
+            spriteAnimation.speed *= 2;
+        }
     }
 
     private void Update()
@@ -14,8 +24,8 @@ public class Slowness : Effect
         {
             currentTime += Time.deltaTime;
 
-            entity.speedCurrent = SetEffectPower(entity.speed, true);
-            entity.attackSpeedCurrent = entity.attackSpeed * 2;
+            targetEntity.speedCurrent = SetEffectPower(targetEntity.speed, true);
+            targetEntity.attackSpeedCurrent = targetEntity.attackSpeed * 1.5f;
         }
         else
         {
@@ -28,8 +38,10 @@ public class Slowness : Effect
     public override void EndEffect()
     {
         currentTime = parameters.duration;
-        entity.speedCurrent = entity.speed;
-        entity.attackSpeedCurrent = entity.attackSpeed;
+        targetEntity.speedCurrent = targetEntity.speed;
+        targetEntity.attackSpeedCurrent = targetEntity.attackSpeed;
+
+        if (spriteAnimation != null) spriteAnimation.speed = startValue;
     }
 
     private void OnDestroy()

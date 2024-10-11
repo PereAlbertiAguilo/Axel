@@ -11,6 +11,8 @@ public class Portal : Interactable
     {
         base.Interact();
 
+        GameManager.instance.ClearDataForNextFloor();
+
         MenusManager.instance.ChangeScene(nextFloor);
     }
 }

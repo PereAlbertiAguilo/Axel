@@ -10,9 +10,9 @@ public class Effect : MonoBehaviour
     
     [HideInInspector] public float currentTime;
 
-    [HideInInspector] public Entity entity;
+    [HideInInspector] public Entity targetEntity;
 
-    [HideInInspector] public Entity attakerEntity;
+    [HideInInspector] public Entity attackerEntity;
 
     public void SetEffect()
     {

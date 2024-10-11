@@ -26,6 +26,8 @@ public class Entity : MonoBehaviour
     [HideInInspector] public bool canGetKnockback = true;
     [HideInInspector] public EffectManager effectsManager;
 
+    [HideInInspector] public SpriteRenderer _spriteRenderer;
+
     public enum Stat
     {
         health, defense, speed, damage, attackSpeed
@@ -78,7 +80,7 @@ public class Entity : MonoBehaviour
 
             Audio.instance.PlayOneShot(Audio.Sound.heal, .3f);
 
-            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToAdd, 1), Color.green, .5f, true);
+            if (actualHealthToAdd > 0) PopUp.instance.Message(transform, "" + Math.Round(actualHealthToAdd, 1), Color.green, .5f, true);
         }
     }
 
@@ -91,7 +93,7 @@ public class Entity : MonoBehaviour
 
             healthCurrent -= actualHealthToRemove;
 
-            PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, (defenseCurrent < defense) ? .65f : .4f, true);
+            if (actualHealthToRemove > 0) PopUp.instance.Message(transform, "" + Math.Round(actualHealthToRemove, 1), Color.red, (defenseCurrent < defense) ? .65f : .4f, true);
 
             if (healthCurrent <= 0)
             {
@@ -102,18 +104,52 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual IEnumerator JiggleAnimation(int power)
+    public IEnumerator DamagedAnimation(float duration)
     {
-        Vector3 initialScale = transform.localScale;
-        float duration = .5f;
         float currentTime = 0;
-        float offset = .1f;
 
-        while (currentTime < duration / 3)
+        Material entityMat = _spriteRenderer.material;
+
+        //float firstDuration = duration * .25f;
+
+        //while (currentTime < firstDuration)
+        //{
+        //    currentTime += Time.deltaTime;
+
+        //    entityMat.SetFloat("_BlendFactor", Mathf.Clamp(Mathf.Lerp(1, 0, currentTime / firstDuration), 0, 1));
+
+        //    yield return null;
+        //}
+
+        entityMat.SetFloat("_BlendFactor", 1);
+
+        while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
 
-            transform.localScale = Vector3.Lerp(initialScale, new Vector3(initialScale.x - offset, initialScale.y - offset, 0), currentTime / (duration / 3));
+            entityMat.SetFloat("_BlendFactor", Mathf.Clamp(Mathf.Lerp(1, 0, currentTime / duration), 0, 1));
+
+            yield return null;
+        }
+
+        entityMat.SetFloat("_BlendFactor", 0);
+    }
+
+    public virtual IEnumerator JiggleAnimation(float duration)
+    {
+        Vector3 initialScale = Vector3.one;
+        float currentTime = 0;
+        float offset = .1f;
+
+        float firstDuration = duration * .33f;
+
+        transform.localScale = initialScale;
+
+        while (currentTime < firstDuration)
+        {
+            currentTime += Time.deltaTime;
+
+            transform.localScale = Vector3.Lerp(initialScale, new Vector3(initialScale.x - offset, initialScale.y - offset, 0), currentTime / firstDuration);
 
             yield return null;
         }

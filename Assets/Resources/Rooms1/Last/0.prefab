@@ -103,19 +103,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabPath: 
-  miniMapUp: {fileID: 6493292939809614679}
-  miniMapDown: {fileID: 2306772670686241455}
+  miniMapUp: {fileID: 2306772670686241455}
+  miniMapDown: {fileID: 6493292939809614679}
   miniMapRight: {fileID: 4281248817792204878}
   miniMapLeft: {fileID: 825096865006797238}
   doorsManager: {fileID: 1585468266219733200}
   enemiesManager: {fileID: 8457982754114297828}
   miniMapDisplay: {fileID: 9062662235920564013}
   roomIndex: 0
+  exitsAmount: 0
   openUp: 0
   openDown: 0
   openRight: 0
   openLeft: 0
   roomCleared: 0
+  roomEntered: 0
+  roomLocked: 0
+  rewardGiven: 0
   doorStates: 
   portal: {fileID: 3160444771044801891}
 --- !u!61 &6674072998742642515
@@ -303,6 +307,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 86799193287013886}
     m_Modifications:
+    - target: {fileID: 308493174591978583, guid: 2b95684a224020b469f4bc05a339d8db, type: 3}
+      propertyPath: room
+      value: 
+      objectReference: {fileID: 8507151666777303291}
+    - target: {fileID: 4513975579520635234, guid: 2b95684a224020b469f4bc05a339d8db, type: 3}
+      propertyPath: room
+      value: 
+      objectReference: {fileID: 8507151666777303291}
     - target: {fileID: 4774638626238123387, guid: 2b95684a224020b469f4bc05a339d8db, type: 3}
       propertyPath: m_Name
       value: Doors
@@ -347,6 +359,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6875164733355667432, guid: 2b95684a224020b469f4bc05a339d8db, type: 3}
+      propertyPath: room
+      value: 
+      objectReference: {fileID: 8507151666777303291}
+    - target: {fileID: 7483263483010731643, guid: 2b95684a224020b469f4bc05a339d8db, type: 3}
+      propertyPath: room
+      value: 
+      objectReference: {fileID: 8507151666777303291}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -666,7 +686,7 @@ PrefabInstance:
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[27].m_Data
       value: 
-      objectReference: {fileID: -1992006411, guid: 7b78759ee4786e140a8c6241e4f225ad, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[28].m_Data
       value: 
@@ -682,7 +702,7 @@ PrefabInstance:
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[31].m_Data
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -1992006411, guid: 7b78759ee4786e140a8c6241e4f225ad, type: 3}
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[32].m_Data
       value: 
@@ -804,6 +824,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[27].m_RefCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[28].m_RefCount
       value: 0
       objectReference: {fileID: 0}
@@ -817,7 +841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[31].m_RefCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[32].m_RefCount
@@ -838,6 +862,10 @@ PrefabInstance:
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[36].m_RefCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
+      propertyPath: m_Tiles.Array.data[0].second.m_TileSpriteIndex
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 4148298338006068769, guid: f0265a4c75bbbb8408196f4485f0d2e5, type: 3}
       propertyPath: m_Tiles.Array.data[1].second.m_TileSpriteIndex

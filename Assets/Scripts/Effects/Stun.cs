@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Stun : Effect
 {
+    Animator animator;
+    SpriteAnimation spriteAnimation;
+
     public void Start()
     {
         SetEffect();
 
         parameters.durationCurrent = SetEffectPower(parameters.duration, false);
+
+        if(targetEntity.TryGetComponent(out animator)) animator.enabled = false;
+        if(targetEntity.TryGetComponent(out spriteAnimation)) spriteAnimation.enabled = false;
     }
 
     private void Update()
@@ -17,8 +23,8 @@ public class Stun : Effect
         {
             currentTime += Time.deltaTime;
 
-            entity.canMove = false;
-            entity.canDealDamage = false;
+            targetEntity.canMove = false;
+            targetEntity.canDealDamage = false;
         }
         else
         {
@@ -31,8 +37,11 @@ public class Stun : Effect
     public override void EndEffect()
     {
         currentTime = parameters.duration;
-        entity.canMove = true;
-        entity.canDealDamage = true;
+        targetEntity.canMove = true;
+        targetEntity.canDealDamage = true;
+
+        if (animator != null) animator.enabled = true;
+        if (spriteAnimation != null) spriteAnimation.enabled = true;
     }
 
     private void OnDestroy()

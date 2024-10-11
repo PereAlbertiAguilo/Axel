@@ -78,6 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorFolderName: Rooms1
   treasureRoomsFolderName: Treasure
+  shopRoomsFolderName: Shop
   initialRoomsAmount: 1
   normalRoomsAmount: 6
   lastRoomsAmount: 1
@@ -87,4 +88,5 @@ MonoBehaviour:
   roomSize: {x: 36, y: 22}
   gridSize: {x: 20, y: 20}
   rooms: []
+  currentRoom: {fileID: 0}
   generationComplete: 0

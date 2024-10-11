@@ -12,14 +12,14 @@ public class Knockback : Effect
 
         parameters.durationCurrent = .2f;
 
-        Vector2 dir = Direction.Normalized(entity.transform.position, attakerEntity.transform.position);
+        Vector2 dir = Direction.Normalized(targetEntity.transform.position, attackerEntity.transform.position);
 
-        if (entity.TryGetComponent(out entityRigidbody) && entity.canGetKnockback)
+        if (targetEntity.TryGetComponent(out entityRigidbody) && targetEntity.canGetKnockback)
         {
-            entity.canMove = false;
+            targetEntity.canMove = false;
 
             entityRigidbody.velocity = Vector2.zero;
-            entityRigidbody.AddForce((dir != null && Vector3.Distance(entity.transform.position, attakerEntity.transform.position) > .1f ?
+            entityRigidbody.AddForce((dir != null && Vector3.Distance(targetEntity.transform.position, attackerEntity.transform.position) > .1f ?
                 dir : Vector2.zero) * (entityRigidbody.mass * SetEffectPower(6000, false) / 50), ForceMode2D.Impulse);
 
         }
@@ -43,7 +43,7 @@ public class Knockback : Effect
     {
         currentTime = parameters.duration;
         entityRigidbody.velocity = Vector2.zero;
-        entity.canMove = true;
+        targetEntity.canMove = true;
     }
 
     private void OnDestroy()
