@@ -11,12 +11,18 @@ public class ObjectPooling : MonoBehaviour
         instance = this;
     }
 
-    public void FillPool(List<GameObject> instances, GameObject objectToInstantiate, Transform parent)
+    public void FillPool(List<GameObject> instances, GameObject objectToInstantiate, Transform parent, int poolSize)
     {
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             CreateInstance(instances, objectToInstantiate, parent);
         }
+    }
+
+    public void EmptyPool(List<GameObject> instances)
+    {
+        instances.ForEach(Destroy);
+        instances.Clear();
     }
 
     public GameObject InstatiateObject(List<GameObject> instances, GameObject objectToInstantiate, Vector2 pos, Quaternion rotation, Transform parent)

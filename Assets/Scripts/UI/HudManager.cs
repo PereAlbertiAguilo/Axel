@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,7 @@ public class HudManager : MonoBehaviour
 
     [Space]
 
-    [SerializeField] GameObject statsPanel;
+    [SerializeField] GameObject[] statsPanels;
     [SerializeField] GameObject statsLayout;
     [SerializeField] GameObject colectablesLayout;
 
@@ -30,9 +31,10 @@ public class HudManager : MonoBehaviour
 
     [Space]
 
-    public float timer = 0;
-
+    public int statsPanelIndex = 0;
     public bool keepStatsUp = false;
+
+    public float timer = 0;
 
     public static HudManager instance;
 
@@ -49,8 +51,14 @@ public class HudManager : MonoBehaviour
         currentFloorInitialText.text = FloorName(false);
 
         timer = PlayerPrefs.HasKey("timer") ? PlayerPrefs.GetFloat("timer") : 0;
-        keepStatsUp = PlayerPrefs.HasKey("stats") ? ((PlayerPrefs.GetInt("stats") > 0) ? true : false) : false;
-        statsPanel.SetActive(keepStatsUp);
+
+        if (PlayerPrefs.HasKey("statsIndex"))
+        {
+            statsPanelIndex = PlayerPrefs.GetInt("statsIndex");
+            keepStatsUp = PlayerPrefs.GetInt("statsUp") > 0;
+            DeactivateAllStatsPanels();
+            if (statsPanelIndex < statsPanels.Length && keepStatsUp) statsPanels[statsPanelIndex].SetActive(true);
+        }
     }
 
     private void Update()
@@ -59,18 +67,20 @@ public class HudManager : MonoBehaviour
         {
             if (UserInput.instance.statsInputDown)
             {
-                keepStatsUp = false;
+                statsPanelIndex++;
 
-                if (!statsPanel.activeInHierarchy)
+                if (statsPanelIndex <= (statsPanels.Length - 1))
                 {
-                    StartCoroutine(KeepStatsUp());
-
-                    statsPanel.SetActive(true);
+                    DeactivateAllStatsPanels();
+                    keepStatsUp = true;
+                    statsPanels[statsPanelIndex].SetActive(true);
                 }
             }
-            else if (UserInput.instance.statsInputUp && !keepStatsUp)
+            else if (UserInput.instance.statsInputUp && statsPanelIndex > (statsPanels.Length - 1))
             {
-                statsPanel.SetActive(false);
+                DeactivateAllStatsPanels();
+                keepStatsUp = false;
+                statsPanelIndex = -1;
             }
         }
 
@@ -79,12 +89,15 @@ public class HudManager : MonoBehaviour
         timerText.text = Timer();
 
         currentHealthText.text = PlayerController.instance.healthCurrent.ToString("0.0");
-
         healthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
-
-        delayedHealthBarImage.fillAmount = Mathf.Lerp(delayedHealthBarImage.fillAmount, PlayerController.instance.healthCurrent / PlayerController.instance.health, Time.deltaTime / .5f);
+        delayedHealthBarImage.fillAmount = Mathf.Lerp(delayedHealthBarImage.fillAmount, 
+            PlayerController.instance.healthCurrent / PlayerController.instance.health, Time.deltaTime / .5f);
     }
 
+    void DeactivateAllStatsPanels()
+    {
+        statsPanels.ToList().ForEach(panel => panel.SetActive(false));
+    }
 
     public string Timer()
     {
@@ -142,8 +155,6 @@ public class HudManager : MonoBehaviour
 
             yield return null;
         }
-
-        //delayedHealthBarImage.fillAmount = PlayerController.instance.healthCurrent / PlayerController.instance.health;
     }
 
     public void UpdateStatsUI()
@@ -175,18 +186,10 @@ public class HudManager : MonoBehaviour
         }
     }
 
-    IEnumerator KeepStatsUp()
-    {
-        keepStatsUp = true;
-
-        yield return new WaitForSeconds(.2f);
-
-        if (UserInput.instance.statsInput) keepStatsUp = false;
-    }
-
     private void OnDisable()
     {
         PlayerPrefs.SetFloat("timer", timer);
-        PlayerPrefs.SetInt("stats", keepStatsUp ? 1 : 0);
+        PlayerPrefs.SetInt("statsIndex", statsPanelIndex);
+        PlayerPrefs.SetInt("statsUp", keepStatsUp ? 1 : 0);
     }
 }

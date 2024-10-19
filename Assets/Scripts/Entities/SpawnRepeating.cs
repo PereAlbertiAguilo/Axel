@@ -20,7 +20,7 @@ public class SpawnRepeating : MonoBehaviour
 
     public virtual void Start()
     {
-        FillObjectPool();
+        ObjectPooling.instance.FillPool(instances, shootingObject, transform, poolSize);
 
         rotation = Direction.Rotation(new Vector2(directionX, directionY), Vector2.zero);
     }
@@ -38,43 +38,6 @@ public class SpawnRepeating : MonoBehaviour
         }
     }
 
-    void FillObjectPool()
-    {
-        for (int i = 0; i < poolSize; i++)
-        {
-            CreateInstance();
-        }
-    }
-
-    GameObject InstanceEffect(Vector3 pos)
-    {
-        foreach (GameObject instance in instances)
-        {
-            if (!instance.activeInHierarchy)
-            {
-                instance.SetActive(true);
-                instance.transform.position = pos;
-                instance.transform.SetParent(null);
-                instance.transform.rotation = rotation;
-
-                return instance;
-            }
-        }
-
-        return CreateInstance();
-    }
-
-    GameObject CreateInstance()
-    {
-        GameObject instance = Instantiate(shootingObject, transform);
-        instance.SetActive(false);
-
-        instances.Add(instance);
-
-        return instance;
-    }
-
-
     public void Shoot()
     {
         if (aimToPlayer)
@@ -82,14 +45,11 @@ public class SpawnRepeating : MonoBehaviour
             rotation = Direction.Rotation(PlayerController.instance.transform.position, transform.position);
         }
 
-        InstanceEffect(transform.position);
+        ObjectPooling.instance.InstatiateObject(instances, shootingObject, transform.position, rotation, transform);
     }
 
     private void OnDisable()
     {
-        foreach (GameObject instance in instances)
-        {
-            Destroy(instance);
-        }
+        ObjectPooling.instance.EmptyPool(instances);
     }
 }

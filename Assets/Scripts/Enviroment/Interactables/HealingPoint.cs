@@ -11,5 +11,9 @@ public class HealingPoint : Interactable
         base.Interact();
 
         PlayerController.instance.AddHealth(healthToAdd);
+
+        if (hasUses) uses--;
+
+        InteractableManager.instance.SaveInteractableStructure(this);
     }
 }

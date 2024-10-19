@@ -49,21 +49,13 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.instance.canMove = false;
 
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
-            DelatePlayerPref(System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i)));
-
-            for (int x = 0; x < 20; x++)
-            {
-                DelatePlayerPref("DoorOpener" + SceneNameByBuildIndex(i) + x);
-            }
-        }
-
         HudManager.instance.timer = 0;
         CollectiblesManager.instance.UpdateCollectable(true);
-        DataPersistenceManager.instance.gameData.playerPos = new Vector2(0, 0.5f);
         PlayerController.instance.ResetStats();
         PlayerPrefs.SetInt("Continue", 1);
+
+        DataPersistenceManager.instance.RemovePlayerPrefsData();
+        DataPersistenceManager.instance.gameData.playerPos = new Vector2(0, 0.5f);
         DataPersistenceManager.instance.NewGame();
     }
 
@@ -73,9 +65,11 @@ public class GameManager : MonoBehaviour
         PlayerController.instance.canMove = false;
     }
 
-    public void DelatePlayerPref(string key)
+    public void RestartGame()
     {
-        if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
+        ResetGameData();
+
+        MenusManager.instance.ChangeScene(SceneNameByBuildIndex(1));
     }
 
     public static string SceneNameByBuildIndex(int index)
@@ -84,13 +78,6 @@ public class GameManager : MonoBehaviour
         string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
 
         return sceneName;
-    }
-
-    public void RestartGame()
-    {
-        ResetGameData();
-
-        MenusManager.instance.ChangeScene(SceneNameByBuildIndex(1));
     }
 
     public IEnumerator SlowMotionAnimation(float duration)

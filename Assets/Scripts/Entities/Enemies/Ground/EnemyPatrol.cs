@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(AIPath), typeof(Patrol))]
 public class EnemyPatrol : Enemy
 {
-    AIPath _aIPath;
-    Patrol _patrol;
+    protected AIPath _aIPath;
+    protected Patrol _patrol;
 
     public override void Awake()
     {
@@ -22,19 +22,23 @@ public class EnemyPatrol : Enemy
         base.Update();
 
         _aIPath.maxSpeed = speedCurrent;
+
+        _spriteRenderer.flipX = _aIPath.desiredVelocity.x < 0;
     }
 
-    public override void MoveReset()
+    public override void StartMovement()
     {
-        base.MoveReset();
+        base.StartMovement();
 
+        _patrol.enabled = canMove;
         _aIPath.canMove = canMove;
     }
 
-    public override void DeactivateFollowState()
+    public override void StopMovement()
     {
-        base.DeactivateFollowState();
+        base.StopMovement();
 
+        _patrol.enabled = canMove;
         _aIPath.canMove = canMove;
     }
 }

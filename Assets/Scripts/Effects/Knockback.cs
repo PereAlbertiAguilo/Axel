@@ -16,7 +16,7 @@ public class Knockback : Effect
 
         if (targetEntity.TryGetComponent(out entityRigidbody) && targetEntity.canGetKnockback)
         {
-            targetEntity.canMove = false;
+            targetEntity.StopMovement();
 
             entityRigidbody.velocity = Vector2.zero;
             entityRigidbody.AddForce((dir != null && Vector3.Distance(targetEntity.transform.position, attackerEntity.transform.position) > .1f ?
@@ -43,7 +43,7 @@ public class Knockback : Effect
     {
         currentTime = parameters.duration;
         entityRigidbody.velocity = Vector2.zero;
-        targetEntity.canMove = true;
+        targetEntity.StartMovement();
     }
 
     private void OnDestroy()

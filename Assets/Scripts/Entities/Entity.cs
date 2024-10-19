@@ -8,6 +8,11 @@ public class Entity : MonoBehaviour
     [Space]
     public GameObject onDeathVFX;
     [Space]
+    public bool deactivateOnDeath = true;
+    [Space]
+    [Min(0.001f)]
+    public float timeSpeed = 1;
+    [Space]
 
     [HideInInspector] public float health;
     [HideInInspector] public float healthCurrent;
@@ -27,6 +32,7 @@ public class Entity : MonoBehaviour
     [HideInInspector] public EffectManager effectsManager;
 
     [HideInInspector] public SpriteRenderer _spriteRenderer;
+
 
     public enum Stat
     {
@@ -54,6 +60,9 @@ public class Entity : MonoBehaviour
         }
 
         if (!canMove) return;
+
+        if (TryGetComponent(out Animator animator)) animator.speed = timeSpeed;
+        if (TryGetComponent(out SpriteAnimation spriteAnimation)) spriteAnimation.speed = timeSpeed;
     }
 
     public virtual void OnDeath()
@@ -62,7 +71,7 @@ public class Entity : MonoBehaviour
 
         Instantiate(onDeathVFX, transform.position, Quaternion.identity);
 
-        gameObject.SetActive(false);
+        gameObject.SetActive(!deactivateOnDeath);
     }
         
     public virtual void AddHealth(float healthToAdd)
@@ -104,22 +113,21 @@ public class Entity : MonoBehaviour
         }
     }
 
+    public virtual void StartMovement()
+    {
+        canMove = true;
+    }
+
+    public virtual void StopMovement()
+    {
+        canMove = false;
+    }
+
     public IEnumerator DamagedAnimation(float duration)
     {
         float currentTime = 0;
 
         Material entityMat = _spriteRenderer.material;
-
-        //float firstDuration = duration * .25f;
-
-        //while (currentTime < firstDuration)
-        //{
-        //    currentTime += Time.deltaTime;
-
-        //    entityMat.SetFloat("_BlendFactor", Mathf.Clamp(Mathf.Lerp(1, 0, currentTime / firstDuration), 0, 1));
-
-        //    yield return null;
-        //}
 
         entityMat.SetFloat("_BlendFactor", 1);
 

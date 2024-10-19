@@ -23,7 +23,7 @@ public class Stun : Effect
         {
             currentTime += Time.deltaTime;
 
-            targetEntity.canMove = false;
+            targetEntity.StopMovement();
             targetEntity.canDealDamage = false;
         }
         else
@@ -37,7 +37,7 @@ public class Stun : Effect
     public override void EndEffect()
     {
         currentTime = parameters.duration;
-        targetEntity.canMove = true;
+        targetEntity.StartMovement();
         targetEntity.canDealDamage = true;
 
         if (animator != null) animator.enabled = true;

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class GiantSlimeBoss : Boss
 {
-    List<GameObject> instances = new List<GameObject>();
-
     [SerializeField] GameObject projetile;
 
     [Space]
@@ -19,11 +17,10 @@ public class GiantSlimeBoss : Boss
     [SerializeField] AudioClip attackSound;
 
     int attackIndex = 0;
-
     float currentAttackSpeed;
-
     bool halfLifeSpawn = false;
-    bool attack = true;
+
+    List<GameObject> instances = new List<GameObject>();
 
     AIPath _aIPath;
     AIDestinationSetter _destinationSetter;
@@ -44,7 +41,7 @@ public class GiantSlimeBoss : Boss
 
         _destinationSetter.target = PlayerController.instance.transform;
 
-        ObjectPooling.instance.FillPool(instances, projetile, transform);
+        ObjectPooling.instance.FillPool(instances, projetile, transform, 30);
     }
 
     public override void Update()
@@ -56,21 +53,14 @@ public class GiantSlimeBoss : Boss
 
         if (!canMove) return;
 
-        if (attack)
+        if (currentAttackSpeed <= 0)
         {
-            attack = false;
-
-            StartCoroutine(Attack());
+            Attack();
         }
-
-        //if (currentAttackSpeed <= 0)
-        //{
-            
-        //}
-        //else
-        //{
-        //    currentAttackSpeed -= Time.deltaTime;
-        //}
+        else
+        {
+            currentAttackSpeed -= Time.deltaTime * timeSpeed;
+        }
 
         if (healthCurrent <= health * 0.5f && !halfLifeSpawn)
         {
@@ -80,52 +70,57 @@ public class GiantSlimeBoss : Boss
         }
     }
 
-    public IEnumerator Attack()
+    public void Attack()
     {
-        _animator.Play("GiantSlimeAttack");
+        StartCoroutine(AnimatorState.ChangeState(_animator, "GiantSlimeAttack"));
 
         currentAttackSpeed = attackSpeedCurrent;
 
         switch (attackIndex)
         {
-            case 0: StartCoroutine(BulletAttack(4)); break;
-            case 1:
-                StartCoroutine(BulletAttack(8));
+            case 0:
+                StartCoroutine(BulletCircle(4));
                 currentAttackSpeed = attackSpeedCurrent / 1.5f;
                 break;
+            case 1:
+                StartCoroutine(BulletCircle(8));
+                break;
             case 2:
-                StartCoroutine(BulletAttack(12));
+                StartCoroutine(BulletCircle(12));
+                currentAttackSpeed = attackSpeedCurrent / 2f;
+                break;
+            case 3:
+                StartCoroutine(BulletCircle(16));
                 currentAttackSpeed = attackSpeedCurrent * 2.5f;
                 break;
         }
 
-        attackIndex = attackIndex < 2 ? (attackIndex + 1) : 0;
-
-        yield return new WaitForSeconds(currentAttackSpeed);
-
-        attack = true;
+        attackIndex = attackIndex < 3 ? (attackIndex + 1) : 0;
     }
 
     public override void OnDeath()
     {
         SpawnMinions();
 
+        ObjectPooling.instance.EmptyPool(instances);
+
         base.OnDeath();
     }
 
-    public IEnumerator BulletAttack(int bulletsAmount)
+    public IEnumerator BulletCircle(int bulletsAmount)
     {
-        float angleOffset = Random.Range(0, 360);
-
+        float randomAngleOffset = Random.Range(0, 360);
         float angle = 360 / (float)bulletsAmount;
 
         yield return new WaitForSeconds(.8f);
+        if ((int)timeSpeed != 1) yield return new WaitForSeconds(.8f - (.8f * timeSpeed));
 
         Audio.instance.PlayOneShot(attackSound, .5f, true);
 
         for (int i = 0; i < bulletsAmount; i++)
         {
-            GameObject instance = ObjectPooling.instance.InstatiateObject(instances, projetile, transform.position, Quaternion.Euler(0, 0, angle * i + angleOffset), transform);
+            GameObject instance = ObjectPooling.instance.InstatiateObject(instances, projetile, 
+                transform.position, Quaternion.Euler(0, 0, angle * i + randomAngleOffset), transform);
 
             if (instance.TryGetComponent(out EnemyCollider enemyCollider))
             {
@@ -149,16 +144,16 @@ public class GiantSlimeBoss : Boss
         }
     }
 
-    public override void MoveReset()
+    public override void StartMovement()
     {
-        base.MoveReset();
+        base.StartMovement();
 
         _aIPath.canMove = canMove;
     }
 
-    public override void DeactivateFollowState()
+    public override void StopMovement()
     {
-        base.DeactivateFollowState();
+        base.StopMovement();
 
         _aIPath.canMove = canMove;
     }

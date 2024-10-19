@@ -14,5 +14,7 @@ public class Portal : Interactable
         GameManager.instance.ClearDataForNextFloor();
 
         MenusManager.instance.ChangeScene(nextFloor);
+
+        if (hasUses) uses--;
     }
 }

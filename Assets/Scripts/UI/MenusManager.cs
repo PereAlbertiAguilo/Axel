@@ -34,21 +34,6 @@ public class MenusManager : MonoBehaviour
             }
         }
 
-        // Dev tool
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            ChangeScene(SceneManager.GetActiveScene().name);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            GameManager.instance.ResetGameData();
-            ChangeScene(SceneManager.GetActiveScene().name);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GameManager.instance.RestartGame();
-        }
-
         if (EventSystem.current.IsPointerOverGameObject() && canChangeSelectableWithMouse)
         {
             PointerEventData eventData = new PointerEventData(EventSystem.current);

@@ -13,6 +13,16 @@ public class LastRoom : Room
         if (!roomCleared) portal.SetActive(false);
     }
 
+    public override void Update()
+    {
+        base.Update();
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            PlayerController.instance.transform.position = transform.position + (Vector3.down * 3);
+        }
+    }
+
     public override void RoomCleared()
     {
         base.RoomCleared();

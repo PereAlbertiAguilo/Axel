@@ -4857,7 +4857,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 0}
+  m_LocalScale: {x: 15, y: 15, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1059661365337044490}
@@ -4908,7 +4908,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 0.75, y: 0.75}
+  m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4975,6 +4975,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityName: Axel
   onDeathVFX: {fileID: 0}
+  deactivateOnDeath: 1
+  timeSpeed: 1
   health: 50
   healthCurrent: 0
   damage: 5
@@ -5039,7 +5041,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gems: 0
   planks: 0
-  collectibles: []
   index: 0
 --- !u!212 &7845927118872907861
 SpriteRenderer:
@@ -5152,9 +5153,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.35}
+  m_Offset: {x: 0, y: -0.5}
   serializedVersion: 2
-  m_Radius: 0.475
+  m_Radius: 0.35
 --- !u!95 &5795816556729869295
 Animator:
   serializedVersion: 5
@@ -5213,7 +5214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.65
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5225,15 +5226,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

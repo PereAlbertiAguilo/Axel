@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5049093510094228452}
   - component: {fileID: 2547205690792161935}
   m_Layer: 0
-  m_Name: Shadown
+  m_Name: Shadown16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -73,14 +73,14 @@ SpriteRenderer:
   m_SortingLayerID: 127907025
   m_SortingLayer: -2
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 0d585da933c751c4ca498cb51b267655, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d0bf178c715eeac46b8218f64151909a, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.6}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.06}
+  m_Size: {x: 0.18, y: -0.1}
   m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

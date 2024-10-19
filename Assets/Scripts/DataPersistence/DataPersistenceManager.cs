@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -121,5 +122,31 @@ public class DataPersistenceManager : MonoBehaviour
     public bool HasGameData()
     {
         return gameData != null;
+    }
+
+    public void RemovePlayerPrefsData()
+    {
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            DelatePlayerPref(System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i)));
+        }
+
+        DelatePlayerPref("statsUp");
+        DelatePlayerPref("statsIndex");
+    }
+
+    public IEnumerator DelatePlayerPrefCoroutine(string key)
+    {
+        while (PlayerPrefs.HasKey(key))
+        {
+            PlayerPrefs.DeleteKey(key);
+
+            yield return null;
+        }
+    }
+
+    public void DelatePlayerPref(string key)
+    {
+        StartCoroutine(DelatePlayerPrefCoroutine(key));
     }
 }

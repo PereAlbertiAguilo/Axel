@@ -86,6 +86,7 @@ Transform:
   - {fileID: 4217435336688234372}
   - {fileID: 6519818707060755799}
   - {fileID: 3942013209245964913}
+  - {fileID: 4635545670871457349}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1347525224759588888
@@ -107,6 +108,7 @@ MonoBehaviour:
   miniMapLeft: {fileID: 825096865006797238}
   doorsManager: {fileID: 1585468266219733200}
   enemiesManager: {fileID: 8457982754114297828}
+  roomCollectibles: {fileID: 485926180821372107}
   miniMapDisplay: {fileID: 9062662235920564013}
   roomIndex: 0
   exitsAmount: 0
@@ -164,6 +166,52 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 30, y: 16}
   m_EdgeRadius: 0
+--- !u!1 &9118060795307931079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4635545670871457349}
+  - component: {fileID: 485926180821372107}
+  m_Layer: 0
+  m_Name: Collectibles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4635545670871457349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118060795307931079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 86799193287013886}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &485926180821372107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118060795307931079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb1628481b45604c8c464160b610979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  room: {fileID: 1347525224759588888}
+  collectibles: []
 --- !u!1001 &563546640958666809
 PrefabInstance:
   m_ObjectHideFlags: 0

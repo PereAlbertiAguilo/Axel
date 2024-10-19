@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Interactable : MonoBehaviour
 {
@@ -13,11 +12,21 @@ public class Interactable : MonoBehaviour
 
     protected bool canInteract = false;
 
-    public virtual void Awake() { }
+    public string id;
+    public Room room;
+
+    public virtual void Awake()
+    {
+    }
+
+    public virtual void Start()
+    {
+        id = id + SceneManager.GetActiveScene().name + room.roomIndex;
+    }
 
     public virtual void Update()
     {
-        if (UserInput.instance.interactInput && canInteract && HasInteracted())
+        if (UserInput.instance.interactInput && canInteract && HasUses())
         {
             Interact();
         }
@@ -28,12 +37,16 @@ public class Interactable : MonoBehaviour
         Audio.instance.PlayOneShot(Audio.Sound.interact, .3f);
     }
 
-    protected bool HasInteracted()
+    public virtual void SaveData()
+    {
+        InteractableManager.instance.SaveInteractableStructure(this);
+    }
+
+    protected bool HasUses()
     {
         if (hasUses)
         {
             if (uses <= 0) return false;
-            uses--;
             return true;
         }
         else

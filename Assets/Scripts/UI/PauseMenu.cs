@@ -52,6 +52,21 @@ public class PauseMenu : MonoBehaviour
             //pauseButton.onClick.Invoke();
             //Pause();
         }
+
+        // Dev tool
+        if (Input.GetKeyDown(KeyCode.U) && RoomManager.instance.generationComplete && canPause)
+        {
+            MenusManager.instance.ChangeScene(SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.I) && RoomManager.instance.generationComplete && canPause)
+        {
+            if (GameManager.instance != null) GameManager.instance.ResetGameData();
+            MenusManager.instance.ChangeScene(SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.R) && RoomManager.instance.generationComplete && canPause)
+        {
+            if (GameManager.instance != null) GameManager.instance.RestartGame();
+        }
     }
 
     // Resumes the game

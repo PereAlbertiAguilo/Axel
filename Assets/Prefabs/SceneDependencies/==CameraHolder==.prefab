@@ -388,7 +388,7 @@ MonoBehaviour:
     _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.05882353}
     _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0}
     _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
-    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
+    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5019608}
     _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
     _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
     _AreaColors: []
@@ -583,7 +583,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 375
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

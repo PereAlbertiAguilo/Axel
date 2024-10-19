@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponSetter : RarityInteractable, IDataPersistence
+public class WeaponSetter : RarityInteractable
 {
     [Space]
 
@@ -37,18 +38,19 @@ public class WeaponSetter : RarityInteractable, IDataPersistence
     {
         yield return new WaitForSeconds(delay);
 
-        weapon = GetWeapon();
-
-        while (weapon.attackSpriteSheet.Length <= 0)
-        {
-            weapon = GetWeapon();
-        }
+        GetWeapon();
     }
 
-    Weapon GetWeapon()
+    void GetWeapon()
     {
+        SetRarity();
+
         randomWeaponElement = UnityEngine.Random.Range(0, Enum.GetValues(typeof(WeaponManager.Element)).Length);
         randomWeaponType = UnityEngine.Random.Range(0, Enum.GetValues(typeof(WeaponManager.Type)).Length);
+
+        // Get saved data
+        randomWeaponElement = InteractableManager.instance.GetInteractableValue(id, 1, randomWeaponElement);
+        randomWeaponType = InteractableManager.instance.GetInteractableValue(id, 2, randomWeaponType);
 
         weaponObject = WeaponManager.instance.LoadWeapon((WeaponManager.Element)randomWeaponElement, (WeaponManager.Type)randomWeaponType);
 
@@ -83,70 +85,67 @@ public class WeaponSetter : RarityInteractable, IDataPersistence
                     effectText.gameObject.SetActive(false);
                 }
             }
-            
 
-            return weapon;
+            this.weapon = weapon;
         }
-
-        return null;
     }
 
     public override void Interact()
     {
         base.Interact();
 
-        if (hasUses) animator.SetBool("IsInRange", false);
+        if(weaponObject != null)
+        {
+            WeaponManager.instance.SetWeapon(weaponObject, PlayerController.instance.transform);
 
-        if (weapon.attackSpriteSheet.Length <= 0) throw new System.Exception("Weapon does not have a attack animation");
+            StartCoroutine(UpdateStatsUI());
 
-        WeaponManager.instance.SetWeapon(weaponObject, PlayerController.instance.transform);
+            Weapon currentWeapon = weaponObject.GetComponent<Weapon>();
+
+            DataPersistenceManager.instance.gameData.weaponElement = currentWeapon.weaponElement;
+            DataPersistenceManager.instance.gameData.weaponType = currentWeapon.weaponType;
+            DataPersistenceManager.instance.gameData.weaponAddedDamage = currentWeapon.weaponAddedDamage;
+            DataPersistenceManager.instance.gameData.weaponAddedAttackSpeed = currentWeapon.weaponAddedAttackSpeed;
+            DataPersistenceManager.instance.gameData.effectPower = currentWeapon.gameObject.GetComponent<EffectManager>().parameters.power;
+
+            InteractableManager.instance.SaveInteractableStructure(this);
+
+            if (hasUses) 
+                uses--;
+            else
+                InteractableManager.instance.UnsaveInteractableStructure(this);
+        }
 
         if (!hasUses)
         {
-            SetRarity();
-            StartCoroutine(GetUsebleWeapon(.1f));
+            GetWeapon();
+            SaveData();
         }
-
-        StartCoroutine(UpdateUIFromHUD());
-
-        Weapon currentWeapon = weaponObject.GetComponent<Weapon>();
-
-        DataPersistenceManager.instance.gameData.weaponElement = currentWeapon.weaponElement;
-        DataPersistenceManager.instance.gameData.weaponType = currentWeapon.weaponType;
-        DataPersistenceManager.instance.gameData.weaponAddedDamage = currentWeapon.weaponAddedDamage;
-        DataPersistenceManager.instance.gameData.weaponAddedAttackSpeed = currentWeapon.weaponAddedAttackSpeed;
-        DataPersistenceManager.instance.gameData.effectPower = currentWeapon.gameObject.GetComponent<EffectManager>().parameters.power;
+        else
+            animator.SetBool("IsInRange", false);
     }
 
-    IEnumerator UpdateUIFromHUD()
+    IEnumerator UpdateStatsUI()
     {
         yield return new WaitForSeconds(.15f);
 
         HudManager.instance.UpdateStatsUI();
     }
 
-    string RarityLevelTextDisplay(Rarity rarity)
+    public override void SaveData()
     {
-        string posDisplay = "O";
-        string negDisplay = " I";
-        string finalDisplay = "";
+        base.SaveData();
 
-        for (int i = 0; i < System.Enum.GetValues(typeof(Rarity)).Length; i++)
-        {
-            finalDisplay += (i <= (int)rarity) ? posDisplay : negDisplay;
-        }
-
-        return finalDisplay;
+        InteractableManager.instance.SetInteractableValues(id, (int)rarity, 0);
+        InteractableManager.instance.SetInteractableValues(id, randomWeaponElement, 1);
+        InteractableManager.instance.SetInteractableValues(id, randomWeaponType, 2);
     }
 
-    public void LoadData(GameData data)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
-        throw new NotImplementedException();
-    }
+        base.OnTriggerEnter2D(collision);
 
-    public void SaveData(GameData data)
-    {
-
-        
+        // Save data
+        SaveData();
     }
 }

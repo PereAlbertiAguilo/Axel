@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 3306608132350586080}
   - component: {fileID: 7640498994432499676}
   - component: {fileID: 7788255154124207711}
-  - component: {fileID: 4059206337348384796}
+  - component: {fileID: 7720842676963990649}
   - component: {fileID: 1705286445493852997}
   - component: {fileID: 5329561180621037583}
   - component: {fileID: 4052452182973813478}
@@ -191,6 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityName: Slime Lord
   onDeathVFX: {fileID: 0}
+  deactivateOnDeath: 1
+  timeSpeed: 1
   health: 75
   healthCurrent: 0
   damage: 15
@@ -283,8 +285,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &4059206337348384796
-CircleCollider2D:
+--- !u!70 &7720842676963990649
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -292,7 +294,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1442175670818825145}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 94ed4c59e950bef48bce556f3edee8fc, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -315,9 +317,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.1}
-  serializedVersion: 2
-  m_Radius: 1.3
+  m_Offset: {x: 0, y: -0.45}
+  m_Size: {x: 2.75, y: 1.75}
+  m_Direction: 1
 --- !u!50 &1705286445493852997
 Rigidbody2D:
   serializedVersion: 4

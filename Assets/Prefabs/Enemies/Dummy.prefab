@@ -123,6 +123,7 @@ MonoBehaviour:
   canGetKnockback: 1
   effectsManager: {fileID: 4642567420151246046}
   _spriteRenderer: {fileID: 0}
+  deactivateOnDeath: 1
   _enemyRigidbody: {fileID: 0}
   enemiesManager: {fileID: 0}
   audioSource: {fileID: 0}
@@ -277,20 +278,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 5587088601896523189}
     m_Modifications:
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.59999996
-      objectReference: {fileID: 0}
-    - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5049093510094228452, guid: 8337fd60cf96e8147a2d594eeb0b6d9d, type: 3}
       propertyPath: m_LocalPosition.z

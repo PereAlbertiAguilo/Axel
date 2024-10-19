@@ -28,20 +28,19 @@ public class EnemyGroundFollow : Enemy
     {
         base.Update();
 
-        _aIPath.canMove = canMove;
         _aIPath.maxSpeed = speedCurrent;
     }
 
-    public override void MoveReset()
+    public override void StartMovement()
     {
-        base.MoveReset();
+        base.StartMovement();
 
         _aIPath.canMove = canMove;
     }
 
-    public override void DeactivateFollowState()
+    public override void StopMovement()
     {
-        base.DeactivateFollowState();
+        base.StopMovement();
 
         _aIPath.canMove = canMove;
     }

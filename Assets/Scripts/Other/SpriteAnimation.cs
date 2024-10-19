@@ -44,7 +44,7 @@ public class SpriteAnimation : MonoBehaviour
             int frame = randomFirstFrame ? (((i + firstFrame) > (sprites.Length - 1)) ? (i + firstFrame - sprites.Length) : (i + firstFrame)) : i;
 
             _spriteRenderer.sprite = sprites[frame];
-            yield return new WaitForSeconds((animationDuration / sprites.Length) * speed);
+            yield return new WaitForSeconds((animationDuration / sprites.Length) / speed);
         }
 
         nextIteration = true;

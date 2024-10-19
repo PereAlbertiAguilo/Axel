@@ -42,24 +42,18 @@ public class Enemy : Entity
         }
     }
 
-    public virtual void MoveReset()
+    public override void StartMovement()
     {
-        canMove = true;
+        base.StartMovement();
 
-        if(audioSource != null)
-        {
-            audioSource.mute = canMove;
-        }
+        if(audioSource != null) audioSource.mute = false;
     }
 
-    public virtual void DeactivateFollowState()
+    public override void StopMovement()
     {
-        canMove = false;
+        base.StopMovement();
 
-        if (audioSource != null)
-        {
-            audioSource.mute = canMove;
-        }
+        if (audioSource != null) audioSource.mute = true;
     }
 
     public virtual void OnDisable()

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -54,6 +53,7 @@ public class Door : MonoBehaviour
             DoorOpener doorOpener = instance.GetComponent<DoorOpener>();
 
             doorOpener.door = this;
+            doorOpener.room = room;
         }
     }
 

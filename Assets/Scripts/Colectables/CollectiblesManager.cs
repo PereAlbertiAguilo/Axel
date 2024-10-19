@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollectiblesManager : MonoBehaviour
 {
@@ -12,9 +13,17 @@ public class CollectiblesManager : MonoBehaviour
         gems, planks
     };
 
-    public enum Prefabs
+    public enum Prefabs1
     {
-        gem1, gem2, gem3, planks
+        gem1
+    };
+    public enum Prefabs2
+    {
+        gem2
+    };
+    public enum Prefabs3
+    {
+        gem3, planks
     };
 
     public int gems = 0;
@@ -22,9 +31,7 @@ public class CollectiblesManager : MonoBehaviour
 
     public FieldInfo[] properties = typeof(CollectiblesManager).GetFields();
 
-    public List<Collectable> collectibles = new List<Collectable>();
-
-    public int index = 0;
+    public bool collectiblesLoaded = false;
 
     public static CollectiblesManager instance;
 
@@ -37,9 +44,13 @@ public class CollectiblesManager : MonoBehaviour
     {
         UpdateCollectable(false);
 
-        if(DataPersistenceManager.instance.gameData.collectableStructures != null)
+        if(DataPersistenceManager.instance.gameData.collectableStructures != null && PlayerPrefs.HasKey(SceneManager.GetActiveScene().name))
         {
-            LoadCollectibles();
+            StartCoroutine(LoadCollectibles());
+        }
+        else
+        {
+            collectiblesLoaded = true;
         }
     }
 
@@ -47,7 +58,7 @@ public class CollectiblesManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            SpawnCollectable(Prefabs.planks, transform.position + Vector3.down, index);
+            SpawnCollectable("Collectables/3/planks", transform.position + Vector3.down, RoomManager.instance.currentRoom);
         }
     }
 
@@ -86,56 +97,95 @@ public class CollectiblesManager : MonoBehaviour
         return property;
     }
 
-    public Collectable SpawnCollectable(Prefabs prefabName, Vector2 pos, int index)
+    public Collectable SpawnCollectable(string prefabPath, Vector2 pos, Room room)
     {
-        string prefabPath = "Collectables/" + prefabName.ToString();
-
         GameObject prefab = Resources.Load(prefabPath) as GameObject;
         GameObject instance = Instantiate(prefab, pos, Quaternion.identity);
-
         Collectable collectable = instance.GetComponent<Collectable>();
 
-        this.index++;
-
-        collectable.index = index;
+        collectable.room = room;
+        collectable.index = room.roomCollectibles.index;
         collectable.prefabPath = prefabPath;
 
-        collectibles.Add(collectable);
+        room.roomCollectibles.collectibles.Add(collectable);
+        instance.transform.parent = room.roomCollectibles.transform;
+
+        room.roomCollectibles.index++;
 
         SaveCollectibles();
 
         return collectable;
     }
 
-    public Prefabs GetRandomCollectable()
+    public string GetRandomCollectable()
     {
-        return (Prefabs)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs)).Length);
+        float randomValue = UnityEngine.Random.value;
+        string prefabName = "Collectables/";
+
+        if (randomValue < .5f) 
+            prefabName += "3/" + ((Prefabs3)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs3)).Length)).ToString();
+        else if (randomValue < .75f) 
+            prefabName += "2/" + ((Prefabs2)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs2)).Length)).ToString();
+        else 
+            prefabName += "1/" + ((Prefabs1)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs1)).Length)).ToString();
+
+        return prefabName;
     }
 
     public void SaveCollectibles()
     {
         List<CollectableStructure> collectableStructures = new List<CollectableStructure>();
 
-        foreach (Collectable collectable in collectibles)
+        foreach (GameObject roomInstance in RoomManager.instance.rooms)
         {
-            CollectableStructure collectableStructure = new CollectableStructure();
+            Room room = roomInstance.GetComponent<Room>();
 
-            collectableStructure.type = (int)collectable.collectable;
-            collectableStructure.prefabPath = collectable.prefabPath;
-            collectableStructure.pos = collectable.transform.position;
-            collectableStructure.index = collectable.index;
+            foreach (Collectable collectable in room.roomCollectibles.collectibles)
+            {
+                CollectableStructure collectableStructure = new(room.roomIndex, collectable.index, collectable.pickedUp,
+                    collectable.transform.position, collectable.prefabPath);
 
-            collectableStructures.Add(collectableStructure);
+                collectableStructures.Add(collectableStructure);
+            }
         }
 
-        DataPersistenceManager.instance.gameData.collectableStructures = collectableStructures.ToArray();
+        if(collectableStructures.Count > 0) DataPersistenceManager.instance.gameData.collectableStructures = collectableStructures.ToArray();
     }
 
-    public void LoadCollectibles()
+    public IEnumerator LoadCollectibles()
     {
-        foreach (CollectableStructure collectableStructure in DataPersistenceManager.instance.gameData.collectableStructures)
+        yield return new WaitUntil(() => RoomManager.instance.generationComplete);
+
+        foreach (GameObject roomInstance in RoomManager.instance.rooms)
         {
-            SpawnCollectable((Prefabs)collectableStructure.type, collectableStructure.pos, collectableStructure.index);
+            Room room = roomInstance.GetComponent<Room>();
+
+            foreach (CollectableStructure collectableStructure in DataPersistenceManager.instance.gameData.collectableStructures)
+            {
+                if(collectableStructure.roomIndex == room.roomIndex)
+                {
+                    if (!collectableStructure.pickedUp) SpawnCollectable(collectableStructure.prefabPath, collectableStructure.pos, room);
+                }
+            }
         }
+
+        collectiblesLoaded = true;
+    }
+
+    public bool IsCollectableSaved(CollectableStructure collectableStructure)
+    {
+        bool isCollectableSaved = false;
+
+        foreach (CollectableStructure savedStructure in DataPersistenceManager.instance.gameData.collectableStructures)
+        {
+            if (savedStructure.roomIndex == collectableStructure.roomIndex &&
+                savedStructure.prefabPath == collectableStructure.prefabPath &&
+                savedStructure.pos == collectableStructure.pos)
+            {
+                isCollectableSaved = true;
+            }
+        }
+
+        return isCollectableSaved;
     }
 }

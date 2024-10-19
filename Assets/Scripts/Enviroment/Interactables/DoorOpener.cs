@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DoorOpener : Interactable
 {
@@ -16,18 +15,9 @@ public class DoorOpener : Interactable
 
     public TextMeshProUGUI planksAmountText;
 
-    private void Start()
+    public override void Start()
     {
-        if(PlayerPrefs.HasKey("DoorOpener" + SceneManager.GetActiveScene().name + door.room.roomIndex))
-        {
-            planksAmount = PlayerPrefs.GetInt("DoorOpener" + SceneManager.GetActiveScene().name + door.room.roomIndex);
-        }
-        else
-        {
-            planksAmount = Random.Range(1, 4);
-            PlayerPrefs.SetInt("DoorOpener" + SceneManager.GetActiveScene().name + door.room.roomIndex, planksAmount);
-        }
-
+        base.Start();
 
         planksAmountText.text = "" + planksAmount + ((planksAmount == 1) ? " PLANK" : " PLANKS");
     }
@@ -49,10 +39,13 @@ public class DoorOpener : Interactable
             Destroy(gameObject, 1.1f);
 
             RoomManager.instance.SaveRoomStructures();
+
+            if (hasUses) uses--;
         }
-        else
-        {
-            uses++;
-        }
+    }
+
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
     }
 }

@@ -18,15 +18,11 @@ public class MainMenu : MonoBehaviour
 
     public void Play(string sceneName)
     {
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
-            string key = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
-
-            if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
-        }
-
         PlayerPrefs.SetInt("Continue", 1);
+
         DataPersistenceManager.instance.NewGame();
+        DataPersistenceManager.instance.RemovePlayerPrefsData();
+
         MenusManager.instance.ChangeScene(sceneName);
     }
 

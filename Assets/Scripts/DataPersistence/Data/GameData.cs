@@ -28,6 +28,7 @@ public class GameData
 
     public RoomStructure[] roomStructures;
     public CollectableStructure[] collectableStructures;
+    public InteractableStructure[] interactableStructures;
 
     public Vector2 playerPos;
 

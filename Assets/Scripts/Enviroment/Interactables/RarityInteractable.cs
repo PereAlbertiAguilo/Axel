@@ -27,8 +27,10 @@ public class RarityInteractable : Interactable
 
     public Color[] rarityColors;
 
-    public virtual void Start()
+    public override void Start()
     {
+        base.Start();
+
         SetRarity();
     }
 
@@ -56,6 +58,8 @@ public class RarityInteractable : Interactable
         {
             rarity = Rarity.legendary;
         }
+
+        rarity = (Rarity)InteractableManager.instance.GetInteractableValue(id, 0, (int)rarity);
 
         rarityImage.color = new Color(rarityColors[(int)rarity].r, rarityColors[(int)rarity].g, rarityColors[(int)rarity].b, rarityImage.color.a);
         rarityText.color = rarityColors[(int)rarity];

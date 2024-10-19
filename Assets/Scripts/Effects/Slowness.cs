@@ -11,11 +11,7 @@ public class Slowness : Effect
     {
         SetEffect();
 
-        if (targetEntity.TryGetComponent(out spriteAnimation))
-        {
-            startValue = spriteAnimation.speed;
-            spriteAnimation.speed *= 2;
-        }
+        startValue = targetEntity.timeSpeed;
     }
 
     private void Update()
@@ -26,6 +22,7 @@ public class Slowness : Effect
 
             targetEntity.speedCurrent = SetEffectPower(targetEntity.speed, true);
             targetEntity.attackSpeedCurrent = targetEntity.attackSpeed * 1.5f;
+            targetEntity.timeSpeed = startValue / 2;
         }
         else
         {
@@ -40,8 +37,7 @@ public class Slowness : Effect
         currentTime = parameters.duration;
         targetEntity.speedCurrent = targetEntity.speed;
         targetEntity.attackSpeedCurrent = targetEntity.attackSpeed;
-
-        if (spriteAnimation != null) spriteAnimation.speed = startValue;
+        targetEntity.timeSpeed = startValue;
     }
 
     private void OnDestroy()

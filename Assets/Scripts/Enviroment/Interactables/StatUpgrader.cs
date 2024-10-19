@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StatUpgrader : RarityInteractable
@@ -23,6 +25,10 @@ public class StatUpgrader : RarityInteractable
         SetRarity();
 
         randomStatIndex = UnityEngine.Random.Range(0, Enum.GetValues(typeof(Entity.Stat)).Length);
+
+        // Get saved data
+        randomStatIndex = InteractableManager.instance.GetInteractableValue(id, 1, randomStatIndex);
+
         randomStat = (Entity.Stat)randomStatIndex;
 
         if (!PlayerController.instance.CanSetStat(randomStat))
@@ -52,12 +58,30 @@ public class StatUpgrader : RarityInteractable
         {
             PlayerController.instance.SetStat(randomStat, PlayerController.instance.GetStatMultiplier(randomStat) * rarityMuliplier[(int)rarity], true);
             HudManager.instance.UpdateStatsUI();
+
+            InteractableManager.instance.SaveInteractableStructure(this);
+
+            if (hasUses)
+                uses--;
+            else
+                InteractableManager.instance.UnsaveInteractableStructure(this);
         }
 
         if (!hasUses)
+        {
             GetStat();
+            SaveData();
+        }
         else
             animator.SetBool("IsInRange", false);
+    }
+
+    public override void SaveData()
+    {
+        base.SaveData();
+
+        InteractableManager.instance.SetInteractableValues(id, (int)rarity, 0);
+        InteractableManager.instance.SetInteractableValues(id, randomStatIndex, 1);
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -65,5 +89,8 @@ public class StatUpgrader : RarityInteractable
         base.OnTriggerEnter2D(collision);
 
         DisplayStat();
+
+        // Save data
+        SaveData();
     }
 }

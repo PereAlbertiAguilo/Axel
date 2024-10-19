@@ -155,7 +155,7 @@ public class UpdateWeapons : EditorWindow
                 break;
 
             case Options.Particle:
-                weapon.GetComponent<EffectOnDestroy>().effect = newParticle;
+                weapon.GetComponent<InstanceOnHit>().effect = newParticle;
                 break;
         }
     }

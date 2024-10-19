@@ -497,10 +497,19 @@ public class RoomManager : MonoBehaviour
 
         RoomStructure savedStructure = DataPersistenceManager.instance.gameData.roomStructures.ToList().Find(x => x.roomIndex == roomIndex);
 
-        savedStructure = new RoomStructure(room.transform.position, room.prefabPath, room.gameObject.name, room.roomGridPos,
-                room.roomIndex, room.enemiesManager.enemiesAlive, room.roomEntered, room.roomCleared, room.roomLocked, room.rewardGiven,
-                room.openUp, room.openDown, room.openRight, room.openLeft, room.doorsManager.doorUp.isLocked, room.doorsManager.doorDown.isLocked,
-                room.doorsManager.doorRight.isLocked, room.doorsManager.doorLeft.isLocked);
+        if (savedStructure != null)
+        {
+            savedStructure.roomEntered = room.roomEntered;
+            savedStructure.roomCleared = room.roomCleared;
+            savedStructure.roomLocked = room.roomLocked;
+            savedStructure.rewardGiven = room.rewardGiven;
+            savedStructure.enemiesAlive = room.enemiesManager.enemiesAlive;
+
+            savedStructure.doorUpLocked = room.doorsManager.doorUp.isLocked;
+            savedStructure.doorDownLocked = room.doorsManager.doorDown.isLocked;
+            savedStructure.doorRightLocked = room.doorsManager.doorRight.isLocked;
+            savedStructure.doorLeftLocked = room.doorsManager.doorLeft.isLocked;
+        }
     }
 
     IEnumerator SaveRoomDataWhenGenerationComplete(int roomIndex)

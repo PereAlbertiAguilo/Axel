@@ -10,8 +10,6 @@ public class EnemySpawnRepeating : SpawnRepeating
     {
         base.Start();
 
-        fireRate = enemy.attackSpeed;
-
         foreach (GameObject instance in instances)
         {
             if(instance.TryGetComponent(out EnemyCollider enemyCollider))
@@ -24,6 +22,8 @@ public class EnemySpawnRepeating : SpawnRepeating
     public override void Update()
     {
         if (!enemy.canDealDamage || !enemy.canMove) return;
+
+        fireRate = enemy.attackSpeedCurrent;
 
         base.Update();
     }

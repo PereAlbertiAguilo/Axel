@@ -14,8 +14,13 @@ public class Room : MonoBehaviour
     [HideInInspector] public GameObject miniMapRight;
     [HideInInspector] public GameObject miniMapLeft;
 
+    [Space]
+
     public DoorsManager doorsManager;
     public EnemiesManager enemiesManager;
+    public RoomCollectibles roomCollectibles;
+
+    [Space]
 
     public GameObject miniMapDisplay;
 
@@ -48,7 +53,7 @@ public class Room : MonoBehaviour
         miniMapLeft = miniMapDisplay.transform.GetChild(3).gameObject;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if(!enemiesManager.enemiesAlive && !roomCleared && enemiesManager.enemiesList.Count <= 0)
         {
@@ -60,20 +65,20 @@ public class Room : MonoBehaviour
     {
         roomCleared = true;
 
-        RoomManager.instance.SaveRoomData(roomIndex);
-        GameManager.instance.SlowMo(1f);
-
         if (!rewardGiven)
         {
             rewardGiven = true;
 
             CollectiblesManager cm = CollectiblesManager.instance;
-            cm.SpawnCollectable(cm.GetRandomCollectable(), transform.position, cm.index);
+            cm.SpawnCollectable(cm.GetRandomCollectable(), transform.position, this);
         }
 
         OpenDoors();
 
+        GameManager.instance.SlowMo(1f);
         StartCoroutine(PlaySoundDelayed(.45f));
+
+        RoomManager.instance.SaveRoomData(roomIndex);
     }
 
 
