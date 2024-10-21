@@ -13,8 +13,6 @@ public class EntityEditor : Editor
 
     static bool foldout = false;
 
-    
-
     protected virtual void OnEnable()
     {
         setvars();

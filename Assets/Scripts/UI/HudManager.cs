@@ -31,10 +31,11 @@ public class HudManager : MonoBehaviour
 
     [Space]
 
-    public int statsPanelIndex = 0;
+    public int statsPanelIndex = -1;
     public bool keepStatsUp = false;
+    [HideInInspector] public float timer = 0;
 
-    public float timer = 0;
+    public bool saveUIData = true;
 
     public static HudManager instance;
 
@@ -58,6 +59,11 @@ public class HudManager : MonoBehaviour
             keepStatsUp = PlayerPrefs.GetInt("statsUp") > 0;
             DeactivateAllStatsPanels();
             if (statsPanelIndex < statsPanels.Length && keepStatsUp) statsPanels[statsPanelIndex].SetActive(true);
+        }
+        else
+        {
+            keepStatsUp = false;
+            statsPanelIndex = -1;
         }
     }
 
@@ -189,7 +195,11 @@ public class HudManager : MonoBehaviour
     private void OnDisable()
     {
         PlayerPrefs.SetFloat("timer", timer);
-        PlayerPrefs.SetInt("statsIndex", statsPanelIndex);
-        PlayerPrefs.SetInt("statsUp", keepStatsUp ? 1 : 0);
+
+        if (saveUIData)
+        {
+            PlayerPrefs.SetInt("statsIndex", statsPanelIndex);
+            PlayerPrefs.SetInt("statsUp", keepStatsUp ? 1 : 0);
+        }
     }
 }

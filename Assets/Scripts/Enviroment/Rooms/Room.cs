@@ -26,7 +26,7 @@ public class Room : MonoBehaviour
 
     public Vector2Int roomGridPos {  get; set; }
 
-    [HideInInspector] public int roomIndex = 0;
+    public int roomIndex = 0;
     public int exitsAmount = 0;
 
     [Space]
@@ -51,14 +51,14 @@ public class Room : MonoBehaviour
         miniMapDown = miniMapDisplay.transform.GetChild(1).gameObject;
         miniMapRight = miniMapDisplay.transform.GetChild(2).gameObject;
         miniMapLeft = miniMapDisplay.transform.GetChild(3).gameObject;
+
+        if (roomCleared && !roomEntered) RoomCleared();
     }
 
     public virtual void Update()
     {
-        if(!enemiesManager.enemiesAlive && !roomCleared && enemiesManager.enemiesList.Count <= 0)
-        {
+        if(!enemiesManager.enemiesAlive && !roomCleared && enemiesManager.enemiesList.Count <= 0) 
             RoomCleared();
-        }
     }
 
     public virtual void RoomCleared()
@@ -68,15 +68,14 @@ public class Room : MonoBehaviour
         if (!rewardGiven)
         {
             rewardGiven = true;
-
-            CollectiblesManager cm = CollectiblesManager.instance;
-            cm.SpawnCollectable(cm.GetRandomCollectable(), transform.position, this);
+            CollectiblesManager.instance.SpawnCollectable(CollectiblesManager.instance.GetRandomCollectable(), transform.position, this);
         }
 
         OpenDoors();
 
         GameManager.instance.SlowMo(1f);
-        StartCoroutine(PlaySoundDelayed(.45f));
+
+        BridgeSFX();
 
         RoomManager.instance.SaveRoomData(roomIndex);
     }
@@ -158,6 +157,11 @@ public class Room : MonoBehaviour
         Audio.instance.PlayOneShot(Audio.Sound.changeRoom, .01f, true);
     }
 
+    public void BridgeSFX()
+    {
+        StartCoroutine(PlaySoundDelayed(.45f));
+    }
+
     Room GetRoomFromGridPos(Vector2Int newRoomGridPos)
     {
         return RoomManager.instance.rooms.Find(x => x.GetComponent<Room>().roomGridPos ==
@@ -169,7 +173,7 @@ public class Room : MonoBehaviour
         RoomManager.instance.currentRoom = this;
 
         if (enemiesManager.enemiesAlive) Invoke(nameof(CloseDoors), .45f);
-        if (!roomCleared) StartCoroutine(PlaySoundDelayed(.45f));
+        if (!roomCleared) BridgeSFX();
         if (!roomEntered) StartCoroutine(NextRoomsMiniMapUpdate());
 
         CameraController.instance.ChangeCameraPos(transform);

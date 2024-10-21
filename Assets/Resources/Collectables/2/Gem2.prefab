@@ -102,11 +102,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedb86a87314d6942a5703fbb269acc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectable: 0
+  type: 0
   amount: 2
   pickUpSound: {fileID: 8300000, guid: b0ef6cc82ac33124ead6f7661611d180, type: 3}
+  volumeScale: 0.05
+  room: {fileID: 0}
   index: 0
   prefabPath: 
+  pickedUp: 0
 --- !u!58 &4056963547575125902
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -154,16 +157,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bddbb0b3aa929d34a8955efc071e87b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationDuration: 0.5
+  speed: 1
+  nextIteration: 1
+  firstFrame: 0
   sprites:
   - {fileID: -840566262, guid: 2de1bef60558dcb4696b72526badb1ce, type: 3}
   - {fileID: 1717320072, guid: 2de1bef60558dcb4696b72526badb1ce, type: 3}
   - {fileID: -213835424, guid: 2de1bef60558dcb4696b72526badb1ce, type: 3}
   - {fileID: -27020580, guid: 2de1bef60558dcb4696b72526badb1ce, type: 3}
   - {fileID: 1490229753, guid: 2de1bef60558dcb4696b72526badb1ce, type: 3}
-  animationDuration: 0.5
-  nextIteration: 1
   randomFirstFrame: 1
-  firstFrame: 0
 --- !u!114 &6665760989876237988
 MonoBehaviour:
   m_ObjectHideFlags: 0

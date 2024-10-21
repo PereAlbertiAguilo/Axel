@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    public Room room;
-    public CollectiblesManager.Types collectable;
+    // Custom Inspector properties
+    [HideInInspector] public CollectiblesManager.Types type;
+    [HideInInspector] public int amount = 1;
+    [HideInInspector] public AudioClip pickUpSound;
+    [HideInInspector, Range(0, 1)] public float volumeScale;
 
-    public int amount = 1;
-
-    public AudioClip pickUpSound;
-
-    public int index;
-    public string prefabPath;
-
-    public bool pickedUp = false;
+    // Hiden properties
+    [HideInInspector] public Room room;
+    [HideInInspector] public int index;
+    [HideInInspector] public string prefabPath;
+    [HideInInspector] public bool pickedUp = false;
 
     private void Start()
     {
@@ -23,9 +23,9 @@ public class Collectable : MonoBehaviour
 
     public void PickUpColectable(CollectiblesManager collectiblesManager)
     {
-        collectiblesManager.SetCollectable(collectable, amount);
+        collectiblesManager.SetCollectable(type, amount);
 
-        if (pickUpSound != null) Audio.instance.PlayOneShot(pickUpSound, .05f, true);
+        if (pickUpSound != null) Audio.instance.PlayOneShot(pickUpSound, volumeScale, true);
 
         pickedUp = true;
 

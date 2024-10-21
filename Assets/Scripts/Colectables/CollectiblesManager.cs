@@ -58,7 +58,12 @@ public class CollectiblesManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            SpawnCollectable("Collectables/3/planks", transform.position + Vector3.down, RoomManager.instance.currentRoom);
+            SpawnCollectable("Collectables/3/planks", transform.position + (Vector3.down * 2), RoomManager.instance.currentRoom);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SpawnCollectable("Collectables/3/gem3", transform.position + (Vector3.down * 2), RoomManager.instance.currentRoom);
         }
     }
 

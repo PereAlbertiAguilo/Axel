@@ -15,6 +15,8 @@ public class DoorOpener : Interactable
 
     public TextMeshProUGUI planksAmountText;
 
+    public AudioClip useSound;
+
     public override void Start()
     {
         base.Start();
@@ -39,6 +41,9 @@ public class DoorOpener : Interactable
             Destroy(gameObject, 1.1f);
 
             RoomManager.instance.SaveRoomStructures();
+
+            if (useSound != null) Audio.instance.PlayOneShot(useSound, .65f, true);
+            RoomManager.instance.currentRoom.BridgeSFX();
 
             if (hasUses) uses--;
         }

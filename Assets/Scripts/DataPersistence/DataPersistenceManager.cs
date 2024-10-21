@@ -130,9 +130,6 @@ public class DataPersistenceManager : MonoBehaviour
         {
             DelatePlayerPref(System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i)));
         }
-
-        DelatePlayerPref("statsUp");
-        DelatePlayerPref("statsIndex");
     }
 
     public IEnumerator DelatePlayerPrefCoroutine(string key)

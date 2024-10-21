@@ -241,9 +241,12 @@ MonoBehaviour:
   hasUses: 1
   uses: 1
   animator: {fileID: 4341337010164507077}
+  id: 
+  room: {fileID: 0}
   door: {fileID: 0}
   planksAmount: 1
   planksAmountText: {fileID: 5302468286941386440}
+  useSound: {fileID: 8300000, guid: cbecc87fdb8b97d4590259a8151383c8, type: 3}
 --- !u!95 &4341337010164507077
 Animator:
   serializedVersion: 5

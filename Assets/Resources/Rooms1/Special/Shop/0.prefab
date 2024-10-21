@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb1628481b45604c8c464160b610979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  room: {fileID: 1347525224759588888}
+  index: 0
   collectibles: []
 --- !u!1 &8187783278854872381
 GameObject:
