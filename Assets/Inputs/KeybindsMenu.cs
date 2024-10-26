@@ -1,5 +1,3 @@
-using Pathfinding.Util;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,9 +7,10 @@ public class KeybindsMenu : MonoBehaviour
 {
     GameObject currentSelectedGameObject;
 
+    [SerializeField] GameObject rebindOverlay;
     [SerializeField] ScrollRect scrollRect;
 
-    public List<GameObject> scrollItems = new List<GameObject>();
+    List<GameObject> scrollItems = new List<GameObject>();
 
     bool canScroll = false;
 
@@ -25,6 +24,11 @@ public class KeybindsMenu : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenu.instance != null && rebindOverlay.activeInHierarchy)
+        {
+            PauseMenu.instance.canPause = false;
+        }
+
         if (Input.mouseScrollDelta.y != 0 || scrollRect.velocity.y != 0 && EventSystem.current.currentSelectedGameObject != scrollRect.verticalScrollbar.gameObject)
         {
             MenusManager.instance.ChangeCurrentSelectedElement(scrollRect.verticalScrollbar.gameObject);

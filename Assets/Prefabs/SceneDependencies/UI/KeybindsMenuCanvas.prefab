@@ -701,9 +701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee0fdcba99ccf9458f43b16e55e7c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSelectedGameObject: {fileID: 0}
+  rebindOverlay: {fileID: 5462909603143582585}
   scrollRect: {fileID: 1376135733064775973}
-  scrollItems: []
 --- !u!1 &3361806616055572934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,7 +1462,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 3

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using System;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -126,10 +127,11 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void RemovePlayerPrefsData()
     {
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++) 
             DelatePlayerPref(System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i)));
-        }
+
+        foreach (CollectiblesManager.Types collectable in Enum.GetValues(typeof(CollectiblesManager.Types)))
+            DelatePlayerPref(collectable.ToString());
     }
 
     public IEnumerator DelatePlayerPrefCoroutine(string key)

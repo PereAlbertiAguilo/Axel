@@ -13,7 +13,7 @@ public class MenusManager : MonoBehaviour
 
     public List<Button> returns = new List<Button>();
 
-    int currentMenuIndex = 0;
+    public int currentMenuIndex = 0;
 
     [HideInInspector] public bool inTransition;
 
@@ -91,7 +91,6 @@ public class MenusManager : MonoBehaviour
 
             if (result != null)
             {
-                //print("" + selectable.gameObject.name + " Is " + typeof(T));
                 return selectable.gameObject;
             }
         }

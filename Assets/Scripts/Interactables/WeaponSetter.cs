@@ -22,7 +22,6 @@ public class WeaponSetter : RarityInteractable
     float[] rarityAttackSpeedAdded = { 0, -.05f, -.1f, -.2f, -.35f };
 
     GameObject weaponObject;
-    Weapon weapon;
 
     int randomWeaponElement = 0;
     int randomWeaponType = 0;
@@ -58,15 +57,28 @@ public class WeaponSetter : RarityInteractable
         {
             weapon.weaponAddedDamage += rarityDamagesAdded[(int)rarity];
             weapon.weaponAddedAttackSpeed += rarityAttackSpeedAdded[(int)rarity];
-
+            #region UI_Dysplay
             displayImage.sprite = weapon.weaponSprite;
+
             displayText.text = "" + weapon.weaponName;
 
-            addedDamageText.text = "Weapon Damage: " + (weapon.weaponAddedDamage >= PlayerController.instance.currentWeapon.weaponAddedDamage ?
-                "<color=green>" : "<color=red>") + Math.Round(weapon.weaponAddedDamage, 2) + "</color>" + " [" + Math.Round(PlayerController.instance.currentWeapon.weaponAddedDamage, 2) + "]";
-            addedAttackSpeedText.text = "Weapon Attack Speed: " + (weapon.weaponAddedAttackSpeed <= PlayerController.instance.currentWeapon.weaponAddedAttackSpeed ?
-                "<color=green>" : "<color=red>") + Math.Round(weapon.weaponAddedAttackSpeed, 2) + "</color>" + " [" + Math.Round(PlayerController.instance.currentWeapon.weaponAddedAttackSpeed, 2) + "]";
+            addedDamageText.text = "DMG: " 
+                + (weapon.weaponAddedDamage >= PlayerController.instance.currentWeapon.weaponAddedDamage ?
+                "<color=green>" : "<color=red>") 
+                + (weapon.weaponAddedDamage > 0 ? " + " : (weapon.weaponAddedDamage == 0 ? " " : " - ")) +
+                + Math.Round(Mathf.Abs(weapon.weaponAddedDamage), 2) 
+                + "</color>" 
+                + " [" + Math.Round(PlayerController.instance.currentWeapon.weaponAddedDamage, 2) + "]";
 
+            addedAttackSpeedText.text = "ATK SPD: "
+                + (weapon.weaponAddedAttackSpeed <= PlayerController.instance.currentWeapon.weaponAddedAttackSpeed ?
+                "<color=green>" : "<color=red>") 
+                + (weapon.weaponAddedAttackSpeed > 0 ? " + " : (weapon.weaponAddedAttackSpeed == 0 ? " " : " - ")) +
+                + Math.Round(Mathf.Abs(weapon.weaponAddedAttackSpeed), 2) 
+                + "</color>" 
+                + " [" + Math.Round(PlayerController.instance.currentWeapon.weaponAddedAttackSpeed, 2) + "]";
+            #endregion
+            #region WeaponEffects
             if (weaponObject.TryGetComponent(out EffectManager effectManager))
             {
                 if (effectManager.appliesEffects)
@@ -85,8 +97,7 @@ public class WeaponSetter : RarityInteractable
                     effectText.gameObject.SetActive(false);
                 }
             }
-
-            this.weapon = weapon;
+            #endregion
         }
     }
 
@@ -102,18 +113,19 @@ public class WeaponSetter : RarityInteractable
 
             Weapon currentWeapon = weaponObject.GetComponent<Weapon>();
 
+            //Get Weapon Data
+            #region WeaponData
             DataPersistenceManager.instance.gameData.weaponElement = currentWeapon.weaponElement;
             DataPersistenceManager.instance.gameData.weaponType = currentWeapon.weaponType;
             DataPersistenceManager.instance.gameData.weaponAddedDamage = currentWeapon.weaponAddedDamage;
             DataPersistenceManager.instance.gameData.weaponAddedAttackSpeed = currentWeapon.weaponAddedAttackSpeed;
             DataPersistenceManager.instance.gameData.effectPower = currentWeapon.gameObject.GetComponent<EffectManager>().parameters.power;
+            #endregion
 
             InteractableManager.instance.SaveInteractableStructure(this);
 
-            if (hasUses) 
-                uses--;
-            else
-                InteractableManager.instance.UnsaveInteractableStructure(this);
+            if (hasUses) uses--;
+            else InteractableManager.instance.UnsaveInteractableStructure(this);
         }
 
         if (!hasUses)
@@ -121,14 +133,12 @@ public class WeaponSetter : RarityInteractable
             GetWeapon();
             SaveData();
         }
-        else
-            animator.SetBool("IsInRange", false);
+        else animator.SetBool("IsInRange", false);
     }
 
     IEnumerator UpdateStatsUI()
     {
-        yield return new WaitForSeconds(.15f);
-
+        yield return null;
         HudManager.instance.UpdateStatsUI();
     }
 

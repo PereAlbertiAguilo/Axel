@@ -13,16 +13,7 @@ public class DoorOpener : Interactable
 
     public int planksAmount = 1;
 
-    public TextMeshProUGUI planksAmountText;
-
     public AudioClip useSound;
-
-    public override void Start()
-    {
-        base.Start();
-
-        planksAmountText.text = "" + planksAmount + ((planksAmount == 1) ? " PLANK" : " PLANKS");
-    }
 
     public override void Interact()
     {

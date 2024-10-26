@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour
     {
         Resume();
 
-        Invoke(nameof(PauseStartDelay), 2f);
+        StartCoroutine(PauseStartDelay(1.25f));
     }
 
     private void Update()
@@ -40,14 +40,14 @@ public class PauseMenu : MonoBehaviour
                     Resume();
                 }
             }
-            else if (Time.timeScale <= 1 && !GameManager.instance.isGameOver && !MenusManager.instance.inTransition && canPause)
+            else if (!GameManager.instance.isGameOver && !MenusManager.instance.inTransition && canPause)
             {
                 pauseButton.onClick.Invoke();
                 Pause();
             }
         }
 
-        if (!Application.isFocused && !isPaused && Time.timeScale != 0 && !GameManager.instance.isGameOver)
+        if (!Application.isFocused && !isPaused && Time.timeScale != 0 && !GameManager.instance.isGameOver && canPause)
         {
             pauseButton.onClick.Invoke();
             Pause();
@@ -92,8 +92,19 @@ public class PauseMenu : MonoBehaviour
         MenusManager.instance.ChangeScene("MainMenu");
     }
 
-    void PauseStartDelay()
+    IEnumerator PauseStartDelay(float duration)
     {
+        float currentTime = 0;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+
+            canPause = false;
+
+            yield return null;
+        }
+
         canPause = true;
     }
 }

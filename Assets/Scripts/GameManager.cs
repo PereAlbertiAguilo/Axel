@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         PlayerController.instance.canMove = false;
 
         HudManager.instance.timer = 0;
-        CollectiblesManager.instance.UpdateCollectable(true);
         PlayerController.instance.ResetStats();
         PlayerPrefs.SetInt("Continue", 1);
 

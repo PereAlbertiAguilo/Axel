@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static RoomCollectable;
 
 public class Room : MonoBehaviour
 {
@@ -68,7 +69,10 @@ public class Room : MonoBehaviour
         if (!rewardGiven)
         {
             rewardGiven = true;
-            CollectiblesManager.instance.SpawnCollectable(CollectiblesManager.instance.GetRandomCollectable(), transform.position, this);
+
+            string prefabPath = CollectiblesManager.instance.GetRandomCollectable();
+
+            CollectiblesManager.instance.SpawnCollectable(prefabPath, transform.position, this);
         }
 
         OpenDoors();

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b50ed5ea2b3cb114d891982184c24ca7
+guid: 9fe27e217f23f2642846af790772369e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,91 +108,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Dummy_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 36
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e8695da378e59742a6a6ad9c4d0de1a
-      internalID: 571239079
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dummy_1
-      rect:
-        serializedVersion: 2
-        x: 36
-        y: 0
-        width: 36
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc3e2cc753731df4b9c3832b33caca3e
-      internalID: -2138716168
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dummy_2
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 0
-        width: 36
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 702c5de88bd367948aa4951da81567df
-      internalID: 982637929
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dummy_3
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 0
-        width: 36
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de74f865b492c7d45b43d019fb3f9261
-      internalID: 271758492
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -203,11 +119,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Dummy_0: 571239079
-      Dummy_1: -2138716168
-      Dummy_2: 982637929
-      Dummy_3: 271758492
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

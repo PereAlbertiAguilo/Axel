@@ -100,11 +100,12 @@ public class RoomManager : MonoBehaviour
 
             Invoke(nameof(GridGraphScan), .1f);
             FinalFoorUpdate();
-
-            generationComplete = true;
             Time.timeScale = 1;
 
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
+
+            generationComplete = true;
+
             SaveRoomStructures();
         }
     }

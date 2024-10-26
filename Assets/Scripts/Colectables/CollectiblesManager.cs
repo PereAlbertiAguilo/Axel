@@ -42,43 +42,33 @@ public class CollectiblesManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateCollectable(false);
+        UpdateCollectable();
 
-        if(DataPersistenceManager.instance.gameData.collectableStructures != null && PlayerPrefs.HasKey(SceneManager.GetActiveScene().name))
-        {
-            StartCoroutine(LoadCollectibles());
-        }
-        else
-        {
-            collectiblesLoaded = true;
-        }
+        StartCoroutine(LoadCollectibles());
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            SpawnCollectable("Collectables/3/planks", transform.position + (Vector3.down * 2), RoomManager.instance.currentRoom);
+            string prefabPath = "Collectables/3/planks";
+
+            SpawnCollectable(prefabPath, transform.position + (Vector3.down * 2), RoomManager.instance.currentRoom);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            SpawnCollectable("Collectables/3/gem3", transform.position + (Vector3.down * 2), RoomManager.instance.currentRoom);
+            string prefabPath = "Collectables/3/gem3";
+
+            SpawnCollectable(prefabPath, transform.position + (Vector3.down * 2), RoomManager.instance.currentRoom);
         }
     }
 
-    public void UpdateCollectable(bool clear)
+    public void UpdateCollectable()
     {
         foreach (Types colectable in Enum.GetValues(typeof(Types)))
         {
-            if (clear)
-            {
-                PlayerPrefs.DeleteKey(colectable.ToString());
-            }
-            else
-            {
-                if (PlayerPrefs.HasKey(colectable.ToString())) SetCollectable(colectable, PlayerPrefs.GetInt(colectable.ToString()));
-            }
+            if (PlayerPrefs.HasKey(colectable.ToString())) SetCollectable(colectable, PlayerPrefs.GetInt(colectable.ToString()));
         }
 
         HudManager.instance.UpdateCollectableUI();
@@ -127,9 +117,9 @@ public class CollectiblesManager : MonoBehaviour
         float randomValue = UnityEngine.Random.value;
         string prefabName = "Collectables/";
 
-        if (randomValue < .5f) 
+        if (randomValue < .65f) 
             prefabName += "3/" + ((Prefabs3)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs3)).Length)).ToString();
-        else if (randomValue < .75f) 
+        else if (randomValue < .90f) 
             prefabName += "2/" + ((Prefabs2)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs2)).Length)).ToString();
         else 
             prefabName += "1/" + ((Prefabs1)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Prefabs1)).Length)).ToString();
@@ -161,15 +151,30 @@ public class CollectiblesManager : MonoBehaviour
     {
         yield return new WaitUntil(() => RoomManager.instance.generationComplete);
 
-        foreach (GameObject roomInstance in RoomManager.instance.rooms)
+        if(DataPersistenceManager.instance.gameData.collectableStructures.Length > 0 
+            && PlayerPrefs.HasKey(SceneManager.GetActiveScene().name))
         {
-            Room room = roomInstance.GetComponent<Room>();
+            List<CollectableStructure> savedStructures = new List<CollectableStructure>();
 
-            foreach (CollectableStructure collectableStructure in DataPersistenceManager.instance.gameData.collectableStructures)
+            foreach (GameObject roomInstance in RoomManager.instance.rooms)
             {
-                if(collectableStructure.roomIndex == room.roomIndex)
+                Room room = roomInstance.GetComponent<Room>();
+
+                foreach (CollectableStructure collectableStructure in DataPersistenceManager.instance.gameData.collectableStructures)
                 {
-                    if (!collectableStructure.pickedUp) SpawnCollectable(collectableStructure.prefabPath, collectableStructure.pos, room);
+                    if (collectableStructure.roomIndex == room.roomIndex && !collectableStructure.pickedUp) 
+                        savedStructures.Add(collectableStructure);
+                }
+            }
+
+            foreach (GameObject roomInstance in RoomManager.instance.rooms)
+            {
+                Room room = roomInstance.GetComponent<Room>();
+
+                foreach (CollectableStructure collectableStructure in savedStructures)
+                {
+                    if (collectableStructure.roomIndex != room.roomIndex) continue;
+                    SpawnCollectable(collectableStructure.prefabPath, collectableStructure.pos, room);
                 }
             }
         }
@@ -181,12 +186,16 @@ public class CollectiblesManager : MonoBehaviour
     {
         bool isCollectableSaved = false;
 
+        if (DataPersistenceManager.instance.gameData.collectableStructures.Length <= 0) return isCollectableSaved;
+
         foreach (CollectableStructure savedStructure in DataPersistenceManager.instance.gameData.collectableStructures)
         {
             if (savedStructure.roomIndex == collectableStructure.roomIndex &&
                 savedStructure.prefabPath == collectableStructure.prefabPath &&
                 savedStructure.pos == collectableStructure.pos)
             {
+                print("Structure Saved: structure pos: " + savedStructure.pos +  " = " + " current structure: " + collectableStructure.pos);
+
                 isCollectableSaved = true;
             }
         }

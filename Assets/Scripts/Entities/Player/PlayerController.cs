@@ -201,8 +201,6 @@ public class PlayerController : Entity, IDataPersistence
         {
             effectsManager.ApplyEffect(hitingEntity.effectsManager);
         }
-
-        GameManager.instance.SlowMo(.5f);
     }
 
     public override void OnDeath()
