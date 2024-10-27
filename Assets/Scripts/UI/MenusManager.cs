@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -34,7 +33,7 @@ public class MenusManager : MonoBehaviour
             }
         }
 
-        if (EventSystem.current.IsPointerOverGameObject() && canChangeSelectableWithMouse)
+        if (EventSystem.current.IsPointerOverGameObject() && canChangeSelectableWithMouse && UserInput.instance.mouseIsMoveing)
         {
             PointerEventData eventData = new PointerEventData(EventSystem.current);
             eventData.position = Input.mousePosition;

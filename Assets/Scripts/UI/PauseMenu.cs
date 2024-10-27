@@ -69,7 +69,6 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
         MenusManager.instance.ChangeCurrentSelectedElement(null);
-        Cursor.visible = false;
         PlayerController.instance.canMove = true;
         Time.timeScale = 1;
         Audio.instance.UpdateSFX(false);
@@ -80,7 +79,6 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = true;
         MenusManager.instance.ChangeCurrentSelectedElement(resumeButton.gameObject);
-        Cursor.visible = true;
         PlayerController.instance.canMove = false;
         Time.timeScale = 0;
         Audio.instance.UpdateSFX(true);

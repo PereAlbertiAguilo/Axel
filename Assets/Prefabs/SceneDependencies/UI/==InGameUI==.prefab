@@ -943,6 +943,9 @@ MonoBehaviour:
   currentMenuIndex: 0
   inTransition: 0
   canChangeSelectableWithMouse: 1
+  mouseIsMoveing: 0
+  timeToHideMouseWhenStatic: 2
+  currentTime: 0
 --- !u!1 &4980165413446222061
 GameObject:
   m_ObjectHideFlags: 0

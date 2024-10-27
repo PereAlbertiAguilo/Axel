@@ -17,8 +17,14 @@ public class UserInput : MonoBehaviour
     public bool statsInput { get; private set; }
     public bool statsInputDown { get; private set; }
     public bool statsInputUp { get; private set; }
+    public bool isKeyboard { get; private set; }
+    public bool isGamepad { get; private set; }
+    public bool mouseIsMoveing { get; private set; }
 
-    public bool isKeyboard;
+    [SerializeField] float timeToHideMouseWhenStatic = 2;
+
+    Vector3 lastMousePosition;
+    float currentTime = 0;
 
     PlayerInput _playerInput;
 
@@ -67,5 +73,42 @@ public class UserInput : MonoBehaviour
         statsInput = _statsAction.IsPressed();
         statsInputDown = _statsAction.WasPressedThisFrame();
         statsInputUp = _statsAction.WasReleasedThisFrame();
+        isKeyboard = _playerInput.currentControlScheme == "Keyboard";
+        isGamepad = _playerInput.currentControlScheme == "Gamepad";
+        mouseIsMoveing = MouseIsMoveing();
+
+        HideCursorWhenStatic();
+    }
+
+    public void HideCursorWhenStatic()
+    {
+        if (!mouseIsMoveing)
+        {
+            if (Input.mouseScrollDelta.y != 0) currentTime = timeToHideMouseWhenStatic;
+            if (Cursor.visible) currentTime -= Time.unscaledDeltaTime;
+            if (currentTime <= 0) StartCoroutine(HideCursor());
+        }
+        else currentTime = timeToHideMouseWhenStatic;
+    }
+
+    public IEnumerator HideCursor()
+    {
+        Mouse.current.WarpCursorPosition(new Vector2(Screen.currentResolution.width / 2, 0));
+
+        yield return null;
+
+        currentTime = 0;
+        Cursor.visible = false;
+    }
+
+    bool MouseIsMoveing()
+    {
+        if (Input.mousePosition != lastMousePosition)
+        {
+            lastMousePosition = Input.mousePosition;
+            Cursor.visible = true;
+            return true;
+        }
+        else return false;
     }
 }
