@@ -82,7 +82,7 @@ public class UserInput : MonoBehaviour
 
     public void HideCursorWhenStatic()
     {
-        if (!mouseIsMoveing)
+        if (!mouseIsMoveing && Application.isFocused)
         {
             if (Input.mouseScrollDelta.y != 0) currentTime = timeToHideMouseWhenStatic;
             if (Cursor.visible) currentTime -= Time.unscaledDeltaTime;

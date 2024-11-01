@@ -117,7 +117,7 @@ public class MenusManager : MonoBehaviour
         Audio.instance.StopAllCoroutines();
         Audio.instance.StartCoroutine(Audio.instance.FadeAudioOut(Audio.instance.musicAudioSource, .5f));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.1f);
 
         SceneManager.LoadScene(sceneName);
     }

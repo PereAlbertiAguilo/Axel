@@ -64,9 +64,16 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        ResetGameData();
+        StartCoroutine(RestartGameCoroutine());
+    }
 
+    public IEnumerator RestartGameCoroutine()
+    {
         MenusManager.instance.ChangeScene(SceneNameByBuildIndex(1));
+
+        yield return new WaitForSeconds(1);
+
+        ResetGameData();
     }
 
     public static string SceneNameByBuildIndex(int index)

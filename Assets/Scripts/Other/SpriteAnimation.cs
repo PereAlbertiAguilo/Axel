@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using UnityEngine.UI;
 
 public class SpriteAnimation : MonoBehaviour
 {
@@ -15,12 +15,14 @@ public class SpriteAnimation : MonoBehaviour
     [SerializeField] bool randomFirstFrame = true;
 
     SpriteRenderer _spriteRenderer;
+    Image _image;
 
     private void Start()
     {
         nextIteration = true;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _image = GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -43,7 +45,9 @@ public class SpriteAnimation : MonoBehaviour
         {
             int frame = randomFirstFrame ? (((i + firstFrame) > (sprites.Length - 1)) ? (i + firstFrame - sprites.Length) : (i + firstFrame)) : i;
 
-            _spriteRenderer.sprite = sprites[frame];
+            if (_spriteRenderer != null)_spriteRenderer.sprite = sprites[frame];
+            if (_image != null)_image.sprite = sprites[frame];
+
             yield return new WaitForSeconds((animationDuration / sprites.Length) / speed);
         }
 
